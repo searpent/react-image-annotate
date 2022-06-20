@@ -45,16 +45,17 @@ type Props = {
   keypointDefinitions: KeypointsDefinition,
   fullImageSegmentationMode?: boolean,
   autoSegmentationOptions?:
-    | {| type: "simple" |}
-    | {| type: "autoseg", maxClusters?: number, slicWeightFactor?: number |},
-  hideHeader?: boolean,
-  hideHeaderText?: boolean,
-  hideNext?: boolean,
-  hidePrev?: boolean,
-  hideClone?: boolean,
-  hideSettings?: boolean,
-  hideFullScreen?: boolean,
-  hideSave?: boolean,
+  | {| type: "simple" |}
+    | {| type: "autoseg", maxClusters ?: number, slicWeightFactor ?: number |},
+hideHeader ?: boolean,
+  hideHeaderText ?: boolean,
+  hideNext ?: boolean,
+  hidePrev ?: boolean,
+  hideClone ?: boolean,
+  hideSettings ?: boolean,
+  hideFullScreen ?: boolean,
+  hideSave ?: boolean,
+  onImagesChange ?: (any) => any,
 }
 
 export const Annotator = ({
@@ -99,6 +100,7 @@ export const Annotator = ({
   hideFullScreen,
   hideSave,
   allowComments,
+  onImagesChange,
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -137,15 +139,15 @@ export const Annotator = ({
       allowComments,
       ...(annotationType === "image"
         ? {
-            selectedImage,
-            images,
-            selectedImageFrameTime:
-              images && images.length > 0 ? images[0].frameTime : undefined,
-          }
+          selectedImage,
+          images,
+          selectedImageFrameTime:
+            images && images.length > 0 ? images[0].frameTime : undefined,
+        }
         : {
-            videoSrc,
-            keyframes,
-          }),
+          videoSrc,
+          keyframes,
+        }),
     })
   )
 
@@ -170,13 +172,16 @@ export const Annotator = ({
   })
 
   useEffect(() => {
+    if (onImagesChange) {
+      onImagesChange({ selectedImage, images: state.images })
+    }
     if (selectedImage === undefined) return
     dispatchToReducer({
       type: "SELECT_IMAGE",
       imageIndex: selectedImage,
       image: state.images[selectedImage],
     })
-  }, [selectedImage, state.images])
+  }, [onImagesChange, selectedImage, state.images])
 
   if (!images && !videoSrc)
     return 'Missing required prop "images" or "videoSrc"'
