@@ -1,4 +1,4 @@
-# React Image Annotate
+# React Image Annotate (Searpent fork)
 
 [![npm version](https://badge.fury.io/js/react-image-annotate.svg)](https://badge.fury.io/js/react-image-annotate)
 
