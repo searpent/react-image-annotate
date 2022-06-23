@@ -81,6 +81,21 @@ storiesOf("Annotator", module)
           name: "Frame 0038",
         },
       ]}
+      groups={[{
+        id: 'alpha',
+        title: 'Alpha',
+        subtitle: 'This is title of the text',
+        color: '#ff00ff'
+      }, {
+        id: 'beta',
+        title: 'Betaa',
+        subtitle: 'Anoother one article here is it dawg!',
+        color: '#67db75'
+      }]}
+      selectedGroupId={"alpha"}
+      onGroupSelect={(groupId) => console.log('selected groupid:', groupId)}
+      hideHeader={true}
+      hideHistory={true}
     />
   ))
   .add("Basic - Allow Comments", () => (

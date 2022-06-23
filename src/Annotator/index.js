@@ -56,6 +56,10 @@ hideHeader ?: boolean,
   hideFullScreen ?: boolean,
   hideSave ?: boolean,
   onImagesChange ?: (any) => any,
+  groups ?: Array < any >,
+  onGroupSelect ?: (any) => any,
+  selectedGroupId ?: String,
+  hideHistory ?: boolean,
 }
 
 export const Annotator = ({
@@ -101,6 +105,10 @@ export const Annotator = ({
   hideSave,
   allowComments,
   onImagesChange,
+  groups,
+  onGroupSelect,
+  selectedGroupId,
+  hideHistory,
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -203,6 +211,10 @@ export const Annotator = ({
         hideSettings={hideSettings}
         hideFullScreen={hideFullScreen}
         hideSave={hideSave}
+        groups={groups}
+        onGroupSelect={onGroupSelect}
+        selectedGroupId={selectedGroupId}
+        hideHistory={hideHistory}
       />
     </SettingsProvider>
   )
