@@ -33,6 +33,7 @@ type Props = {
   onOpen: (Region) => null,
   onRegionClassAdded: () => {},
   allowComments?: boolean,
+  hideNotEditingLabel?: boolean,
 }
 
 export const RegionLabel = ({
@@ -46,6 +47,7 @@ export const RegionLabel = ({
   onOpen,
   onRegionClassAdded,
   allowComments,
+  hideNotEditingLabel
 }: Props) => {
   const classes = useStyles()
   const commentInputRef = useRef(null)
@@ -55,6 +57,8 @@ export const RegionLabel = ({
 
     if (commentInput) return commentInput.focus()
   }
+
+  if (hideNotEditingLabel && !editing) return null
 
   return (
     <ThemeProvider theme={theme}>

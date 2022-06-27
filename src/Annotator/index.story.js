@@ -96,6 +96,7 @@ storiesOf("Annotator", module)
       onGroupSelect={(groupId) => console.log('selected groupid:', groupId)}
       hideHeader={true}
       hideHistory={true}
+      hideNotEditingLabel={true}
     />
   ))
   .add("Basic - Allow Comments", () => (

@@ -87,6 +87,7 @@ type Props = {
   onChangeVideoTime: (number) => any,
   onRegionClassAdded: () => {},
   onChangeVideoPlaying?: Function,
+  hideNotEditingLabel?: boolean,
 }
 
 const getDefaultMat = (allowedArea = null, { iw, ih } = {}) => {
@@ -142,6 +143,7 @@ export const ImageCanvas = ({
   modifyingAllowedArea = false,
   keypointDefinitions,
   allowComments,
+  hideNotEditingLabel = false,
 }: Props) => {
   const classes = useStyles()
 
@@ -288,10 +290,10 @@ export const ImageCanvas = ({
     !zoomStart || !zoomEnd
       ? null
       : {
-          ...mat.clone().inverse().applyToPoint(zoomStart.x, zoomStart.y),
-          w: (zoomEnd.x - zoomStart.x) / mat.a,
-          h: (zoomEnd.y - zoomStart.y) / mat.d,
-        }
+        ...mat.clone().inverse().applyToPoint(zoomStart.x, zoomStart.y),
+        w: (zoomEnd.x - zoomStart.x) / mat.a,
+        h: (zoomEnd.y - zoomStart.y) / mat.d,
+      }
   if (zoomBox) {
     if (zoomBox.w < 0) {
       zoomBox.x += zoomBox.w
@@ -326,14 +328,14 @@ export const ImageCanvas = ({
           cursor: createWithPrimary
             ? "crosshair"
             : dragging
-            ? "grabbing"
-            : dragWithPrimary
-            ? "grab"
-            : zoomWithPrimary
-            ? mat.a < 1
-              ? "zoom-out"
-              : "zoom-in"
-            : undefined,
+              ? "grabbing"
+              : dragWithPrimary
+                ? "grab"
+                : zoomWithPrimary
+                  ? mat.a < 1
+                    ? "zoom-out"
+                    : "zoom-in"
+                  : undefined,
         }}
       >
         {showCrosshairs && (
@@ -346,19 +348,19 @@ export const ImageCanvas = ({
               !modifyingAllowedArea || !allowedArea
                 ? regions
                 : [
-                    {
-                      type: "box",
-                      id: "$$allowed_area",
-                      cls: "allowed_area",
-                      highlighted: true,
-                      x: allowedArea.x,
-                      y: allowedArea.y,
-                      w: allowedArea.w,
-                      h: allowedArea.h,
-                      visible: true,
-                      color: "#ff0",
-                    },
-                  ]
+                  {
+                    type: "box",
+                    id: "$$allowed_area",
+                    cls: "allowed_area",
+                    highlighted: true,
+                    x: allowedArea.x,
+                    y: allowedArea.y,
+                    w: allowedArea.w,
+                    h: allowedArea.h,
+                    visible: true,
+                    color: "#ff0",
+                  },
+                ]
             }
             mouseEvents={mouseEvents}
             projectRegionBox={projectRegionBox}
@@ -393,6 +395,7 @@ export const ImageCanvas = ({
               RegionEditLabel={RegionEditLabel}
               onRegionClassAdded={onRegionClassAdded}
               allowComments={allowComments}
+              hideNotEditingLabel={hideNotEditingLabel}
             />
           </PreventScrollToParents>
         )}

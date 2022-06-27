@@ -28,6 +28,7 @@ export const RegionTags = ({
   RegionEditLabel,
   onRegionClassAdded,
   allowComments,
+  hideNotEditingLabel,
 }) => {
   const RegionLabel =
     RegionEditLabel != null ? RegionEditLabel : DefaultRegionLabel
@@ -44,9 +45,9 @@ export const RegionTags = ({
 
       const coords = displayOnTop
         ? {
-            left: pbox.x,
-            top: pbox.y - margin / 2,
-          }
+          left: pbox.x,
+          top: pbox.y - margin / 2,
+        }
         : { left: pbox.x, top: pbox.y + pbox.h + margin / 2 }
       if (region.locked) {
         return (
@@ -120,6 +121,7 @@ export const RegionTags = ({
               imageSrc={imageSrc}
               onRegionClassAdded={onRegionClassAdded}
               allowComments={allowComments}
+              hideNotEditingLabel={hideNotEditingLabel}
             />
           </div>
         </div>

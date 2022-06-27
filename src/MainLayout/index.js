@@ -67,6 +67,7 @@ type Props = {
   onGroupSelect?: (any) => any,
   selectedGroupId?: String,
   hideHistory?: boolean,
+  hideNotEditingLabel?: boolean,
 }
 
 export const MainLayout = ({
@@ -88,6 +89,7 @@ export const MainLayout = ({
   onGroupSelect = () => { },
   selectedGroupId = null,
   hideHistory = false,
+  hideNotEditingLabel = false,
 }: Props) => {
   const classes = useStyles()
   const settings = useSettings()
@@ -206,6 +208,7 @@ const canvas = (
     onChangeVideoPlaying={action("CHANGE_VIDEO_PLAYING", "isPlaying")}
     onRegionClassAdded={onRegionClassAdded}
     allowComments={state.allowComments}
+    hideNotEditingLabel={hideNotEditingLabel}
   />
 )
 
