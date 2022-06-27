@@ -136,7 +136,7 @@ export const testRegionsBoxes = [
   {
     type: "box",
     id: "boxBeta2",
-    cls: "text",
+    cls: "subtitle",
     highlighted: false,
     groupHighlighted: false,
     x: 0.415,
@@ -148,6 +148,37 @@ export const testRegionsBoxes = [
     groupColor: "#78ffa7",
     groupId: "beta"
   },
+  {
+    type: "box",
+    id: "boxBeta3",
+    cls: "text",
+    highlighted: false,
+    groupHighlighted: false,
+    x: 0.415,
+    y: 0.53,
+    w: 0.067,
+    h: 0.045,
+    visible: true,
+    color: "#007efc",
+    groupColor: "#78ffa7",
+    groupId: "beta"
+  },
+  {
+    type: "box",
+    id: "boxBeta4",
+    cls: "text",
+    highlighted: false,
+    groupHighlighted: false,
+    x: 0.415,
+    y: 0.73,
+    w: 0.067,
+    h: 0.045,
+    visible: true,
+    color: "#007efc",
+    groupColor: "#78ffa7",
+    groupId: "beta"
+  },
+
 ]
 
 const events = {

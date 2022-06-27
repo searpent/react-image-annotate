@@ -12,6 +12,7 @@ import convertExpandingLineToPolygon from "./convert-expanding-line-to-polygon"
 import clamp from "clamp"
 import getLandmarksWithTransform from "../../utils/get-landmarks-with-transform"
 import setInLocalStorage from "../../utils/set-in-local-storage"
+import onlyUnique from "../../utils/filter-only-unique"
 
 const getRandomId = () => Math.random().toString().split(".")[1]
 
@@ -170,6 +171,14 @@ export default (state: MainLayoutState, action: Action) => {
         groupHighlighted: (r.groupId && r.groupId === region.groupId) ? true : false,
         editingLabels: r.id === region.id,
       }))
+
+      const selectedGroupIds = regions.filter(i => i.highlighted).map(r => r.groupId || '').filter(onlyUnique);
+      if (selectedGroupIds.length === 1) {
+        state = setIn(state, [...pathToActiveImage, "selectedGroupId"], selectedGroupIds[0])
+      }
+      if (selectedGroupIds.length === 0) {
+        state = setIn(state, [...pathToActiveImage, "selectedGroupId"], null)
+      }
       return setIn(state, [...pathToActiveImage, "regions"], regions)
     }
     case "BEGIN_MOVE_POINT": {
@@ -668,6 +677,8 @@ export default (state: MainLayoutState, action: Action) => {
           setIn(r, ["editingLabels"], false).setIn(["highlighted"], false).setIn(["groupHighlighted"], false)
         )
         .concat(newRegion ? [newRegion] : [])
+
+      state = setIn(state, [...pathToActiveImage, "selectedGroupId"], null)
 
       return setIn(state, [...pathToActiveImage, "regions"], regions)
     }
