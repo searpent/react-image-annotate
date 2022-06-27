@@ -12,7 +12,7 @@ import { defaultKeyMap } from "../ShortcutsManager"
 
 import Annotator from "./"
 
-import { testRegions } from "../ImageCanvas/index.story"
+import { testRegions, testRegionsBoxes } from "../ImageCanvas/index.story"
 
 const middlewares = [
   (store) => (next) => (action) => {
@@ -66,7 +66,7 @@ storiesOf("Annotator", module)
         {
           src: exampleImage,
           name: "Seve's Desk",
-          regions: testRegions,
+          regions: testRegionsBoxes,
         },
         {
           src: "https://loremflickr.com/100/100/cars?lock=1",

@@ -167,6 +167,7 @@ export default (state: MainLayoutState, action: Action) => {
       const regions = [...(activeImage.regions || [])].map((r) => ({
         ...r,
         highlighted: r.id === region.id,
+        groupHighlighted: (r.groupId && r.groupId === region.groupId) ? true : false,
         editingLabels: r.id === region.id,
       }))
       return setIn(state, [...pathToActiveImage, "regions"], regions)
@@ -310,15 +311,15 @@ export default (state: MainLayoutState, action: Action) => {
             xFree === 0
               ? ow
               : xFree === -1
-              ? ow + (ox - dx)
-              : Math.max(0, ow + (x - ox - ow))
+                ? ow + (ox - dx)
+                : Math.max(0, ow + (x - ox - ow))
           const dy = yFree === 0 ? oy : yFree === -1 ? Math.min(oy + oh, y) : oy
           const dh =
             yFree === 0
               ? oh
               : yFree === -1
-              ? oh + (oy - dy)
-              : Math.max(0, oh + (y - oy - oh))
+                ? oh + (oy - dy)
+                : Math.max(0, oh + (y - oy - oh))
 
           // determine if we should switch the freedom
           if (dw <= 0.001) {
@@ -636,18 +637,18 @@ export default (state: MainLayoutState, action: Action) => {
           const [[keypointsDefinitionId, { landmarks, connections }]] =
             (Object.entries(state.keypointDefinitions): any)
 
-          newRegion = {
-            type: "keypoints",
-            keypointsDefinitionId,
-            points: getLandmarksWithTransform({
-              landmarks,
-              center: { x, y },
-              scale: 1,
-            }),
-            highlighted: true,
-            editingLabels: false,
-            id: getRandomId(),
-          }
+            newRegion = {
+              type: "keypoints",
+              keypointsDefinitionId,
+              points: getLandmarksWithTransform({
+                landmarks,
+                center: { x, y },
+                scale: 1,
+              }),
+              highlighted: true,
+              editingLabels: false,
+              id: getRandomId(),
+            }
           state = setIn(state, ["mode"], {
             mode: "RESIZE_KEYPOINTS",
             landmarks,
@@ -664,7 +665,7 @@ export default (state: MainLayoutState, action: Action) => {
 
       const regions = [...(getIn(state, pathToActiveImage).regions || [])]
         .map((r) =>
-          setIn(r, ["editingLabels"], false).setIn(["highlighted"], false)
+          setIn(r, ["editingLabels"], false).setIn(["highlighted"], false).setIn(["groupHighlighted"], false)
         )
         .concat(newRegion ? [newRegion] : [])
 

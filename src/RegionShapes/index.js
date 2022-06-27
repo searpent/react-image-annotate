@@ -31,19 +31,34 @@ const RegionComponents = {
       />
     </g>
   )),
-  box: memo(({ region, iw, ih }) => (
-    <g transform={`translate(${region.x * iw} ${region.y * ih})`}>
-      <rect
-        strokeWidth={2}
-        x={0}
-        y={0}
-        width={Math.max(region.w * iw, 0)}
-        height={Math.max(region.h * ih, 0)}
-        stroke={colorAlpha(region.color, 0.75)}
-        fill={colorAlpha(region.color, 0.25)}
-      />
-    </g>
-  )),
+  box: memo(({ region, iw, ih }) => {
+    if (region.groupColor) {
+      return <g transform={`translate(${region.x * iw} ${region.y * ih})`}>
+        <rect
+          strokeWidth={(region.groupHighlighted) ? 3 : 0}
+          x={0}
+          y={0}
+          width={Math.max(region.w * iw, 0)}
+          height={Math.max(region.h * ih, 0)}
+          stroke={colorAlpha(region.color, 0.85)}
+          fill={(region.groupHighlighted) ? colorAlpha(region.groupColor, 0.5) : colorAlpha(region.groupColor, 0.25)}
+        />
+      </g>
+    } else {
+      return <g transform={`translate(${region.x * iw} ${region.y * ih})`}>
+        <rect
+          strokeWidth={2}
+          x={0}
+          y={0}
+          width={Math.max(region.w * iw, 0)}
+          height={Math.max(region.h * ih, 0)}
+          stroke={colorAlpha(region.color, 0.75)}
+          fill={colorAlpha(region.color, 0.25)}
+        />
+      </g>
+    }
+  }
+  ),
   polygon: memo(({ region, iw, ih, fullSegmentationMode }) => {
     const Component = region.open ? "polyline" : "polygon"
     const alphaBase = fullSegmentationMode ? 0.5 : 1
@@ -144,9 +159,8 @@ const RegionComponents = {
         {points.map(({ x, y, angle }, i) => (
           <g
             key={i}
-            transform={`translate(${x * iw} ${y * ih}) rotate(${
-              (-(angle || 0) * 180) / Math.PI
-            })`}
+            transform={`translate(${x * iw} ${y * ih}) rotate(${(-(angle || 0) * 180) / Math.PI
+              })`}
           >
             <g>
               <rect

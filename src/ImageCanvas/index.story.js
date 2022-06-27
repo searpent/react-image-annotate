@@ -87,6 +87,69 @@ export const testRegions = [
   },
 ]
 
+export const testRegionsBoxes = [
+  {
+    type: "box",
+    id: "box1",
+    cls: "title",
+    highlighted: false,
+    groupHighlighted: false,
+    x: 0.315,
+    y: 0.63,
+    w: 0.067,
+    h: 0.045,
+    visible: true,
+    color: "#ff4133",
+    groupColor: "#2436ff",
+    groupId: "alpha"
+  },
+  {
+    type: "box",
+    id: "box2",
+    cls: "text",
+    highlighted: false,
+    groupHighlighted: false,
+    x: 0.415,
+    y: 0.63,
+    w: 0.067,
+    h: 0.045,
+    visible: true,
+    color: "#ff9924",
+    groupColor: "#2436ff",
+    groupId: "alpha"
+  },
+  {
+    type: "box",
+    id: "boxBeta1",
+    cls: "title",
+    highlighted: false,
+    groupHighlighted: false,
+    x: 0.315,
+    y: 0.43,
+    w: 0.067,
+    h: 0.045,
+    visible: true,
+    color: "#ff4133",
+    groupColor: "#78ffa7",
+    groupId: "beta"
+  },
+  {
+    type: "box",
+    id: "boxBeta2",
+    cls: "text",
+    highlighted: false,
+    groupHighlighted: false,
+    x: 0.415,
+    y: 0.43,
+    w: 0.067,
+    h: 0.045,
+    visible: true,
+    color: "#ff9924",
+    groupColor: "#78ffa7",
+    groupId: "beta"
+  },
+]
+
 const events = {
   // Ignore common mouse movements, they fill the action log
   onMouseMove: () => null, //action("onMouseMove"),
