@@ -61,6 +61,7 @@ hideHeader ?: boolean,
   selectedGroupId ?: String,
   hideHistory ?: boolean,
   hideNotEditingLabel ?: boolean,
+  showEditor ?: boolean,
 }
 
 export const Annotator = ({
@@ -111,6 +112,7 @@ export const Annotator = ({
   selectedGroupId,
   hideHistory,
   hideNotEditingLabel,
+  showEditor,
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -218,6 +220,7 @@ export const Annotator = ({
         selectedGroupId={selectedGroupId}
         hideHistory={hideHistory}
         hideNotEditingLabel={hideNotEditingLabel}
+        showEditor={showEditor}
       />
     </SettingsProvider>
   )

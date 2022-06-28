@@ -101,7 +101,8 @@ export const testRegionsBoxes = [
     visible: true,
     color: "#ff4133",
     groupColor: "#2436ff",
-    groupId: "alpha"
+    groupId: "alpha",
+    text: "first box text"
   },
   {
     type: "box",
@@ -116,7 +117,8 @@ export const testRegionsBoxes = [
     visible: true,
     color: "#ff9924",
     groupColor: "#2436ff",
-    groupId: "alpha"
+    groupId: "alpha",
+    text: "second box text"
   },
   {
     type: "box",
@@ -131,7 +133,8 @@ export const testRegionsBoxes = [
     visible: true,
     color: "#ff4133",
     groupColor: "#78ffa7",
-    groupId: "beta"
+    groupId: "beta",
+    text: "third box text"
   },
   {
     type: "box",
@@ -146,7 +149,8 @@ export const testRegionsBoxes = [
     visible: true,
     color: "#ff9924",
     groupColor: "#78ffa7",
-    groupId: "beta"
+    groupId: "beta",
+    text: "fourth box text"
   },
   {
     type: "box",
@@ -161,7 +165,8 @@ export const testRegionsBoxes = [
     visible: true,
     color: "#007efc",
     groupColor: "#78ffa7",
-    groupId: "beta"
+    groupId: "beta",
+    text: "fifth box text"
   },
   {
     type: "box",
@@ -176,7 +181,8 @@ export const testRegionsBoxes = [
     visible: true,
     color: "#007efc",
     groupColor: "#78ffa7",
-    groupId: "beta"
+    groupId: "beta",
+    text: "sixth box text"
   },
 
 ]
