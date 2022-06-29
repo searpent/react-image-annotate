@@ -436,7 +436,9 @@ return (
             {
               showEditor && (
                 <div style={{
-                  width: '30%',
+                  width: '45%',
+                  padding: '1rem',
+                  paddingLeft: '2rem',
                 }}>
                   <Editor regions={state.images[state.selectedImage]?.regions} selectedGroupId={state.images[state.selectedImage]?.selectedGroupId} />
                 </div>

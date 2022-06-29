@@ -1,18 +1,34 @@
 import React from 'react';
+import { createReactEditorJS } from 'react-editor-js'
+import { EDITOR_JS_TOOLS } from './tools'
 
-function index({ regions, selectedGroupId }) {
+const ReactEditorJS = createReactEditorJS()
+
+const blocks = {
+  "time": 1656421988504,
+  "blocks": [
+    {
+      "id": "BNm1xCwz-P",
+      "type": "annotation",
+      "data": {
+        "text": "Editor.js",
+        "labelName": "title"
+      }
+    },
+  ],
+  "version": "2.24.3"
+};
+
+function Editor(props) {
+  const handleChange = async instance => {
+    const data = await instance.saver.save();
+    console.log(data)
+  };
+
   return (
-    <div style={{ backgroundColor: 'red' }}>
-      There will be the editor
-      {JSON.stringify(regions)}
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
-      {JSON.stringify(selectedGroupId)}
-    </div>
+    <ReactEditorJS defaultValue={blocks} tools={EDITOR_JS_TOOLS} onChange={handleChange}
+      onCompareBlocks={(newData, oldData) => newData === oldData} />
   );
 }
 
-export default index;
+export default Editor;
