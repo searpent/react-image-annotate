@@ -33,6 +33,7 @@ import useKey from "use-key-hook"
 import { useSettings } from "../SettingsProvider"
 import { withHotKeys } from "react-hotkeys"
 import Editor from "../Editor"
+import regionsToBlocks from '../utils/regions-to-blocks';
 
 // import Fullscreen from "../Fullscreen"
 
@@ -55,6 +56,12 @@ const FullScreenContainer = styled("div")(({ theme }) => ({
   },
 }))
 
+const EditorWrapper = styled("div")(({ theme }) => ({
+  width: "45%",
+  padding: "1rem",
+  paddingLeft: "2rem"
+}))
+
 type Props = {
   state: MainLayoutState,
   RegionEditLabel?: Node,
@@ -66,7 +73,6 @@ type Props = {
   hideHeaderText?: boolean,
   groups?: Array<any>,
   onGroupSelect?: (any) => any,
-  selectedGroupId?: String,
   hideHistory?: boolean,
   hideNotEditingLabel?: boolean,
   showEditor?: boolean,
@@ -89,7 +95,6 @@ export const MainLayout = ({
   hideSave = false,
   groups = [],
   onGroupSelect = () => { },
-  selectedGroupId = null,
   hideHistory = false,
   hideNotEditingLabel = false,
   showEditor = false,
@@ -231,6 +236,20 @@ const onClickHeaderItem = useEventCallback((item) => {
 const debugModeOn = Boolean(window.localStorage.$ANNOTATE_DEBUG_MODE && state)
 const nextImageHasRegions =
   !nextImage || (nextImage.regions && nextImage.regions.length > 0)
+
+// Editor.js blocks
+const selectedGroupId = state.images[state.selectedImage]?.selectedGroupId || null;
+const editorBlocks = regionsToBlocks(state.images[state.selectedImage]?.regions || []);
+const blocks = editorBlocks.filter(i => i?.data?.groupId === selectedGroupId);
+
+const handleEditorChange = ({ imageIndex, data }) => {
+  const newRegions = data.blocks.map(i => ({
+    id: i.id,
+    cls: i.data.labelName,
+    text: i.data.text
+  }))
+  dispatch({ type: "UPDATE_REGIONS", regions: newRegions, imageIndex })
+}
 
 return (
   <ThemeProvider theme={theme}>
@@ -396,14 +415,14 @@ return (
                 //     images={state.images}
                 //   />
                 // ),
-                groups && (
-                  <GroupSelector
-                    title="Articles"
-                    groups={groups}
-                    selectedGroupId={selectedGroupId}
-                    onSelect={onGroupSelect}
-                  />
-                )
+                // groups && (
+                //   <GroupSelector
+                //     title="Articles"
+                //     groups={groups}
+                //     selectedGroupId={selectedGroupId}
+                //     onSelect={onGroupSelect}
+                //   />
+                // )
                 ,
                 <RegionSelector
                   regions={activeImage ? activeImage.regions : emptyArr}
@@ -434,14 +453,10 @@ return (
               {canvas}
             </Workspace>
             {
-              showEditor && (
-                <div style={{
-                  width: '45%',
-                  padding: '1rem',
-                  paddingLeft: '2rem',
-                }}>
-                  <Editor regions={state.images[state.selectedImage]?.regions} selectedGroupId={state.images[state.selectedImage]?.selectedGroupId} />
-                </div>
+              (showEditor) && (
+                <EditorWrapper id="editor-wrapper">
+                  <Editor id="editor" blocks={blocks} imageIndex={state.selectedImage} key={`${state.selectedImage}#${selectedGroupId}`} onChange={handleEditorChange} />
+                </EditorWrapper>
               )
             }
           </div>

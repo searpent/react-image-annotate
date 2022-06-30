@@ -919,6 +919,26 @@ export default (state: MainLayoutState, action: Action) => {
       }
       break
     }
+    case "UPDATE_REGIONS": {
+      const { imageIndex, regions: newRegions } = action;
+      const updatedRegions = state.images[imageIndex].regions.map(r => {
+        const updatedRegion = newRegions.find(i => i.id === r.id)
+        if (!updatedRegion) {
+          return r
+        }
+        return {
+          ...r,
+          cls: updatedRegion.cls,
+          text: updatedRegion.text
+        }
+      })
+      // TODO: add mutation of order and deletion of regions - SI-1967
+      return setIn(
+        state,
+        ["images", imageIndex, "regions"],
+        updatedRegions
+      )
+    }
     default:
       break
   }
