@@ -92,7 +92,6 @@ storiesOf("Annotator", module)
         subtitle: 'Anoother one article here is it dawg!',
         color: '#67db75'
       }]}
-      selectedGroupId={"alpha"}
       onGroupSelect={(groupId) => console.log('selected groupid:', groupId)}
       hideHeader={true}
       hideHistory={true}

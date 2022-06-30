@@ -58,7 +58,6 @@ hideHeader ?: boolean,
   onImagesChange ?: (any) => any,
   groups ?: Array < any >,
   onGroupSelect ?: (any) => any,
-  selectedGroupId ?: String,
   hideHistory ?: boolean,
   hideNotEditingLabel ?: boolean,
   showEditor ?: boolean,
@@ -109,7 +108,6 @@ export const Annotator = ({
   onImagesChange,
   groups,
   onGroupSelect,
-  selectedGroupId,
   hideHistory,
   hideNotEditingLabel,
   showEditor,
@@ -217,7 +215,6 @@ export const Annotator = ({
         hideSave={hideSave}
         groups={groups}
         onGroupSelect={onGroupSelect}
-        selectedGroupId={selectedGroupId}
         hideHistory={hideHistory}
         hideNotEditingLabel={hideNotEditingLabel}
         showEditor={showEditor}
