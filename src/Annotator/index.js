@@ -191,7 +191,8 @@ export const Annotator = ({
       imageIndex: selectedImage,
       image: state.images[selectedImage],
     })
-  }, [onImagesChange, selectedImage, state.images])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onImagesChange, selectedImage])
 
   if (!images && !videoSrc)
     return 'Missing required prop "images" or "videoSrc"'
