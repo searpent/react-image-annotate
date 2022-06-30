@@ -34,6 +34,7 @@ import { useSettings } from "../SettingsProvider"
 import { withHotKeys } from "react-hotkeys"
 import Editor from "../Editor"
 import regionsToBlocks from '../utils/regions-to-blocks';
+import PagesSelector from "../PageSelector"
 
 // import Fullscreen from "../Fullscreen"
 
@@ -251,6 +252,16 @@ const handleEditorChange = ({ imageIndex, data }) => {
   dispatch({ type: "UPDATE_REGIONS", regions: newRegions, imageIndex })
 }
 
+const pages = state.images.map((i, idx) => ({
+  id: idx,
+  src: i.src,
+  isActive: idx === state.selectedImage
+}))
+
+const handlePageClick = (pageIndex) => {
+  dispatch({ type: "SELECT_IMAGE", imageIndex: pageIndex })
+}
+
 return (
   <ThemeProvider theme={theme}>
     <FullScreenContainer>
@@ -279,6 +290,7 @@ return (
             display: 'flex',
             flexDirection: 'row'
           }}>
+            <PagesSelector pages={pages} onPageClick={handlePageClick} />
             <Workspace
               allowFullscreen
               iconDictionary={iconDictionary}

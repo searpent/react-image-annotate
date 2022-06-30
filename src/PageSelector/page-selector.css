@@ -1,0 +1,32 @@
+.page-list {
+  list-style: none;
+  padding: 1rem;
+  height: 100%;
+  overflow-x: scroll;
+  width: 5%;
+}
+
+.page-thumbnail {
+  margin-bottom: 1rem;
+  border-radius: .5rem !important;
+  overflow: hidden;
+  filter: grayscale(1);
+  transition: transform .2s;
+  opacity: .5;
+}
+
+.page-thumbnail:hover {
+  box-shadow: 0 0 2rem 0 #8898aa !important;
+  filter: grayscale(0);
+  cursor: pointer;
+  opacity: 1;
+}
+
+.page-thumbnail-is-active {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+.page-thumbnail img {
+  width: 100%;
+}
