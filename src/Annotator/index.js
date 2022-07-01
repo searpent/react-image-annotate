@@ -61,6 +61,7 @@ hideHeader ?: boolean,
   hideHistory ?: boolean,
   hideNotEditingLabel ?: boolean,
   showEditor ?: boolean,
+  showPageSelector ?: boolean,
 }
 
 export const Annotator = ({
@@ -111,6 +112,7 @@ export const Annotator = ({
   hideHistory,
   hideNotEditingLabel,
   showEditor,
+  showPageSelector,
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -219,6 +221,7 @@ export const Annotator = ({
         hideHistory={hideHistory}
         hideNotEditingLabel={hideNotEditingLabel}
         showEditor={showEditor}
+        showPageSelector={showPageSelector}
       />
     </SettingsProvider>
   )

@@ -77,6 +77,7 @@ type Props = {
   hideHistory?: boolean,
   hideNotEditingLabel?: boolean,
   showEditor?: boolean,
+  showPageSelector?: boolean,
 }
 
 export const MainLayout = ({
@@ -99,6 +100,7 @@ export const MainLayout = ({
   hideHistory = false,
   hideNotEditingLabel = false,
   showEditor = false,
+  showPageSelector = false,
 }: Props) => {
   const classes = useStyles()
   const settings = useSettings()
@@ -290,7 +292,11 @@ return (
             display: 'flex',
             flexDirection: 'row'
           }}>
-            <PagesSelector pages={pages} onPageClick={handlePageClick} />
+            {
+              showPageSelector && (
+                <PagesSelector pages={pages} onPageClick={handlePageClick} />
+              )
+            }
             <Workspace
               allowFullscreen
               iconDictionary={iconDictionary}

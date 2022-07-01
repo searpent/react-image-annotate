@@ -97,6 +97,7 @@ storiesOf("Annotator", module)
       hideHistory={true}
       hideNotEditingLabel={true}
       showEditor={true}
+      showPageSelector={true}
     />
   ))
   .add("Basic - Allow Comments", () => (
