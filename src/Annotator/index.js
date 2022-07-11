@@ -62,6 +62,8 @@ hideHeader ?: boolean,
   hideNotEditingLabel ?: boolean,
   showEditor ?: boolean,
   showPageSelector ?: boolean,
+  clsColors ?: Object,
+  groupColors ?: Object,
 }
 
 export const Annotator = ({
@@ -113,6 +115,8 @@ export const Annotator = ({
   hideNotEditingLabel,
   showEditor,
   showPageSelector,
+  clsColors,
+  groupColors,
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -200,7 +204,7 @@ export const Annotator = ({
     return 'Missing required prop "images" or "videoSrc"'
 
   return (
-    <SettingsProvider>
+    <SettingsProvider clsColors={clsColors} groupColors={groupColors}>
       <MainLayout
         RegionEditLabel={RegionEditLabel}
         alwaysShowNextButton={Boolean(onNextImage)}

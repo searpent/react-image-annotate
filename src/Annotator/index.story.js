@@ -13,6 +13,8 @@ import { defaultKeyMap } from "../ShortcutsManager"
 import Annotator from "./"
 
 import { testRegions, testRegionsBoxes } from "../ImageCanvas/index.story"
+import photosToImages from "../utils/photosToImages"
+import examplePhotos from "./examplePhotos"
 
 const middlewares = [
   (store) => (next) => (action) => {
@@ -62,36 +64,29 @@ storiesOf("Annotator", module)
       imageClsList={["Alpha", "Beta", "Charlie", "Delta"]}
       imageTagList={["tag1", "tag2", "tag3"]}
       onImagesChange={(images) => console.log("images changed to:", images)}
-      images={[
-        {
-          src: exampleImage,
-          name: "Seve's Desk",
-          regions: testRegionsBoxes,
-        },
-        {
-          src: "https://loremflickr.com/100/100/cars?lock=1",
-          name: "Frame 0036",
-        },
-        {
-          src: "https://loremflickr.com/100/100/cars?lock=2",
-          name: "Frame 0037",
-        },
-        {
-          src: "https://loremflickr.com/100/100/cars?lock=3",
-          name: "Frame 0038",
-        },
-      ]}
-      groups={[{
-        id: 'alpha',
-        title: 'Alpha',
-        subtitle: 'This is title of the text',
-        color: '#ff00ff'
-      }, {
-        id: 'beta',
-        title: 'Betaa',
-        subtitle: 'Anoother one article here is it dawg!',
-        color: '#67db75'
-      }]}
+      images={photosToImages(examplePhotos)}
+      clsColors={{
+        subtitle: "#e11438",
+        text: "#14deef",
+        author: "#f8d51e",
+        appendix: "#bfede2",
+        photo_author: "#9a17bb",
+        photo_caption: "#ff84f6",
+        advertisement: "#ffb201",
+        other_graphics: "#ff5400",
+        unknown: "#bfede2",
+        about_author: "#9a17bb",
+        image: "#14deef",
+        interview: "#23b20f",
+        table: "#02b4ba",
+      }}
+      groupColors={{
+        "0": "#FDDFDF",
+        "1": "#FCF7DE",
+        "2": "#DEFDE0",
+        "3": "#DEF3FD",
+        "4": "#F0DEFD",
+      }}
       onGroupSelect={(groupId) => console.log('selected groupid:', groupId)}
       hideHeader={true}
       hideHistory={true}

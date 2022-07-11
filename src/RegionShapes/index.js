@@ -2,6 +2,8 @@
 
 import React, { memo } from "react"
 import colorAlpha from "color-alpha"
+import useColors from '../hooks/use-colors';
+
 
 function clamp(num, min, max) {
   return num <= min ? min : num >= max ? max : num
@@ -32,7 +34,9 @@ const RegionComponents = {
     </g>
   )),
   box: memo(({ region, iw, ih }) => {
-    if (region.groupColor) {
+    const { clsColor, groupColor } = useColors();
+
+    if (region.groupId !== undefined) {
       return <g transform={`translate(${region.x * iw} ${region.y * ih})`}>
         <rect
           strokeWidth={(region.groupHighlighted) ? 3 : 0}
@@ -40,8 +44,8 @@ const RegionComponents = {
           y={0}
           width={Math.max(region.w * iw, 0)}
           height={Math.max(region.h * ih, 0)}
-          stroke={colorAlpha(region.color, 0.85)}
-          fill={(region.groupHighlighted) ? colorAlpha(region.groupColor, 0.5) : colorAlpha(region.groupColor, 0.25)}
+          stroke={colorAlpha(clsColor(region.cls), 0.85)}
+          fill={(region.groupHighlighted) ? colorAlpha(groupColor(region.groupId), 0.5) : colorAlpha(groupColor(region.groupId), 0.25)}
         />
       </g>
     } else {
@@ -52,8 +56,8 @@ const RegionComponents = {
           y={0}
           width={Math.max(region.w * iw, 0)}
           height={Math.max(region.h * ih, 0)}
-          stroke={colorAlpha(region.color, 0.75)}
-          fill={colorAlpha(region.color, 0.25)}
+          stroke={colorAlpha(clsColor(region.cls), 0.85)}
+          fill={colorAlpha(clsColor(region.cls), 0.25)}
         />
       </g>
     }

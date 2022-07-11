@@ -20,7 +20,7 @@ const pullSettingsFromLocalStorage = () => {
         settings[key.replace("settings_", "")] = JSON.parse(
           window.localStorage.getItem(key)
         )
-      } catch (e) {}
+      } catch (e) { }
     }
   }
   return settings
@@ -28,8 +28,12 @@ const pullSettingsFromLocalStorage = () => {
 
 export const useSettings = () => useContext(SettingsContext)
 
-export const SettingsProvider = ({ children }) => {
-  const [state, changeState] = useState(() => pullSettingsFromLocalStorage())
+export const SettingsProvider = ({ children, clsColors, groupColors }) => {
+  const [state, changeState] = useState({
+    ...() => pullSettingsFromLocalStorage(),
+    clsColors,
+    groupColors,
+  })
   const changeSetting = (setting: string, value: any) => {
     changeState({ ...state, [setting]: value })
     window.localStorage.setItem(`settings_${setting}`, JSON.stringify(value))
