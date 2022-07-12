@@ -20,15 +20,17 @@ function PageThumbnail({ src, isActive, onClick }) {
 
 function PagesSelector({ pages, onPageClick }) {
   return (
-    <div className="page-list">
-      {pages.map((page, idx) => (
-        <PageThumbnail
-          key={page.id}
-          src={page.src}
-          isActive={page.isActive}
-          onClick={() => onPageClick(idx)}
-        />
-      ))}
+    <div className="page-selector">
+      <div className="pages">
+        {pages.map((page, idx) => (
+          <PageThumbnail
+            key={page.id}
+            src={page.src}
+            isActive={page.isActive}
+            onClick={() => onPageClick(idx)}
+          />
+        ))}
+      </div>
     </div>
   );
 }
