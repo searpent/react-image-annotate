@@ -464,8 +464,6 @@ return (
                     onRestoreHistory={action("RESTORE_HISTORY")}
                   />
                 )
-                ,
-                (<div>{state.images[state.selectedImage]?.selectedGroupId}</div>)
               ].filter(Boolean)}
             >
               {canvas}
