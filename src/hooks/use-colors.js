@@ -2,8 +2,10 @@ import { useSettings } from "../SettingsProvider"
 
 function defaultClsColor(cls) {
   switch (cls) {
+    case 'title':
+      return '#f70202'
     case 'subtitle':
-      return "#e11438"
+      return "#ffb405"
     case 'text':
       return "#14deef"
     case 'author':

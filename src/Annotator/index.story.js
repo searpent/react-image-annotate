@@ -59,14 +59,28 @@ storiesOf("Annotator", module)
       onExit={actionAddon("onExit")}
       middlewares={middlewares}
       labelImages
-      regionClsList={["Alpha", "Beta", "Charlie", "Delta"]}
-      regionTagList={["tag1", "tag2", "tag3"]}
-      imageClsList={["Alpha", "Beta", "Charlie", "Delta"]}
-      imageTagList={["tag1", "tag2", "tag3"]}
-      onImagesChange={(images) => console.log("images changed to:", images)}
-      images={photosToImages(examplePhotos)}
+      regionClsList={[
+        "author",
+        "appendix",
+        "photo_author",
+        "photo_caption",
+        "advertisement",
+        "other_graphics",
+        "unknown",
+        "title",
+        "about_author",
+        "image",
+        "subtitle",
+        "interview",
+        "table",
+        "text",
+      ]}
+      regionTagList={["xxtag1", "xxtag2", "xxtag3"]}
+      onImagesChange={(images) => console.log("[images changed to]:", images)}
+      images={photosToImages([...examplePhotos, ...examplePhotos, ...examplePhotos])}
       clsColors={{
-        subtitle: "#e11438",
+        title: "#f70202",
+        subtitle: "#ffb405",
         text: "#14deef",
         author: "#f8d51e",
         appendix: "#bfede2",

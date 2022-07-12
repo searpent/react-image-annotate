@@ -2,10 +2,10 @@ const examplePhotos = [
   {
     "id": "0f2dc246-77ad-40ea-934b-90980c4f658a",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
@@ -846,10 +846,10 @@ const examplePhotos = [
   {
     "id": "431fc636-d6d1-4e20-a35b-cc7a201c1833",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
@@ -1443,10 +1443,10 @@ const examplePhotos = [
   {
     "id": "45f79ec8-fd2e-4ad8-82f6-007a2eec2b97",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
@@ -2222,10 +2222,10 @@ const examplePhotos = [
   {
     "id": "5494ea75-ec1b-4513-b23b-0b2eaa29b576",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
@@ -2936,10 +2936,10 @@ const examplePhotos = [
   {
     "id": "cd6943d8-f7a1-4dbd-9b0e-4d9050764df4",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
@@ -3585,10 +3585,10 @@ const examplePhotos = [
   {
     "id": "d462a224-4760-4518-9066-3c84a3b39602",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
@@ -4351,10 +4351,10 @@ const examplePhotos = [
   {
     "id": "df74e5f5-1649-40dc-821a-3d4d32c157b0",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
@@ -5260,10 +5260,10 @@ const examplePhotos = [
   {
     "id": "eb28a64e-db70-40d2-a3f6-8e4ba67e1e37",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
@@ -5415,10 +5415,10 @@ const examplePhotos = [
   {
     "id": "ee8a642d-6dfe-4a43-900d-0a2af5452856",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
@@ -6818,10 +6818,10 @@ const examplePhotos = [
   {
     "id": "f87db9ab-b4d7-47ad-a8c8-400d5476e3c7",
     "fullsize": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "thumbnail": {
-      "key": "https://img.freepik.com/premium-vector/newspaper-pages-template_152104-103.jpg",
+      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
     },
     "modelResults": {
       "v1": [
