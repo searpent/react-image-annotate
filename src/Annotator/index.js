@@ -187,10 +187,15 @@ export const Annotator = ({
     })
   })
 
+  // trigger this on every BBox manipulation (there is currently no way to detect adding of new box!)
   useEffect(() => {
+    if (!state.lastAction || !["BEGIN_BOX_TRANSFORM", "CHANGE_REGION", "DELETE_REGION"].includes(state.lastAction.type)) { return }
     if (onImagesChange) {
-      onImagesChange({ selectedImage, images: state.images })
+      onImagesChange(state.images)
     }
+  }, [onImagesChange, state.images, state.lastAction])
+
+  useEffect(() => {
     if (selectedImage === undefined) return
     dispatchToReducer({
       type: "SELECT_IMAGE",
