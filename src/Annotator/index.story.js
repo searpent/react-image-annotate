@@ -75,17 +75,16 @@ storiesOf("Annotator", module)
         "text",
       ]}
       allowedGroups={[
-        { value: '0', label: 'zero' },
-        { value: '1', label: 'one' },
-        { value: '2', label: 'two' },
-        { value: '3', label: 'three' },
-        { value: '4', label: 'four' },
-        { value: '5', label: 'five' },
-        { value: '6', label: 'six' },
-        { value: '7', label: 'seven' },
-        { value: '8', label: 'eight' },
-        { value: '9', label: 'nine' },
-        { value: '10', label: '10' },
+        { value: '0', label: '0' },
+        { value: '1', label: '1' },
+        { value: '2', label: '2' },
+        { value: '3', label: '3' },
+        { value: '4', label: '4' },
+        { value: '5', label: '5' },
+        { value: '6', label: '6' },
+        { value: '7', label: '7' },
+        { value: '8', label: '8' },
+        { value: '9', label: '9' },
       ]}
       onImagesChange={(images) => console.log("[images changed to]:", images)}
       images={photosToImages([...examplePhotos, ...examplePhotos, ...examplePhotos])}
@@ -106,11 +105,16 @@ storiesOf("Annotator", module)
         table: "#02b4ba",
       }}
       groupColors={{
-        "0": "#FDDFDF",
-        "1": "#FCF7DE",
-        "2": "#DEFDE0",
-        "3": "#DEF3FD",
-        "4": "#F0DEFD",
+        "0": "#e3a7c0",
+        "1": "#c2d5a8",
+        "2": "#f2e9cc",
+        "3": "#bad5f0",
+        "4": "#f0d5ba",
+        "5": "#d6eff5",
+        "6": "#f8d7e8",
+        "7": "#a5d5d5",
+        "8": "#b0abcb",
+        "9": "#fae4cc",
       }}
       onGroupSelect={(groupId) => console.log('selected groupid:', groupId)}
       hideHeader={true}
