@@ -56,7 +56,6 @@ storiesOf("Annotator", module)
   ))
   .add("Basic with onImagesChange", () => (
     <Annotator
-      onExit={actionAddon("onExit")}
       middlewares={middlewares}
       labelImages
       regionClsList={[
@@ -107,6 +106,9 @@ storiesOf("Annotator", module)
       hideNotEditingLabel={true}
       showEditor={true}
       showPageSelector={true}
+      onSave={() => console.log("[onSave] triggered]")}
+      onRecalc={() => console.log("[onRecalc] triggered]")}
+      onExit={(s) => console.log('[onExit] triggered:', s)}
     />
   ))
   .add("Basic - Allow Comments", () => (

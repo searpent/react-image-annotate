@@ -18,9 +18,13 @@ function PageThumbnail({ src, isActive, onClick }) {
   );
 }
 
-function PagesSelector({ pages, onPageClick }) {
+function PagesSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive }) {
   return (
     <div className="page-selector">
+      <div className="bottom-buttons">
+        <button onClick={onRecalc} disabled={!recalcActive}>Recalc</button>
+        <button onClick={onSave} disabled={!saveActive}>Save</button>
+      </div>
       <div className="pages">
         {pages.map((page, idx) => (
           <PageThumbnail
@@ -31,6 +35,7 @@ function PagesSelector({ pages, onPageClick }) {
           />
         ))}
       </div>
+
     </div>
   );
 }
@@ -43,11 +48,19 @@ PagesSelector.propTypes = {
       isActive: PropTypes.string.isRequired
     })
   ).isRequired,
-  onPageClick: PropTypes.func
+  onPageClick: PropTypes.func,
+  onRecalc: PropTypes.func,
+  onSave: PropTypes.func,
+  recalcActive: PropTypes.bool,
+  saveActive: PropTypes.bool,
 };
 
 PagesSelector.defaultProps = {
-  onPageClick: () => { }
+  onPageClick: () => { },
+  onRecalc: () => { },
+  onSave: () => { },
+  recalcActive: false,
+  saveActive: false
 };
 
 export default PagesSelector;

@@ -155,3 +155,4 @@ pointIndex: number,
   | {| type: "CANCEL" |}
   | {| type: "SELECT_CLASSIFICATION", cls: string |}
   | {| type: "UPDATE_REGIONS", imageId: string, regions: Arrat < Region >}
+  | {| type: "IMAGES_CHANGED", updatedAt: Date |}

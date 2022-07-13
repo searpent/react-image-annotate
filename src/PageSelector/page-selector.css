@@ -1,7 +1,7 @@
 .page-selector {
   height: 100vh;
   overflow-y: scroll;
-  width: 5%;
+  width: 10%;
 }
 
 .pages {
@@ -31,5 +31,21 @@
 }
 
 .page-thumbnail img {
+  width: 100%;
+}
+
+.bottom-buttons {
+  background: linear-gradient(#8898aa, rgba(255, 255, 255, 0));
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  z-index: 100;
+}
+
+.bottom-buttons button {
+  margin-bottom: 1rem;
   width: 100%;
 }

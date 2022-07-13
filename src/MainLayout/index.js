@@ -78,6 +78,10 @@ type Props = {
   hideNotEditingLabel?: boolean,
   showEditor?: boolean,
   showPageSelector?: boolean,
+  onRecalc?: (any) => any,
+  onSave?: (any) => any,
+  recalcActive?: boolean,
+  saveActive?: boolean,
 }
 
 export const MainLayout = ({
@@ -101,6 +105,10 @@ export const MainLayout = ({
   hideNotEditingLabel = false,
   showEditor = false,
   showPageSelector = false,
+  onRecalc = () => { },
+  onSave = () => { },
+  recalcActive = false,
+  saveActive = false
 }: Props) => {
   const classes = useStyles()
   const settings = useSettings()
@@ -123,7 +131,7 @@ export const MainLayout = ({
         : dispatch({ type, ...args[0] })
 memoizedActionFns.current[fnKey] = fn
 return fn
-  }
+}
 
 const { currentImageIndex, activeImage } = getActiveImage(state)
 let nextImage
@@ -294,7 +302,7 @@ return (
           }}>
             {
               showPageSelector && (
-                <PagesSelector pages={pages} onPageClick={handlePageClick} />
+                <PagesSelector pages={pages} onPageClick={handlePageClick} onRecalc={onRecalc} onSave={onSave} saveActive={saveActive} recalcActive={recalcActive} />
               )
             }
             <Workspace

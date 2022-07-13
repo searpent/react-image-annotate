@@ -939,6 +939,22 @@ export default (state: MainLayoutState, action: Action) => {
         updatedRegions
       )
     }
+    case "IMAGES_UPDATED": {
+      const { updatedAt } = action;
+      return setIn(
+        state,
+        ["imagesUpdatedAt"],
+        updatedAt
+      )
+    }
+    case "IMAGES_SAVED": {
+      const { savedAt } = action;
+      return setIn(
+        state,
+        ["imagesSavedAt"],
+        savedAt
+      )
+    }
     default:
       break
   }

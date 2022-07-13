@@ -64,6 +64,8 @@ hideHeader ?: boolean,
   showPageSelector ?: boolean,
   clsColors ?: Object,
   groupColors ?: Object,
+  onRecalc ?: (any) => any,
+  onSave ?: (any) => any,
 }
 
 export const Annotator = ({
@@ -117,6 +119,8 @@ export const Annotator = ({
   showPageSelector,
   clsColors,
   groupColors,
+  onRecalc,
+  onSave
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -164,6 +168,8 @@ export const Annotator = ({
           videoSrc,
           keyframes,
         }),
+      imagesUpdatedAt: null,
+      imagesSavedAt: null,
     })
   )
 
@@ -187,12 +193,34 @@ export const Annotator = ({
     })
   })
 
+  const handleSaveClick = async (e) => {
+    e.preventDefault()
+    if (onSave) {
+      onSave()
+      dispatchToReducer({
+        type: "IMAGES_SAVED",
+        savedAt: new Date()
+      })
+    }
+  }
+
+  const handleRecalcClick = (e) => {
+    e.preventDefault()
+    if (onRecalc) {
+      onRecalc()
+    }
+  }
+
   // trigger this on every BBox manipulation (there is currently no way to detect adding of new box!)
   useEffect(() => {
     if (!state.lastAction || !["BEGIN_BOX_TRANSFORM", "CHANGE_REGION", "DELETE_REGION"].includes(state.lastAction.type)) { return }
     if (onImagesChange) {
       onImagesChange(state.images)
     }
+    dispatchToReducer({
+      type: "IMAGES_UPDATED",
+      updatedAt: new Date()
+    })
   }, [onImagesChange, state.images, state.lastAction])
 
   useEffect(() => {
@@ -207,6 +235,9 @@ export const Annotator = ({
 
   if (!images && !videoSrc)
     return 'Missing required prop "images" or "videoSrc"'
+
+
+  const [recalcActive, saveActive] = state.imagesSavedAt < state.imagesUpdatedAt ? [true, true] : [false, false];
 
   return (
     <SettingsProvider clsColors={clsColors} groupColors={groupColors}>
@@ -231,6 +262,10 @@ export const Annotator = ({
         hideNotEditingLabel={hideNotEditingLabel}
         showEditor={showEditor}
         showPageSelector={showPageSelector}
+        onRecalc={handleRecalcClick}
+        onSave={handleSaveClick}
+        saveActive={recalcActive}
+        recalcActive={saveActive}
       />
     </SettingsProvider>
   )
