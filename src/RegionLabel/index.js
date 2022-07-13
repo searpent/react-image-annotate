@@ -25,6 +25,7 @@ type Props = {
   editing?: boolean,
   allowedClasses?: Array<string>,
   allowedTags?: Array<string>,
+  allowedGroups?: Array<{ value: String, label: String }>,
   cls?: string,
   tags?: Array<string>,
   onDelete: (Region) => null,
@@ -47,7 +48,8 @@ export const RegionLabel = ({
   onOpen,
   onRegionClassAdded,
   allowComments,
-  hideNotEditingLabel
+  hideNotEditingLabel,
+  allowedGroups,
 }: Props) => {
   const classes = useStyles()
   const commentInputRef = useRef(null)
@@ -139,6 +141,21 @@ export const RegionLabel = ({
                   )}
                 />
               </div>
+            )}
+            {(allowedGroups || []).length > 0 && (
+              <Select
+                onChange={(newGroup) => onChange({
+                  ...(region: any),
+                  groupId: newGroup.value,
+                })
+
+                }
+                placeholder="Group"
+                value={
+                  allowedGroups.filter(g => g.value === region.groupId)
+                }
+                options={allowedGroups}
+              />
             )}
             {(allowedTags || []).length > 0 && (
               <div style={{ marginTop: 4 }}>

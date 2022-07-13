@@ -29,6 +29,7 @@ export const RegionTags = ({
   onRegionClassAdded,
   allowComments,
   hideNotEditingLabel,
+  allowedGroups
 }) => {
   const RegionLabel =
     RegionEditLabel != null ? RegionEditLabel : DefaultRegionLabel
@@ -122,6 +123,7 @@ export const RegionTags = ({
               onRegionClassAdded={onRegionClassAdded}
               allowComments={allowComments}
               hideNotEditingLabel={hideNotEditingLabel}
+              allowedGroups={allowedGroups}
             />
           </div>
         </div>

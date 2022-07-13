@@ -66,6 +66,7 @@ hideHeader ?: boolean,
   groupColors ?: Object,
   onRecalc ?: (any) => any,
   onSave ?: (any) => any,
+  allowedGroups ?: Object,
 }
 
 export const Annotator = ({
@@ -120,7 +121,8 @@ export const Annotator = ({
   clsColors,
   groupColors,
   onRecalc,
-  onSave
+  onSave,
+  allowedGroups
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -266,6 +268,7 @@ export const Annotator = ({
         onSave={handleSaveClick}
         saveActive={recalcActive}
         recalcActive={saveActive}
+        allowedGroups={allowedGroups}
       />
     </SettingsProvider>
   )

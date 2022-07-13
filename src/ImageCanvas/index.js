@@ -88,6 +88,7 @@ type Props = {
   onRegionClassAdded: () => {},
   onChangeVideoPlaying?: Function,
   hideNotEditingLabel?: boolean,
+  allowedGroups?: Object
 }
 
 const getDefaultMat = (allowedArea = null, { iw, ih } = {}) => {
@@ -144,6 +145,7 @@ export const ImageCanvas = ({
   keypointDefinitions,
   allowComments,
   hideNotEditingLabel = false,
+  allowedGroups,
 }: Props) => {
   const classes = useStyles()
 
@@ -396,6 +398,7 @@ export const ImageCanvas = ({
               onRegionClassAdded={onRegionClassAdded}
               allowComments={allowComments}
               hideNotEditingLabel={hideNotEditingLabel}
+              allowedGroups={allowedGroups}
             />
           </PreventScrollToParents>
         )}

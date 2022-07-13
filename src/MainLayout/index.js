@@ -82,6 +82,7 @@ type Props = {
   onSave?: (any) => any,
   recalcActive?: boolean,
   saveActive?: boolean,
+  allowedGroups?: boolean,
 }
 
 export const MainLayout = ({
@@ -108,7 +109,8 @@ export const MainLayout = ({
   onRecalc = () => { },
   onSave = () => { },
   recalcActive = false,
-  saveActive = false
+  saveActive = false,
+  allowedGroups = {}
 }: Props) => {
   const classes = useStyles()
   const settings = useSettings()
@@ -228,6 +230,7 @@ const canvas = (
     onRegionClassAdded={onRegionClassAdded}
     allowComments={state.allowComments}
     hideNotEditingLabel={hideNotEditingLabel}
+    allowedGroups={allowedGroups}
   />
 )
 
