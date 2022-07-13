@@ -35,7 +35,6 @@ function PagesSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, sav
           />
         ))}
       </div>
-
     </div>
   );
 }
