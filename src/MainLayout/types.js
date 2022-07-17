@@ -23,6 +23,11 @@ export type ToolEnum =
   | "create-expanding-line"
   | "create-keypoints"
 
+export type Metadata = {
+  key: string,
+  value: string
+}
+
 export type Image = {
   src: string,
   thumbnailSrc?: string,
@@ -31,6 +36,7 @@ export type Image = {
   pixelSize?: { w: number, h: number },
   realSize?: { w: number, h: number, unitName: string },
   frameTime?: number,
+  metadata?: Array<Metadata>
 }
 
 export type Mode =

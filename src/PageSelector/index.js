@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from "classnames"
 require('./page-selector.css').toString();
 
-function PageThumbnail({ src, isActive, onClick }) {
+function PageThumbnail({ src, isActive, onClick, pageNumber }) {
   return (
     <div
       role="button"
@@ -14,7 +14,15 @@ function PageThumbnail({ src, isActive, onClick }) {
       onClick={onClick}
     >
       <img src={src} alt="" />
-    </div>
+      {
+        (pageNumber !== undefined) && (
+          <div className="page-number-wrapper">
+            <span className="page-number">{pageNumber}</span>
+          </div>
+        )
+      }
+
+    </div >
   );
 }
 
@@ -44,7 +52,8 @@ PagesSelector.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       src: PropTypes.string.isRequired,
-      isActive: PropTypes.string.isRequired
+      isActive: PropTypes.string.isRequired,
+      pageNumber: PropTypes.string
     })
   ).isRequired,
   onPageClick: PropTypes.func,
@@ -52,6 +61,7 @@ PagesSelector.propTypes = {
   onSave: PropTypes.func,
   recalcActive: PropTypes.bool,
   saveActive: PropTypes.bool,
+  pageNumber: PropTypes.string
 };
 
 PagesSelector.defaultProps = {
@@ -59,7 +69,8 @@ PagesSelector.defaultProps = {
   onRecalc: () => { },
   onSave: () => { },
   recalcActive: false,
-  saveActive: false
+  saveActive: false,
+  pageNumber: undefined
 };
 
 export default PagesSelector;

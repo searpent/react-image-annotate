@@ -33,6 +33,7 @@ function photosToImages(photos) {
     thumbnail: photo.thumbnail.key,
     name: photo.fullsize.key,
     regions: modelResultsToRegions(photo.modelResults.v1.filter(mr => mr.name === 'extraction-engine')[0].results),
+    metadata: photo.metadata
   }))
 }
 

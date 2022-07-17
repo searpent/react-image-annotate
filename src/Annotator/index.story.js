@@ -122,6 +122,11 @@ storiesOf("Annotator", module)
       hideNotEditingLabel={true}
       showEditor={true}
       showPageSelector={true}
+      metadata={[{
+        key: "name", value: "Dennik Aha"
+      }, {
+        key: "released", value: "20/1/2022"
+      }]}
       onSave={() => console.log("[onSave] triggered]")}
       onRecalc={() => console.log("[onRecalc] triggered]")}
       onExit={(s) => console.log('[onExit] triggered:', s)}

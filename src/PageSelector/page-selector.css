@@ -11,7 +11,7 @@
 
 .page-thumbnail {
   margin-bottom: 1rem;
-  border-radius: .5rem !important;
+  border-radius: .25rem !important;
   overflow: hidden;
   filter: grayscale(1);
   transition: transform .2s;
@@ -48,4 +48,22 @@
 .bottom-buttons button {
   margin-bottom: 1rem;
   width: 100%;
+}
+
+.page-number-wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(rgba(255, 255, 255, 0), #8898aa);
+  padding: .5rem 0;
+}
+
+.page-number {
+  font-size: 1.5rem;
+  font-weight: 800;
 }

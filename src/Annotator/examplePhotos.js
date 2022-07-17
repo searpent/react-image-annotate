@@ -841,7 +841,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "1"
+    }]
   },
   {
     "id": "431fc636-d6d1-4e20-a35b-cc7a201c1833",
@@ -1438,7 +1442,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "2"
+    }]
   },
   {
     "id": "45f79ec8-fd2e-4ad8-82f6-007a2eec2b97",
@@ -2217,7 +2225,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "3"
+    }]
   },
   {
     "id": "5494ea75-ec1b-4513-b23b-0b2eaa29b576",
@@ -2931,7 +2943,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "4"
+    }]
   },
   {
     "id": "cd6943d8-f7a1-4dbd-9b0e-4d9050764df4",
@@ -3580,7 +3596,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "5"
+    }]
   },
   {
     "id": "d462a224-4760-4518-9066-3c84a3b39602",
@@ -4346,7 +4366,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "6"
+    }]
   },
   {
     "id": "df74e5f5-1649-40dc-821a-3d4d32c157b0",
@@ -5255,7 +5279,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "7"
+    }]
   },
   {
     "id": "eb28a64e-db70-40d2-a3f6-8e4ba67e1e37",
@@ -5410,7 +5438,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "8"
+    }]
   },
   {
     "id": "ee8a642d-6dfe-4a43-900d-0a2af5452856",
@@ -6813,7 +6845,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "9"
+    }]
   },
   {
     "id": "f87db9ab-b4d7-47ad-a8c8-400d5476e3c7",
@@ -7553,7 +7589,11 @@ const examplePhotos = [
           ]
         }
       ]
-    }
+    },
+    "metadata": [{
+      "key": "page",
+      "value": "10"
+    }]
   }
 ]
 

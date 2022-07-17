@@ -6,7 +6,6 @@ import React, { useCallback, useRef } from "react"
 import { makeStyles } from "@mui/styles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { styled } from "@mui/material/styles"
-
 import ClassSelectionMenu from "../ClassSelectionMenu"
 import DebugBox from "../DebugSidebarBox"
 import HistorySidebarBox from "../HistorySidebarBox"
@@ -20,6 +19,7 @@ import RegionSelector from "../RegionSelectorSidebarBox"
 import SettingsDialog from "../SettingsDialog"
 import TagsSidebarBox from "../TagsSidebarBox"
 import TaskDescription from "../TaskDescriptionSidebarBox"
+import MetadataEditor from "../MetadataEditorSidebarBox"
 import Workspace from "react-material-workspace-layout/Workspace"
 import classnames from "classnames"
 import getActiveImage from "../Annotator/reducers/get-active-image"
@@ -83,6 +83,7 @@ type Props = {
   recalcActive?: boolean,
   saveActive?: boolean,
   allowedGroups?: boolean,
+  onMetadataChange: (any) => any
 }
 
 export const MainLayout = ({
@@ -110,7 +111,8 @@ export const MainLayout = ({
   onSave = () => { },
   recalcActive = false,
   saveActive = false,
-  allowedGroups = {}
+  allowedGroups = {},
+  onMetadataChange
 }: Props) => {
   const classes = useStyles()
   const settings = useSettings()
@@ -268,7 +270,8 @@ const handleEditorChange = ({ imageIndex, data }) => {
 const pages = state.images.map((i, idx) => ({
   id: idx,
   src: i.src,
-  isActive: idx === state.selectedImage
+  isActive: idx === state.selectedImage,
+  pageNumber: i?.metadata?.find(md => md.key === "page").value || null
 }))
 
 const handlePageClick = (pageIndex) => {
@@ -474,7 +477,8 @@ return (
                     history={state.history}
                     onRestoreHistory={action("RESTORE_HISTORY")}
                   />
-                )
+                ),
+                <MetadataEditor state={state} onMetadataChange={onMetadataChange} />
               ].filter(Boolean)}
             >
               {canvas}

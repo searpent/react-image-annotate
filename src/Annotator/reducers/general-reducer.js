@@ -955,6 +955,40 @@ export default (state: MainLayoutState, action: Action) => {
         savedAt
       )
     }
+    case "UPDATE_METADATA": {
+      const { name, value, imageIndex } = action;
+      if (isNaN(imageIndex)) {
+        // update global metadata
+        const metadataIndex = state.metadata?.findIndex(mt => mt.key === name)
+        if (metadataIndex < 0) {
+          console.error(`can't find metadata by key "${name}"`)
+          return
+        }
+        return setIn(
+          state,
+          ["metadata", metadataIndex],
+          {
+            key: name,
+            value: value
+          }
+        )
+      } else {
+        // update local metadata of imageIndex
+        const metadataIndex = state.images[imageIndex]?.metadata?.findIndex(mt => mt.key === name)
+        if (metadataIndex < 0) {
+          console.error(`can't find metadata by key "${name}"`)
+          return
+        }
+        return setIn(
+          state,
+          ["images", imageIndex, "metadata", metadataIndex],
+          {
+            key: name,
+            value: value
+          }
+        )
+      }
+    }
     default:
       break
   }

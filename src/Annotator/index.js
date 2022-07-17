@@ -6,6 +6,7 @@ import type {
   MainLayoutState,
   Mode,
   ToolEnum,
+  Metadata
 } from "../MainLayout/types"
 import React, { useEffect, useReducer } from "react"
 import makeImmutable, { without } from "seamless-immutable"
@@ -67,6 +68,7 @@ hideHeader ?: boolean,
   onRecalc ?: (any) => any,
   onSave ?: (any) => any,
   allowedGroups ?: Object,
+  metadata ?: Array < Metadata >,
 }
 
 export const Annotator = ({
@@ -122,7 +124,8 @@ export const Annotator = ({
   groupColors,
   onRecalc,
   onSave,
-  allowedGroups
+  allowedGroups,
+  metadata
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -172,6 +175,7 @@ export const Annotator = ({
         }),
       imagesUpdatedAt: null,
       imagesSavedAt: null,
+      metadata,
     })
   )
 
@@ -211,6 +215,15 @@ export const Annotator = ({
     if (onRecalc) {
       onRecalc()
     }
+  }
+
+  const handleMetadataChange = ({ name, value, imageIndex }) => {
+    dispatchToReducer({
+      type: "UPDATE_METADATA",
+      name,
+      value,
+      imageIndex
+    })
   }
 
   // trigger this on every BBox manipulation (there is currently no way to detect adding of new box!)
@@ -269,6 +282,7 @@ export const Annotator = ({
         saveActive={recalcActive}
         recalcActive={saveActive}
         allowedGroups={allowedGroups}
+        onMetadataChange={handleMetadataChange}
       />
     </SettingsProvider>
   )
