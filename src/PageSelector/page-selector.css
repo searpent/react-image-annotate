@@ -50,6 +50,24 @@
   width: 100%;
 }
 
+.bottom-buttons button.info {
+  background-color: transparent;
+  border-radius: 0.5rem;
+  background-image: linear-gradient(310deg, #627594, #a8b8d8);
+  color: white;
+  border: none;
+  padding: 0.5rem 0;
+}
+
+.bottom-buttons button.success {
+  color: white;
+  background-image: linear-gradient(310deg, #2dce89, #2dcecc);
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.5rem 0;
+}
+
+
 .page-number-wrapper {
   position: absolute;
   bottom: 0;

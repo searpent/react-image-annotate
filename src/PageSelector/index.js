@@ -30,8 +30,8 @@ function PagesSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, sav
   return (
     <div className="page-selector">
       <div className="bottom-buttons">
-        <button onClick={onRecalc} disabled={!recalcActive}>Recalc</button>
-        <button onClick={onSave} disabled={!saveActive}>Save</button>
+        <button onClick={onRecalc} disabled={!recalcActive} className="info">Recalc</button>
+        <button onClick={onSave} disabled={!saveActive} className="success">Save</button>
       </div>
       <div className="pages">
         {pages.map((page, idx) => (

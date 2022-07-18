@@ -160,5 +160,5 @@ pointIndex: number,
   | {| type: "SELECT_TOOL", selectedTool: ToolEnum |}
   | {| type: "CANCEL" |}
   | {| type: "SELECT_CLASSIFICATION", cls: string |}
-  | {| type: "UPDATE_REGIONS", imageId: string, regions: Arrat < Region >}
+  | {| type: "UPDATE_REGIONS", imageId: string, regions: Array < Region > |}
   | {| type: "IMAGES_CHANGED", updatedAt: Date |}
