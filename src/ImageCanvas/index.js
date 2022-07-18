@@ -323,7 +323,7 @@ export const ImageCanvas = ({
       <div
         style={{
           width: "100%",
-          height: "100%",
+          height: "100vh",
           maxHeight: "calc(100vh - 68px)",
           position: "relative",
           overflow: "hidden",
