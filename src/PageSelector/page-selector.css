@@ -50,6 +50,15 @@
   width: 100%;
 }
 
+.bottom-buttons button:hover {
+  cursor: pointer;
+}
+
+.bottom-buttons button:disabled {
+  pointer-events: none;
+  opacity: .5;
+}
+
 .bottom-buttons button.info {
   background-color: transparent;
   border-radius: 0.5rem;
