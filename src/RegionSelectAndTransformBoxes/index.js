@@ -9,8 +9,10 @@ const theme = createTheme()
 const TransformGrabber = styled("div")(({ theme }) => ({
   width: 8,
   height: 8,
-  zIndex: 2,
-  border: "2px solid #FFF",
+  zIndex: 10,
+  backgroundColor: "#454545",
+  border: "2px solid black",
+  borderRadius: "50%",
   position: "absolute",
 }))
 
@@ -123,8 +125,8 @@ export const RegionSelectAndTransformBox = memo(
                       cursor: !r.open
                         ? "move"
                         : i === 0
-                        ? "pointer"
-                        : undefined,
+                          ? "pointer"
+                          : undefined,
                       zIndex: 10,
                       pointerEvents:
                         r.open && i === r.points.length - 1
@@ -196,8 +198,8 @@ export const RegionSelectAndTransformBox = memo(
                           cursor: !r.open
                             ? "move"
                             : i === 0
-                            ? "pointer"
-                            : undefined,
+                              ? "pointer"
+                              : undefined,
                           zIndex: 10,
                           pointerEvents:
                             r.open && i === r.points.length - 1
