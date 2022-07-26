@@ -18,6 +18,7 @@ import VisibleOffIcon from "@mui/icons-material/VisibilityOff"
 import styles from "./styles"
 import classnames from "classnames"
 import isEqual from "lodash/isEqual"
+import useColors from "../hooks/use-colors"
 
 const theme = createTheme()
 const useStyles = makeStyles((theme) => styles)
@@ -112,13 +113,16 @@ const Row = ({
   cls,
   index,
 }) => {
+  const { groupColor } = useColors()
+  const gc = groupColor(r.groupId)
+
   return (
     <RowLayout
       header={false}
       highlighted={highlighted}
       onClick={() => onSelectRegion(r)}
       order={`#${index + 1}`}
-      classification={<Chip text={cls || ""} color={color || "#ddd"} />}
+      classification={<Chip text={cls || ""} color={color || gc || "lime"} />}
       area=""
       trash={<TrashIcon onClick={() => onDeleteRegion(r)} className="icon2" />}
       lock={

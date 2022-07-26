@@ -1,5 +1,7 @@
 import { useSettings } from "../SettingsProvider"
 
+const DEFAULT_GROUP_COLOR = "#32CD32";
+
 function defaultClsColor(cls) {
   switch (cls) {
     case 'title':
@@ -35,23 +37,6 @@ function defaultClsColor(cls) {
   }
 }
 
-function defaultGroupColor(groupId) {
-  switch (groupId) {
-    case "0":
-      return "#FDDFDF"
-    case "1":
-      return "#FCF7DE"
-    case "2":
-      return "#DEFDE0"
-    case "3":
-      return "#DEF3FD"
-    case "4":
-      return "#F0DEFD"
-    default:
-      return "#F0DEFD"
-  }
-}
-
 const useColors = () => {
   const { clsColors, groupColors } = useSettings()
 
@@ -60,9 +45,8 @@ const useColors = () => {
     return defaultClsColor(cls)
   }
 
-  const groupColor = (groupId) => {
-    if (groupColors[groupId]) { return groupColors[groupId] }
-    return defaultGroupColor(groupId)
+  const groupColor = (idx) => {
+    return groupColors[idx % groupColors.length] || DEFAULT_GROUP_COLOR
   }
 
   return {
