@@ -62,6 +62,11 @@ export const RegionLabel = ({
 
   if (hideNotEditingLabel && !editing) return null
 
+  const allowedGroupsForSelect = allowedGroups.map(g => ({
+    value: `${g}`,
+    label: `${g}`
+  }))
+
   return (
     <ThemeProvider theme={theme}>
       <Paper
@@ -147,14 +152,11 @@ export const RegionLabel = ({
                 onChange={(newGroup) => onChange({
                   ...(region: any),
                   groupId: newGroup.value,
-                })
-
-                }
+                })}
                 placeholder="Group"
-                value={
-                  allowedGroups.filter(g => g.value === region.groupId)
+                value={allowedGroupsForSelect.find(g => g.value === region.groupId)
                 }
-                options={allowedGroups}
+                options={[...allowedGroupsForSelect]}
               />
             )}
             {(allowedTags || []).length > 0 && (

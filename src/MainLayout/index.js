@@ -20,6 +20,7 @@ import SettingsDialog from "../SettingsDialog"
 import TagsSidebarBox from "../TagsSidebarBox"
 import TaskDescription from "../TaskDescriptionSidebarBox"
 import MetadataEditor from "../MetadataEditorSidebarBox"
+import GroupsEditor from "../GroupsEditorSidebarBox"
 import Workspace from "react-material-workspace-layout/Workspace"
 import classnames from "classnames"
 import getActiveImage from "../Annotator/reducers/get-active-image"
@@ -82,8 +83,8 @@ type Props = {
   onSave?: (any) => any,
   recalcActive?: boolean,
   saveActive?: boolean,
-  allowedGroups?: boolean,
-  onMetadataChange: (any) => any
+  onMetadataChange: (any) => any,
+  onAddGroup: (any) => any
 }
 
 export const MainLayout = ({
@@ -111,8 +112,8 @@ export const MainLayout = ({
   onSave = () => { },
   recalcActive = false,
   saveActive = false,
-  allowedGroups = {},
-  onMetadataChange
+  onMetadataChange,
+  onAddGroup
 }: Props) => {
   const classes = useStyles()
   const settings = useSettings()
@@ -232,7 +233,7 @@ const canvas = (
     onRegionClassAdded={onRegionClassAdded}
     allowComments={state.allowComments}
     hideNotEditingLabel={hideNotEditingLabel}
-    allowedGroups={allowedGroups}
+    allowedGroups={state.allowedGroups}
   />
 )
 
@@ -478,7 +479,8 @@ return (
                     onRestoreHistory={action("RESTORE_HISTORY")}
                   />
                 ),
-                <MetadataEditor state={state} onMetadataChange={onMetadataChange} />
+                <MetadataEditor state={state} onMetadataChange={onMetadataChange} />,
+                <GroupsEditor groups={state.allowedGroups} onAddGroup={onAddGroup} />,
               ].filter(Boolean)}
             >
               {canvas}

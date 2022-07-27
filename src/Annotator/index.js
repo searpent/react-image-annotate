@@ -71,6 +71,16 @@ hideHeader ?: boolean,
   metadata ?: Array < Metadata >,
 }
 
+function extractAllowedGroups(images) {
+  const allowedGroups = [];
+  images.forEach(image => image.regions.forEach(({ groupId }) => {
+    if (!allowedGroups.includes(groupId)) {
+      allowedGroups.push(groupId)
+    }
+  }))
+  return allowedGroups
+}
+
 export const Annotator = ({
   images,
   allowedArea,
@@ -124,13 +134,13 @@ export const Annotator = ({
   groupColors,
   onRecalc,
   onSave,
-  allowedGroups,
   metadata
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
     if (selectedImage === -1) selectedImage = undefined
   }
+  const allowedGroups = extractAllowedGroups(images);
   const annotationType = images ? "image" : "video"
   const [state, dispatchToReducer] = useReducer(
     historyHandler(
@@ -176,6 +186,7 @@ export const Annotator = ({
       imagesUpdatedAt: null,
       imagesSavedAt: null,
       metadata,
+      allowedGroups: allowedGroups || [],
     })
   )
 
@@ -223,6 +234,13 @@ export const Annotator = ({
       name,
       value,
       imageIndex
+    })
+  }
+
+  const handleAddGroup = (group) => {
+    dispatchToReducer({
+      type: "ADD_GROUP",
+      group
     })
   }
 
@@ -281,8 +299,8 @@ export const Annotator = ({
         onSave={handleSaveClick}
         saveActive={recalcActive}
         recalcActive={saveActive}
-        allowedGroups={allowedGroups}
         onMetadataChange={handleMetadataChange}
+        onAddGroup={handleAddGroup}
       />
     </SettingsProvider>
   )

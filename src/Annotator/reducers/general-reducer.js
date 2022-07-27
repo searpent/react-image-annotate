@@ -989,6 +989,15 @@ export default (state: MainLayoutState, action: Action) => {
         )
       }
     }
+    case "ADD_GROUP": {
+      const { group } = action;
+      const newAllowedGroups = [...state.allowedGroups, group]
+      return setIn(
+        state,
+        ["allowedGroups"],
+        newAllowedGroups
+      )
+    }
     default:
       break
   }

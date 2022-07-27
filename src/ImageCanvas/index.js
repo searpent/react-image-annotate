@@ -88,7 +88,7 @@ type Props = {
   onRegionClassAdded: () => {},
   onChangeVideoPlaying?: Function,
   hideNotEditingLabel?: boolean,
-  allowedGroups?: Object
+  allowedGroups?: []
 }
 
 const getDefaultMat = (allowedArea = null, { iw, ih } = {}) => {
