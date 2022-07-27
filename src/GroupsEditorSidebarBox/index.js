@@ -21,17 +21,9 @@ const GroupItemDiv = styled("div")(({ theme }) => ({
 }))
 
 const GroupItem = ({ group }) => {
-  // const handleDelete = e => {
-  //   e.preventDefault()
-  //   const { value } = e.target
-  //   console.log("deleting group:", value)
-  // }
-
   return (
     <GroupItemDiv>
       {group}
-      {/* <label for={value}>{value}</label>
-      <input type="text" value={value} name={name} onChange={handleChange} /> */}
     </GroupItemDiv>
   )
 }
@@ -50,12 +42,6 @@ const GroupList = ({ groups }) => (
 const AddGroupFormDiv = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
-  // marginBottom: "1rem",
-  // "& > label": {
-  //   fontSize: "1rem",
-  //   marginBottom: ".5rem",
-  //   textTransform: "capitalize"
-  // }
 }))
 
 const AddGroupFrom = ({ onAddGroup }) => {
