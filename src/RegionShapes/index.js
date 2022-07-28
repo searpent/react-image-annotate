@@ -45,7 +45,7 @@ const RegionComponents = {
           width={Math.max(region.w * iw, 0)}
           height={Math.max(region.h * ih, 0)}
           stroke={colorAlpha(clsColor(region.cls), 0.85)}
-          fill={(region.groupHighlighted) ? colorAlpha(groupColor(region.groupId), 0.85) : colorAlpha(groupColor(region.groupId), 0.5)}
+          fill={(region.groupHighlighted) ? colorAlpha(clsColor(region.cls), 0.15) : colorAlpha(groupColor(region.groupId), 0.5)}
         />
       </g>
     } else {
