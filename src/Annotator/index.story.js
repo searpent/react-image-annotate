@@ -104,14 +104,15 @@ storiesOf("Annotator", module)
         interview: "#23b20f",
         table: "#02b4ba",
       }}
-      groupColors={[
-        "#3853F1",
-        "#F6E54C",
-        "#39D33C",
-        "#CF24CF",
-        "#22E3ED",
-        "#EF3029",
-      ]}
+      // groupColors={[
+      //   "#3853F1",
+      //   "#F6E54C",
+      //   "#39D33C",
+      //   "#CF24CF",
+      //   "#22E3ED",
+      //   "#EF3029",
+      // ]}
+      groupColors={['#343434', '#989898', '#dcdcdc']}
       onGroupSelect={(groupId) => console.log('selected groupid:', groupId)}
       hideHeader={true}
       hideHistory={true}
