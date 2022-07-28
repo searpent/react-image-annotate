@@ -55,79 +55,85 @@ storiesOf("Annotator", module)
     />
   ))
   .add("Basic with onImagesChange", () => (
-    <Annotator
-      middlewares={middlewares}
-      labelImages
-      regionClsList={[
-        "author",
-        "appendix",
-        "photo_author",
-        "photo_caption",
-        "advertisement",
-        "other_graphics",
-        "unknown",
-        "title",
-        "about_author",
-        "image",
-        "subtitle",
-        "interview",
-        "table",
-        "text",
-      ]}
-      allowedGroups={[
-        { value: '0', label: '0' },
-        { value: '1', label: '1' },
-        { value: '2', label: '2' },
-        { value: '3', label: '3' },
-        { value: '4', label: '4' },
-        { value: '5', label: '5' },
-        { value: '6', label: '6' },
-        { value: '7', label: '7' },
-        { value: '8', label: '8' },
-        { value: '9', label: '9' },
-      ]}
-      onImagesChange={(images) => console.log("[images changed to]:", images)}
-      images={photosToImages([...examplePhotos, ...examplePhotos, ...examplePhotos])}
-      clsColors={{
-        title: "#f70202",
-        subtitle: "#ffb405",
-        text: "#14deef",
-        author: "#f8d51e",
-        appendix: "#bfede2",
-        photo_author: "#9a17bb",
-        photo_caption: "#ff84f6",
-        advertisement: "#ffb201",
-        other_graphics: "#ff5400",
-        unknown: "#bfede2",
-        about_author: "#9a17bb",
-        image: "#14deef",
-        interview: "#23b20f",
-        table: "#02b4ba",
-      }}
-      // groupColors={[
-      //   "#3853F1",
-      //   "#F6E54C",
-      //   "#39D33C",
-      //   "#CF24CF",
-      //   "#22E3ED",
-      //   "#EF3029",
-      // ]}
-      groupColors={['#343434', '#989898', '#dcdcdc']}
-      onGroupSelect={(groupId) => console.log('selected groupid:', groupId)}
-      hideHeader={true}
-      hideHistory={true}
-      hideNotEditingLabel={true}
-      showEditor={true}
-      showPageSelector={true}
-      metadata={[{
-        key: "name", value: "Dennik Aha"
-      }, {
-        key: "released", value: "20/1/2022"
-      }]}
-      onSave={(d) => console.log("[onSave] triggered:", d)}
-      onRecalc={() => console.log("[onRecalc] triggered:")}
-      onExit={(s) => console.log('[onExit] triggered:', s)}
-    />
+    <HotKeys keyMap={defaultKeyMap}>
+      <div>
+        <div >
+          <Annotator
+            middlewares={middlewares}
+            labelImages
+            regionClsList={[
+              "author",
+              "appendix",
+              "photo_author",
+              "photo_caption",
+              "advertisement",
+              "other_graphics",
+              "unknown",
+              "title",
+              "about_author",
+              "image",
+              "subtitle",
+              "interview",
+              "table",
+              "text",
+            ]}
+            allowedGroups={[
+              { value: '0', label: '0' },
+              { value: '1', label: '1' },
+              { value: '2', label: '2' },
+              { value: '3', label: '3' },
+              { value: '4', label: '4' },
+              { value: '5', label: '5' },
+              { value: '6', label: '6' },
+              { value: '7', label: '7' },
+              { value: '8', label: '8' },
+              { value: '9', label: '9' },
+            ]}
+            onImagesChange={(images) => console.log("[images changed to]:", images)}
+            images={photosToImages([...examplePhotos, ...examplePhotos, ...examplePhotos])}
+            clsColors={{
+              title: "#f70202",
+              subtitle: "#ffb405",
+              text: "#14deef",
+              author: "#f8d51e",
+              appendix: "#bfede2",
+              photo_author: "#9a17bb",
+              photo_caption: "#ff84f6",
+              advertisement: "#ffb201",
+              other_graphics: "#ff5400",
+              unknown: "#bfede2",
+              about_author: "#9a17bb",
+              image: "#14deef",
+              interview: "#23b20f",
+              table: "#02b4ba",
+            }}
+            // groupColors={[
+            //   "#3853F1",
+            //   "#F6E54C",
+            //   "#39D33C",
+            //   "#CF24CF",
+            //   "#22E3ED",
+            //   "#EF3029",
+            // ]}
+            groupColors={['#343434', '#989898', '#dcdcdc']}
+            onGroupSelect={(groupId) => console.log('selected groupid:', groupId)}
+            hideHeader={true}
+            hideHistory={true}
+            hideNotEditingLabel={true}
+            showEditor={true}
+            showPageSelector={true}
+            metadata={[{
+              key: "name", value: "Dennik Aha"
+            }, {
+              key: "released", value: "20/1/2022"
+            }]}
+            onSave={(d) => console.log("[onSave] triggered:", d)}
+            onRecalc={() => console.log("[onRecalc] triggered:")}
+            onExit={(s) => console.log('[onExit] triggered:', s)}
+          />
+        </div>
+      </div>
+    </HotKeys >
   ))
   .add("Basic - Allow Comments", () => (
     <Annotator

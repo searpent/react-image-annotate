@@ -354,7 +354,7 @@ return (
                 state.showTags && "show-tags",
                 state.showMask && "show-mask",
               ].filter(Boolean)}
-              iconSidebarItems={[
+              iconSidebarItems={!state.enabledTools ? [] : [
                 {
                   name: "select",
                   helperText: "Select" + getHotkeyHelpText("select_tool"),
