@@ -802,6 +802,15 @@ export default (state: MainLayoutState, action: Action) => {
         (activeImage.regions || []).filter((r) => r.id !== action.region.id)
       )
     }
+    case "DELETE_GROUP": {
+      const { groupId } = action
+      if (groupId === null || groupId === undefined) return state
+      return setIn(
+        state,
+        [...pathToActiveImage, "regions"],
+        (activeImage.regions || []).filter((r) => r.groupId !== groupId)
+      )
+    }
     case "DELETE_SELECTED_REGION": {
       return setIn(
         state,

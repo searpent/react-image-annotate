@@ -9,7 +9,8 @@ import classnames from "classnames"
 import type { Region } from "../ImageCanvas/region-tools.js"
 import IconButton from "@mui/material/IconButton"
 import Button from "@mui/material/Button"
-import TrashIcon from "@mui/icons-material/Delete"
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CheckIcon from "@mui/icons-material/Check"
 import TextField from "@mui/material/TextField"
 import Select from "react-select"
@@ -29,6 +30,7 @@ type Props = {
   cls?: string,
   tags?: Array<string>,
   onDelete: (Region) => null,
+  onDeleteGroup: (string) => null,
   onChange: (Region) => null,
   onClose: (Region) => null,
   onOpen: (Region) => null,
@@ -50,6 +52,7 @@ export const RegionLabel = ({
   allowComments,
   hideNotEditingLabel,
   allowedGroups,
+  onDeleteGroup
 }: Props) => {
   const classes = useStyles()
   const commentInputRef = useRef(null)
@@ -122,7 +125,16 @@ export const RegionLabel = ({
                 size="small"
                 variant="outlined"
               >
-                <TrashIcon style={{ marginTop: -8, width: 16, height: 16 }} />
+                <DeleteOutlineIcon style={{ marginTop: -8, width: 16, height: 16 }} />
+              </IconButton>
+              <IconButton
+                onClick={() => onDeleteGroup(region.groupId)}
+                tabIndex={-1}
+                style={{ width: 22, height: 22 }}
+                size="small"
+                variant="outlined"
+              >
+                <DeleteForeverIcon style={{ marginTop: -8, width: 16, height: 16 }} />
               </IconButton>
             </div>
             {(allowedClasses || []).length > 0 && (

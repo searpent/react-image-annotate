@@ -23,6 +23,7 @@ export const RegionTags = ({
   onChangeRegion,
   onCloseRegionEdit,
   onDeleteRegion,
+  onDeleteGroup,
   layoutParams,
   imageSrc,
   RegionEditLabel,
@@ -116,6 +117,7 @@ export const RegionTags = ({
               onChange={onChangeRegion}
               onClose={onCloseRegionEdit}
               onDelete={onDeleteRegion}
+              onDeleteGroup={onDeleteGroup}
               editing={region.editingLabels}
               region={region}
               regions={regions}

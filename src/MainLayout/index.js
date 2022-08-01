@@ -206,6 +206,7 @@ const canvas = (
     onBeginRegionEdit={action("OPEN_REGION_EDITOR", "region")}
     onCloseRegionEdit={action("CLOSE_REGION_EDITOR", "region")}
     onDeleteRegion={action("DELETE_REGION", "region")}
+    onDeleteGroup={action("DELETE_GROUP", "groupId")}
     onBeginBoxTransform={action("BEGIN_BOX_TRANSFORM", "box", "directions")}
     onBeginMovePolygonPoint={action(
       "BEGIN_MOVE_POLYGON_POINT",
