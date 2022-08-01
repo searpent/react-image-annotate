@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from "classnames"
 require('./page-selector.css').toString();
@@ -21,33 +21,62 @@ function PageThumbnail({ src, isActive, onClick, pageNumber }) {
           </div>
         )
       }
-
     </div >
   );
 }
 
-function PagesSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive }) {
+function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive, onMetadataChange }) {
+  const [showMetadata, setShowMetadata] = useState(false);
+
   return (
-    <div className="page-selector">
-      <div className="bottom-buttons">
+    <div className={classnames('page-selector', {
+      'page-selector--opened': showMetadata,
+    })}>
+      <div className="top-buttons">
         <button onClick={onRecalc} disabled={!recalcActive} className="info">Recalc</button>
         <button onClick={onSave} disabled={!saveActive} className="success">Save</button>
       </div>
       <div className="pages">
         {pages.map((page, idx) => (
-          <PageThumbnail
-            key={page.id}
-            src={page.src}
-            isActive={page.isActive}
-            onClick={() => onPageClick(idx)}
-          />
+          <div className="page-thumbnail__wrapper">
+            <PageThumbnail
+              key={page.id}
+              src={page.src}
+              isActive={page.isActive}
+              onClick={() => onPageClick(idx)}
+            />
+            {
+              showMetadata && (
+                <div className="page-thumbnail__metadata">
+                  <h5>Metadata</h5>
+                  {
+                    page?.metadata?.map(({ key, value }) => (
+                      <>
+                        <label htmlFor={key}>{key}</label>
+                        <input id={key} type="text" value={value} onChange={(e) => onMetadataChange({ name: key, value: e.target.value, imageIndex: idx })} />
+                      </>
+                    ))
+                  }
+                </div>
+              )
+            }
+          </div>
         ))}
+      </div>
+      <div className="bottom-buttons">
+        <div className="show-metadata-wrapper">
+          <label className="switch mr-2">
+            <input id="show-metadata" type="checkbox" value={showMetadata} onChange={() => setShowMetadata(prev => !prev)} />
+            <span className="slider round"></span>
+          </label>
+          <label>Metadata</label>
+        </div>
       </div>
     </div>
   );
 }
 
-PagesSelector.propTypes = {
+PageSelector.propTypes = {
   pages: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -64,7 +93,7 @@ PagesSelector.propTypes = {
   pageNumber: PropTypes.string
 };
 
-PagesSelector.defaultProps = {
+PageSelector.defaultProps = {
   onPageClick: () => { },
   onRecalc: () => { },
   onSave: () => { },
@@ -73,4 +102,4 @@ PagesSelector.defaultProps = {
   pageNumber: undefined
 };
 
-export default PagesSelector;
+export default PageSelector;

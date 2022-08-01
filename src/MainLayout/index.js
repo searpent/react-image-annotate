@@ -35,7 +35,7 @@ import { useSettings } from "../SettingsProvider"
 import { withHotKeys } from "react-hotkeys"
 import Editor from "../Editor"
 import regionsToBlocks from '../utils/regions-to-blocks';
-import PagesSelector from "../PageSelector"
+import PageSelector from "../PageSelector"
 
 // import Fullscreen from "../Fullscreen"
 
@@ -272,7 +272,8 @@ const pages = state.images.map((i, idx) => ({
   id: idx,
   src: i.src,
   isActive: idx === state.selectedImage,
-  pageNumber: i?.metadata?.find(md => md.key === "page").value || null
+  pageNumber: i?.metadata?.find(md => md.key === "page").value || null,
+  metadata: i.metadata || []
 }))
 
 const handlePageClick = (pageIndex) => {
@@ -309,7 +310,7 @@ return (
           }}>
             {
               showPageSelector && (
-                <PagesSelector pages={pages} onPageClick={handlePageClick} onRecalc={onRecalc} onSave={onSave} saveActive={saveActive} recalcActive={recalcActive} />
+                <PageSelector pages={pages} onPageClick={handlePageClick} onRecalc={onRecalc} onSave={onSave} saveActive={saveActive} recalcActive={recalcActive} onMetadataChange={onMetadataChange} />
               )
             }
             <Workspace

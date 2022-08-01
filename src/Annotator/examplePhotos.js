@@ -845,6 +845,12 @@ const examplePhotos = [
     "metadata": [{
       "key": "page",
       "value": "1"
+    }, {
+      "key": "section",
+      "value": "lokální zpravodajství"
+    }, {
+      "key": "mutation",
+      "value": "hřensko"
     }]
   },
   {
