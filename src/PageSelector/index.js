@@ -35,6 +35,13 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
       <div className="top-buttons">
         <button onClick={onRecalc} disabled={!recalcActive} className="info">Recalc</button>
         <button onClick={onSave} disabled={!saveActive} className="success">Save</button>
+        <div className="show-metadata-wrapper">
+          <label className="switch mr-2">
+            <input id="show-metadata" type="checkbox" value={showMetadata} onChange={() => setShowMetadata(prev => !prev)} />
+            <span className="slider round"></span>
+          </label>
+          <label>Metadata</label>
+        </div>
       </div>
       <div className="pages">
         {pages.map((page, idx) => (
@@ -62,15 +69,6 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
             }
           </div>
         ))}
-      </div>
-      <div className="bottom-buttons">
-        <div className="show-metadata-wrapper">
-          <label className="switch mr-2">
-            <input id="show-metadata" type="checkbox" value={showMetadata} onChange={() => setShowMetadata(prev => !prev)} />
-            <span className="slider round"></span>
-          </label>
-          <label>Metadata</label>
-        </div>
       </div>
     </div>
   );
