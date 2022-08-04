@@ -5,7 +5,7 @@ export const defaultHotkeys = [
   {
     id: "select_tool",
     description: "Switch to the Select Tool",
-    binding: "escape",
+    binding: "e",
   },
   {
     id: "zoom_tool",

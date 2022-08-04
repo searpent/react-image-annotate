@@ -90,7 +90,7 @@ storiesOf("Annotator", module)
               { value: '9', label: '9' },
             ]}
             onImagesChange={(images) => console.log("[images changed to]:", images)}
-            images={photosToImages([...examplePhotos, ...examplePhotos, ...examplePhotos])}
+            images={photosToImages([examplePhotos[0]])}
             clsColors={{
               title: "#f70202",
               subtitle: "#ffb405",
@@ -115,6 +115,7 @@ storiesOf("Annotator", module)
             //   "#22E3ED",
             //   "#EF3029",
             // ]}
+            enabledTools={[]}
             groupColors={['#343434', '#989898', '#dcdcdc']}
             onGroupSelect={(groupId) => console.log('selected groupid:', groupId)}
             hideHeader={true}
