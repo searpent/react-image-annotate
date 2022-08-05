@@ -48,7 +48,7 @@ const MetadataList = ({ title, metadata, imageIndex, onMetadataChange }) => (
   <div>
     <h2>{title}</h2>
     {
-      metadata.map(({ key, value }) => (
+      metadata && metadata.map(({ key, value }) => (
         <MetadataItem name={key} value={value} imageIndex={imageIndex} onChange={onMetadataChange} />
       ))
     }

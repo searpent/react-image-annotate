@@ -8,6 +8,15 @@ const defaultSettings = {
   wasdMode: true,
 }
 
+const DEFAULT_GROUP_COLORS = [
+  "#3853F1",
+  "#F6E54C",
+  "#39D33C",
+  "#CF24CF",
+  "#22E3ED",
+  "#EF3029",
+]
+
 export const SettingsContext = createContext(defaultSettings)
 
 const pullSettingsFromLocalStorage = () => {
@@ -28,7 +37,7 @@ const pullSettingsFromLocalStorage = () => {
 
 export const useSettings = () => useContext(SettingsContext)
 
-export const SettingsProvider = ({ children, clsColors, groupColors }) => {
+export const SettingsProvider = ({ children, clsColors, groupColors = DEFAULT_GROUP_COLORS }) => {
   const [state, changeState] = useState({
     ...() => pullSettingsFromLocalStorage(),
     clsColors,

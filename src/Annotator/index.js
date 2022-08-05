@@ -73,7 +73,7 @@ hideHeader ?: boolean,
 
 function extractAllowedGroups(images) {
   const allowedGroups = [];
-  images.forEach(image => image.regions.forEach(({ groupId }) => {
+  images.forEach(image => image.regions && image.regions.forEach(({ groupId }) => {
     if (!allowedGroups.includes(groupId)) {
       allowedGroups.push(groupId)
     }
@@ -130,7 +130,7 @@ export const Annotator = ({
   hideNotEditingLabel,
   showEditor,
   showPageSelector,
-  clsColors,
+  clsColors = {},
   groupColors,
   onRecalc,
   onSave,
