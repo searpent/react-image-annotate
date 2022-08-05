@@ -32,9 +32,7 @@ const GroupList = ({ groups }) => (
   <div>
     <h2>Groups</h2>
     {
-      groups.map(g => (
-        <GroupItem key={g} group={g} />
-      ))
+      groups.map((g, idx) => <GroupItem key={`${g}-${idx}`} group={g} />)
     }
   </div>
 )

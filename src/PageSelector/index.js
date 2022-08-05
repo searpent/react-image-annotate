@@ -47,7 +47,7 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
         {pages.map((page, idx) => (
           <div className="page-thumbnail__wrapper">
             <PageThumbnail
-              key={page.id}
+              key={`${page.id}`}
               src={page.src}
               isActive={page.isActive}
               onClick={() => onPageClick(idx)}
@@ -58,19 +58,20 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
                   <h5>Metadata</h5>
                   {
                     page?.metadata?.map(({ key, value }) => (
-                      <>
+                      <div key={key}>
                         <label htmlFor={key}>{key}</label>
                         <input id={key} type="text" value={value} onChange={(e) => onMetadataChange({ name: key, value: e.target.value, imageIndex: idx })} />
-                      </>
+                      </div>
                     ))
                   }
                 </div>
               )
             }
           </div>
-        ))}
-      </div>
-    </div>
+        ))
+        }
+      </div >
+    </div >
   );
 }
 
@@ -79,7 +80,7 @@ PageSelector.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       src: PropTypes.string.isRequired,
-      isActive: PropTypes.string.isRequired,
+      isActive: PropTypes.bool.isRequired,
       pageNumber: PropTypes.string
     })
   ).isRequired,

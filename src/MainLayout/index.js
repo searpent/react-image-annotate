@@ -270,7 +270,7 @@ const handleEditorChange = ({ imageIndex, data }) => {
 }
 
 const pages = state.images.map((i, idx) => ({
-  id: idx,
+  id: `${idx}`,
   src: i.src,
   isActive: idx === state.selectedImage,
   pageNumber: i?.metadata?.find(md => md.key === "page").value || null,
@@ -423,16 +423,17 @@ return (
                 )}
               rightSidebarItems={[
                 debugModeOn && (
-                  <DebugBox state={debugModeOn} lastAction={state.lastAction} />
+                  <DebugBox state={debugModeOn} lastAction={state.lastAction} key="debug-box" />
                 ),
                 state.taskDescription && (
-                  <TaskDescription description={state.taskDescription} />
+                  <TaskDescription description={state.taskDescription} key="task-description" />
                 ),
                 state.regionClsList && (
                   <ClassSelectionMenu
                     selectedCls={state.selectedCls}
                     regionClsList={state.regionClsList}
                     onSelectCls={action("SELECT_CLASSIFICATION", "cls")}
+                    key="class-selection-menu"
                   />
                 ),
                 state.labelImages && (
@@ -442,6 +443,7 @@ return (
                     imageTagList={state.imageTagList}
                     onChangeImage={action("CHANGE_IMAGE", "delta")}
                     expandedByDefault
+                    key="tags-sidebar-box"
                   />
                 ),
                 // (state.images?.length || 0) > 1 && (
@@ -464,6 +466,7 @@ return (
                   onSelectRegion={action("SELECT_REGION", "region")}
                   onDeleteRegion={action("DELETE_REGION", "region")}
                   onChangeRegion={action("CHANGE_REGION", "region")}
+                  key="region-selector"
                 />,
                 state.keyframes && (
                   <KeyframesSelector
@@ -473,16 +476,18 @@ return (
                     currentTime={state.currentVideoTime}
                     duration={state.videoDuration}
                     keyframes={state.keyframes}
+                    key="key-frame-selector"
                   />
                 ),
                 !hideHistory && (
                   <HistorySidebarBox
                     history={state.history}
                     onRestoreHistory={action("RESTORE_HISTORY")}
+                    key="history-sidebar"
                   />
                 ),
-                <MetadataEditor state={state} onMetadataChange={onMetadataChange} />,
-                <GroupsEditor groups={state.allowedGroups} onAddGroup={onAddGroup} />,
+                <MetadataEditor state={state} onMetadataChange={onMetadataChange} key="metadata-editor" />,
+                <GroupsEditor groups={state.allowedGroups} onAddGroup={onAddGroup} key="groups-editor" />,
               ].filter(Boolean)}
             >
               {canvas}
