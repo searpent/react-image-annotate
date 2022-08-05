@@ -41,6 +41,7 @@ const useColors = () => {
   const { clsColors, groupColors } = useSettings()
 
   const clsColor = (cls) => {
+    if (!clsColors) { return DEFAULT_GROUP_COLOR }
     if (clsColors[cls]) { return clsColors[cls] }
     return defaultClsColor(cls)
   }

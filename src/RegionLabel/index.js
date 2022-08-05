@@ -65,10 +65,10 @@ export const RegionLabel = ({
 
   if (hideNotEditingLabel && !editing) return null
 
-  const allowedGroupsForSelect = allowedGroups.map(g => ({
+  const allowedGroupsForSelect = allowedGroups ? allowedGroups.map(g => ({
     value: `${g}`,
     label: `${g}`
-  }))
+  })) : []
 
   return (
     <ThemeProvider theme={theme}>
