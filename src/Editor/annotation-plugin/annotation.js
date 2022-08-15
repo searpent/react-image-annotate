@@ -1,7 +1,7 @@
 /**
  * Build styles
  */
-require('./annotation.css').toString();
+import './annotation.css';
 
 // Possible classes
 // ================

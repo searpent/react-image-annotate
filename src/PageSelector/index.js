@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from "classnames"
-require('./page-selector.css').toString();
+import './page-selector.css';
 
 function PageThumbnail({ src, isActive, onClick, pageNumber }) {
   return (
