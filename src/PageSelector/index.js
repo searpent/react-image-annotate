@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from "classnames"
 import './page-selector.css';
 
-function PageThumbnail({ src, isActive, onClick, pageNumber }) {
+function PageThumbnail({ src, isActive, onClick, pageNumber, metadata, showMetadata }) {
   return (
     <div
       role="button"
@@ -13,14 +13,30 @@ function PageThumbnail({ src, isActive, onClick, pageNumber }) {
       })}
       onClick={onClick}
     >
-      <img src={src} alt="" />
-      {
-        (pageNumber !== undefined) && (
-          <div className="page-number-wrapper">
-            <span className="page-number">{pageNumber}</span>
-          </div>
-        )
-      }
+      <div className="page-thumbnail-image-wrapper">
+        <img src={src} alt="" className="page-thumbnail-image" />
+        <div className="page-number-wrapper">
+          {
+            (pageNumber !== undefined && !showMetadata) && (
+              <span className="page-number">{pageNumber}</span>
+            )
+          }
+        </div>
+      </div>
+      <div className="page-thumbnail-metadata-wrapper">
+        <label htmlFor>Page</label>
+        <input type="text" value="2" />
+        <label htmlFor>Topic</label>
+        <input type="text" value="012345678901234567890123456789" />
+        <label htmlFor>Mutation</label>
+        <input type="text" value="2" />
+        <label htmlFor>Page</label>
+        <input type="text" value="2" />
+        <label htmlFor>Topic</label>
+        <input type="text" value="012345678901234567890123456789" />
+        <label htmlFor>Mutation</label>
+        <input type="text" value="2" />
+      </div>
     </div >
   );
 }
@@ -45,29 +61,14 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
       </div>
       <div className="pages">
         {pages.map((page, idx) => (
-          <div className="page-thumbnail__wrapper">
-            <PageThumbnail
-              key={`${page.id}`}
-              src={page.src}
-              isActive={page.isActive}
-              onClick={() => onPageClick(idx)}
-            />
-            {
-              showMetadata && (
-                <div className="page-thumbnail__metadata">
-                  <h5>Metadata</h5>
-                  {
-                    page?.metadata?.map(({ key, value }) => (
-                      <div key={key}>
-                        <label htmlFor={key}>{key}</label>
-                        <input id={key} type="text" value={value} onChange={(e) => onMetadataChange({ name: key, value: e.target.value, imageIndex: idx })} />
-                      </div>
-                    ))
-                  }
-                </div>
-              )
-            }
-          </div>
+          <PageThumbnail
+            key={`${page.id}`}
+            src={page.src}
+            isActive={page.isActive}
+            onClick={() => onPageClick(idx)}
+            metadata={page.metadata}
+            showMetadata={showMetadata}
+          />
         ))
         }
       </div >

@@ -856,10 +856,10 @@ const examplePhotos = [
   {
     "id": "431fc636-d6d1-4e20-a35b-cc7a201c1833",
     "fullsize": {
-      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
+      "key": "https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     },
     "thumbnail": {
-      "key": "https://www.gannett-cdn.com/presto/2022/01/12/NJDN/8088720b-446d-4693-be62-4dfdf1c3046f-DailyNewsSaturday.jpg?width=660&height=1253&fit=crop&format=pjpg&auto=webp",
+      "key": "https://images.pexels.com/photos/167699/pexels-photo-167699.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     },
     "modelResults": {
       "v1": [

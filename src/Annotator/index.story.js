@@ -90,7 +90,7 @@ storiesOf("Annotator", module)
               { value: '9', label: '9' },
             ]}
             onImagesChange={(images) => console.log("[images changed to]:", images)}
-            images={photosToImages([examplePhotos[0]])}
+            images={photosToImages(examplePhotos)}
             clsColors={{
               title: "#f70202",
               subtitle: "#ffb405",
