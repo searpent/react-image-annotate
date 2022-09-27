@@ -8,13 +8,13 @@ function PageThumbnail({ src, isActive, onClick, pageNumber, metadata, showMetad
     <div
       role="button"
       tabIndex={0}
-      className={classnames('page-thumbnail', {
-        'page-thumbnail-is-active': isActive
+      className={classnames('ps-page-thumbnail', {
+        'ps-page-thumbnail-is-active': isActive
       })}
       onClick={onClick}
     >
-      <div className="page-thumbnail-image-wrapper">
-        <img src={src} alt="" className="page-thumbnail-image" />
+      <div className="ps-page-thumbnail-image-wrapper">
+        <img src={src} alt="" className="ps-page-thumbnail-image" />
         <div className="page-number-wrapper">
           {
             (pageNumber !== undefined && !showMetadata) && (
@@ -23,7 +23,7 @@ function PageThumbnail({ src, isActive, onClick, pageNumber, metadata, showMetad
           }
         </div>
       </div>
-      <div className="page-thumbnail-metadata-wrapper">
+      <div className="ps-page-thumbnail-metadata-wrapper">
         <label htmlFor>Page</label>
         <input type="text" value="2" />
         <label htmlFor>Topic</label>
