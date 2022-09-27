@@ -3,7 +3,17 @@ import PropTypes from 'prop-types';
 import classnames from "classnames"
 import './page-selector.css';
 
-function PageThumbnail({ src, isActive, onClick, pageNumber, metadata, showMetadata }) {
+function PageThumbnail({ src, isActive, onClick, pageNumber, metadata, showMetadata, imageIndex, onMetadataChange }) {
+  const handleChange = e => {
+    e.preventDefault()
+    const { name, value } = e.target
+    onMetadataChange({
+      name,
+      value,
+      imageIndex
+    })
+  }
+
   return (
     <div
       role="button"
@@ -24,18 +34,13 @@ function PageThumbnail({ src, isActive, onClick, pageNumber, metadata, showMetad
         </div>
       </div>
       <div className="ps-page-thumbnail-metadata-wrapper">
-        <label htmlFor>Page</label>
-        <input type="text" value="2" />
-        <label htmlFor>Topic</label>
-        <input type="text" value="012345678901234567890123456789" />
-        <label htmlFor>Mutation</label>
-        <input type="text" value="2" />
-        <label htmlFor>Page</label>
-        <input type="text" value="2" />
-        <label htmlFor>Topic</label>
-        <input type="text" value="012345678901234567890123456789" />
-        <label htmlFor>Mutation</label>
-        <input type="text" value="2" />
+        {
+          metadata.map(({ key, value }) => (<>
+
+            <label for={key}>{key}</label>
+            <input type="text" value={value} name={key} onChange={handleChange} />
+          </>))
+        }
       </div>
     </div >
   );
@@ -68,6 +73,8 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
             onClick={() => onPageClick(idx)}
             metadata={page.metadata}
             showMetadata={showMetadata}
+            imageIndex={page.id}
+            onMetadataChange={onMetadataChange}
           />
         ))
         }
@@ -90,7 +97,8 @@ PageSelector.propTypes = {
   onSave: PropTypes.func,
   recalcActive: PropTypes.bool,
   saveActive: PropTypes.bool,
-  pageNumber: PropTypes.string
+  pageNumber: PropTypes.string,
+  onMetadataChange: PropTypes.func.isRequired
 };
 
 PageSelector.defaultProps = {
