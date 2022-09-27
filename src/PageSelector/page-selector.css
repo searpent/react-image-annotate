@@ -55,8 +55,7 @@
 }
 
 .page-thumbnail-image {
-  width: 100px;
-  height: 100%;
+  width: 100px !important;
   object-fit: fill;
   object-position: top;
 }
