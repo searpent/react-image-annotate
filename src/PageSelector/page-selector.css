@@ -154,7 +154,7 @@
   justify-content: center;
   align-items: center;
   background: linear-gradient(rgba(255, 255, 255, 0), #8898aa);
-  padding: .5rem 0;
+  padding: 12px 0;
 }
 
 .page-number {
