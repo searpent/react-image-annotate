@@ -69,17 +69,13 @@
   display: grid;
   grid-template-columns: 1fr 2fr;
   scrollbar-width: none;
+  row-gap: .5rem;
+  align-items: start;
+  justify-self: center;
 }
 
 .ps-page-thumbnail-metadata-wrapper::-webkit-scrollbar {
   display: none;
-}
-
-.page-selector--opened .ps-page-thumbnail-metadata-wrapper {
-  grid-template-columns: 1fr 1fr;
-  row-gap: .5rem;
-  align-items: start;
-  justify-self: center;
 }
 
 .ps-page-thumbnail-metadata-wrapper input {

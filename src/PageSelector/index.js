@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from "classnames"
 import './page-selector.css';
 
-function PageThumbnail({ src, isActive, onClick, pageNumber, metadata, showMetadata, imageIndex, onMetadataChange }) {
+function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, onMetadataChange }) {
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
@@ -13,6 +13,8 @@ function PageThumbnail({ src, isActive, onClick, pageNumber, metadata, showMetad
       imageIndex
     })
   }
+
+  const pageNumber = metadata?.find?.(md => md.key === 'page')?.value
 
   return (
     <div
@@ -36,7 +38,6 @@ function PageThumbnail({ src, isActive, onClick, pageNumber, metadata, showMetad
       <div className="ps-page-thumbnail-metadata-wrapper">
         {
           metadata.map(({ key, value }) => (<>
-
             <label for={key}>{key}</label>
             <input type="text" value={value} name={key} onChange={handleChange} />
           </>))
