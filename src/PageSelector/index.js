@@ -39,7 +39,7 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
         {
           metadata.map(({ key, value }) => (<>
             <label for={key}>{key}</label>
-            <input type="text" value={value} name={key} onChange={handleChange} />
+            <input type="text" value={value} name={key} onChange={handleChange} onClick={e => e.stopPropagation()} />
           </>))
         }
       </div>
