@@ -169,7 +169,7 @@ export default (state: MainLayoutState, action: Action) => {
         ...r,
         highlighted: r.id === region.id,
         groupHighlighted: (r.groupId && r.groupId === region.groupId) ? true : false,
-        editingLabels: r.id === region.id,
+        editingLabels: region.ctrlKey ? r.id === region.id : false,
       }))
 
       const selectedGroupIds = regions.filter(i => i.highlighted).map(r => r.groupId || '').filter(onlyUnique);
