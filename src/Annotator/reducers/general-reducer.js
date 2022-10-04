@@ -13,6 +13,8 @@ import clamp from "clamp"
 import getLandmarksWithTransform from "../../utils/get-landmarks-with-transform"
 import setInLocalStorage from "../../utils/set-in-local-storage"
 import onlyUnique from "../../utils/filter-only-unique"
+import regionsGroups from '../../utils/regions-groups';
+import nextGroupId from "../../utils/next-group-id"
 
 const getRandomId = () => Math.random().toString().split(".")[1]
 
@@ -558,6 +560,11 @@ export default (state: MainLayoutState, action: Action) => {
           break
         }
         case "create-box": {
+          let groupId = state?.images[state.selectedImage]?.regions?.find(r => r.highlighted === true)?.groupId;
+          if (isNaN(groupId)) {
+            const groupIds = regionsGroups(state?.images[state.selectedImage]?.regions)
+            groupId = nextGroupId(groupIds)
+          }
           state = saveToHistory(state, "Create Box")
           newRegion = {
             type: "box",
@@ -570,6 +577,8 @@ export default (state: MainLayoutState, action: Action) => {
             color: defaultRegionColor,
             cls: defaultRegionCls,
             id: getRandomId(),
+            groupHighlighted: true,
+            groupId,
           }
           state = setIn(state, ["mode"], {
             mode: "RESIZE_BOX",

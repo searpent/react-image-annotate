@@ -36,6 +36,7 @@ import { withHotKeys } from "react-hotkeys"
 import Editor from "../Editor"
 import regionsToBlocks from '../utils/regions-to-blocks';
 import PageSelector from "../PageSelector"
+import regionsGroups from '../utils/regions-groups';
 
 // import Fullscreen from "../Fullscreen"
 
@@ -72,22 +73,6 @@ const EditorWrapper = styled("div")(({ theme }) => ({
   width: "30vw",
   overflowY: "scroll"
 }))
-
-function regionsGroups(regions) {
-  if (!regions) {
-    return []
-  }
-  const groups = regions.reduce((prev, curr) => {
-    const { groupId } = curr;
-    if (prev.includes(groupId)) {
-      return prev
-    }
-    prev.push(groupId)
-    return prev;
-  }, [])
-
-  return groups;
-}
 
 type Props = {
   state: MainLayoutState,
