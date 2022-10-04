@@ -67,18 +67,7 @@ hideHeader ?: boolean,
   groupColors ?: Array < string >,
   onRecalc ?: (any) => any,
   onSave ?: (any) => any,
-  allowedGroups ?: Object,
   metadata ?: Array < Metadata >,
-}
-
-function extractAllowedGroups(images) {
-  const allowedGroups = [];
-  images.forEach(image => image.regions && image.regions.forEach(({ groupId }) => {
-    if (!allowedGroups.includes(groupId)) {
-      allowedGroups.push(groupId)
-    }
-  }))
-  return allowedGroups
 }
 
 export const Annotator = ({
@@ -140,7 +129,6 @@ export const Annotator = ({
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
     if (selectedImage === -1) selectedImage = undefined
   }
-  const allowedGroups = extractAllowedGroups(images);
   const annotationType = images ? "image" : "video"
   const [state, dispatchToReducer] = useReducer(
     historyHandler(
@@ -185,8 +173,7 @@ export const Annotator = ({
         }),
       imagesUpdatedAt: null,
       imagesSavedAt: null,
-      metadata,
-      allowedGroups: allowedGroups || [],
+      metadata
     })
   )
 

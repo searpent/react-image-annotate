@@ -2,7 +2,7 @@
 
 import type { Action, MainLayoutState } from "./types"
 import { FullScreen, useFullScreenHandle } from "react-full-screen"
-import React, { useCallback, useRef } from "react"
+import React, { useCallback, useMemo, useRef } from "react"
 import { makeStyles } from "@mui/styles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { styled } from "@mui/material/styles"
@@ -72,6 +72,22 @@ const EditorWrapper = styled("div")(({ theme }) => ({
   width: "30vw",
   overflowY: "scroll"
 }))
+
+function regionsGroups(regions) {
+  if (!regions) {
+    return []
+  }
+  const groups = regions.reduce((prev, curr) => {
+    const { groupId } = curr;
+    if (prev.includes(groupId)) {
+      return prev
+    }
+    prev.push(groupId)
+    return prev;
+  }, [])
+
+  return groups;
+}
 
 type Props = {
   state: MainLayoutState,
@@ -172,6 +188,8 @@ const refocusOnMouseEvent = useCallback((e) => {
   }
 }, [])
 
+const allowedGroups = useMemo(() => regionsGroups(state.images[state.selectedImage].regions), [state.images, state.selectedImage])
+
 const canvas = (
   <ImageCanvas
     {...settings}
@@ -243,7 +261,7 @@ const canvas = (
     onRegionClassAdded={onRegionClassAdded}
     allowComments={state.allowComments}
     hideNotEditingLabel={hideNotEditingLabel}
-    allowedGroups={state.allowedGroups}
+    allowedGroups={allowedGroups}
   />
 )
 
@@ -500,7 +518,7 @@ return (
                     />
                   ),
                   <MetadataEditor state={state} onMetadataChange={onMetadataChange} key="metadata-editor" />,
-                  <GroupsEditor groups={state.allowedGroups} onAddGroup={onAddGroup} key="groups-editor" />,
+                  <GroupsEditor groups={allowedGroups} onAddGroup={onAddGroup} key="groups-editor" />,
                 ].filter(Boolean)}
               >
                 {canvas}
