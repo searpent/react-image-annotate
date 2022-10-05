@@ -576,9 +576,11 @@ export default (state: MainLayoutState, action: Action) => {
         }
         case "create-box": {
           let groupId = state?.images[state.selectedImage]?.regions?.find(r => r.highlighted === true)?.groupId;
+          let groupSelected = true
           if (isNaN(groupId)) {
             const groupIds = regionsGroups(state?.images[state.selectedImage]?.regions)
             groupId = nextGroupId(groupIds)
+            groupSelected = false
           }
           state = saveToHistory(state, "Create Box")
           newRegion = {
@@ -597,7 +599,7 @@ export default (state: MainLayoutState, action: Action) => {
           }
           state = setIn(state, ["mode"], {
             mode: "RESIZE_BOX",
-            editLabelEditorAfter: true,
+            editLabelEditorAfter: !groupSelected,
             regionId: newRegion.id,
             freedom: [1, 1],
             original: { x, y, w: newRegion.w, h: newRegion.h },
