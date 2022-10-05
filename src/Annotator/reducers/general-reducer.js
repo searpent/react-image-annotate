@@ -127,6 +127,21 @@ export default (state: MainLayoutState, action: Action) => {
       return setNewImage(action.image, action.imageIndex)
     }
     case "SELECT_CLASSIFICATION": {
+      // if there is selected region, set its cls
+      const selectedRegionId = state.images[state.selectedImage].regions.find(r => r.highlighted === true)?.id
+      if (selectedRegionId) {
+        const newRegions = activeImage.regions.map(r => {
+          if (r.id === selectedRegionId) {
+            return {
+              ...r,
+              cls: action.cls
+            }
+          } else {
+            return r
+          }
+        })
+        state = setIn(state, [...pathToActiveImage, "regions"], newRegions)
+      }
       return setIn(state, ["selectedCls"], action.cls)
     }
     case "CHANGE_REGION": {
@@ -536,7 +551,7 @@ export default (state: MainLayoutState, action: Action) => {
       }
 
       let newRegion
-      let defaultRegionCls = state.selectedCls,
+      let defaultRegionCls = state.selectedCls || state.regionClsList?.[0],
         defaultRegionColor = "#ff0000"
 
       const clsIndex = (state.regionClsList || []).indexOf(defaultRegionCls)
