@@ -698,7 +698,7 @@ export default (state: MainLayoutState, action: Action) => {
 
       const regions = [...(getIn(state, pathToActiveImage).regions || [])]
         .map((r) =>
-          setIn(r, ["editingLabels"], false).setIn(["highlighted"], false).setIn(["groupHighlighted"], false)
+          setIn(r, ["editingLabels"], false).setIn(["highlighted"], false).setIn([state.selectedTool === 'create-box' ? undefined : 'groupHighlighted'], false)
         )
         .concat(newRegion ? [newRegion] : [])
 
