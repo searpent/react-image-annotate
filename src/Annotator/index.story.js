@@ -77,6 +77,7 @@ storiesOf("Annotator", module)
               "table",
               "text",
             ]}
+            help={`# Tools\n\n**E** - select tool\n\n**D** - frame tool\n\n**Ctrl** + **click frame** - edit frame\n\n**1**- **9** - change class`}
             onImagesChange={(images) => console.log("[images changed to]:", images)}
             images={photosToImages(examplePhotos)}
             clsColors={{

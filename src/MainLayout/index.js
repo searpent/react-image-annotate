@@ -19,6 +19,7 @@ import RegionSelector from "../RegionSelectorSidebarBox"
 import SettingsDialog from "../SettingsDialog"
 import TagsSidebarBox from "../TagsSidebarBox"
 import TaskDescription from "../TaskDescriptionSidebarBox"
+import Help from "../HelpSidebarBox"
 import MetadataEditor from "../MetadataEditorSidebarBox"
 import GroupsEditor from "../GroupsEditorSidebarBox"
 import Workspace from "react-material-workspace-layout/Workspace"
@@ -443,6 +444,9 @@ return (
                   ),
                   state.taskDescription && (
                     <TaskDescription description={state.taskDescription} key="task-description" />
+                  ),
+                  state.help && (
+                    <Help help={state.help} key="help" />
                   ),
                   state.regionClsList && (
                     <ClassSelectionMenu

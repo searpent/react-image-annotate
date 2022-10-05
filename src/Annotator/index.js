@@ -25,6 +25,7 @@ import videoReducer from "./reducers/video-reducer.js"
 
 type Props = {
   taskDescription?: string,
+  help?: string,
   allowedArea?: { x: number, y: number, w: number, h: number },
   regionTagList?: Array<string>,
   regionClsList?: Array<string>,
@@ -93,6 +94,7 @@ export const Annotator = ({
   imageClsList = [],
   keyframes = {},
   taskDescription = "",
+  help = "",
   fullImageSegmentationMode = false,
   RegionEditLabel,
   videoSrc,
@@ -148,6 +150,7 @@ export const Annotator = ({
       autoSegmentationOptions,
       mode: null,
       taskDescription,
+      help,
       showMask: true,
       labelImages: imageClsList.length > 0 || imageTagList.length > 0,
       regionClsList,
