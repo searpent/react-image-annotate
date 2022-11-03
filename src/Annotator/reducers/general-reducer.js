@@ -267,7 +267,6 @@ export default (state: MainLayoutState, action: Action) => {
     }
     case "MOUSE_MOVE": {
       const { x, y } = action
-
       if (!state.mode) return state
       if (!activeImage) return state
       const { mouseDownAt } = state
@@ -716,6 +715,7 @@ export default (state: MainLayoutState, action: Action) => {
       state = setIn(state, ["mouseDownAt"], null)
       switch (state.mode.mode) {
         case "RESIZE_BOX": {
+          state = setIn(state, ["selectedTool"], 'select')
           if (state.mode.isNew) {
             if (
               Math.abs(state.mode.original.x - x) < 0.002 ||
