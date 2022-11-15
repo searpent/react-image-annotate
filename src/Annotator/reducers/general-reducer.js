@@ -822,6 +822,7 @@ export default (state: MainLayoutState, action: Action) => {
     case "DELETE_REGION": {
       const regionIndex = getRegionIndex(action.region)
       if (regionIndex === null) return state
+      state = saveToHistory(state, "Delete region")
       return setIn(
         state,
         [...pathToActiveImage, "regions"],
@@ -831,6 +832,7 @@ export default (state: MainLayoutState, action: Action) => {
     case "DELETE_GROUP": {
       const { groupId } = action
       if (groupId === null || groupId === undefined) return state
+      state = saveToHistory(state, "Delete group")
       return setIn(
         state,
         [...pathToActiveImage, "regions"],
@@ -838,6 +840,7 @@ export default (state: MainLayoutState, action: Action) => {
       )
     }
     case "DELETE_SELECTED_REGION": {
+      state = saveToHistory(state, "Delete selected region")
       return setIn(
         state,
         [...pathToActiveImage, "regions"],
