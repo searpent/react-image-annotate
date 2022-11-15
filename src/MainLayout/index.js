@@ -38,6 +38,7 @@ import Editor from "../Editor"
 import regionsToBlocks from '../utils/regions-to-blocks';
 import PageSelector from "../PageSelector"
 import regionsGroups from '../utils/regions-groups';
+import RightSidebarItemsWrapper from './RightSidebarItemsWrapper';
 
 // import Fullscreen from "../Fullscreen"
 
@@ -439,76 +440,82 @@ return (
                     (a) => a.alwaysShowing || state.enabledTools.includes(a.name)
                   )}
                 rightSidebarItems={[
-                  debugModeOn && (
-                    <DebugBox state={debugModeOn} lastAction={state.lastAction} key="debug-box" />
-                  ),
-                  state.taskDescription && (
-                    <TaskDescription description={state.taskDescription} key="task-description" />
-                  ),
-                  state.help && (
-                    <Help help={state.help} key="help" />
-                  ),
-                  state.regionClsList && (
-                    <ClassSelectionMenu
-                      selectedCls={state.selectedCls}
-                      regionClsList={state.regionClsList}
-                      onSelectCls={action("SELECT_CLASSIFICATION", "cls")}
-                      key="class-selection-menu"
-                    />
-                  ),
-                  state.labelImages && (
-                    <TagsSidebarBox
-                      currentImage={activeImage}
-                      imageClsList={state.imageClsList}
-                      imageTagList={state.imageTagList}
-                      onChangeImage={action("CHANGE_IMAGE", "delta")}
-                      expandedByDefault
-                      key="tags-sidebar-box"
-                    />
-                  ),
-                  // (state.images?.length || 0) > 1 && (
-                  //   <ImageSelector
-                  //     onSelect={action("SELECT_REGION", "region")}
-                  //     images={state.images}
-                  //   />
-                  // ),
-                  // groups && (
-                  //   <GroupSelector
-                  //     title="Articles"
-                  //     groups={groups}
-                  //     selectedGroupId={selectedGroupId}
-                  //     onSelect={onGroupSelect}
-                  //   />
-                  // )
-                  ,
-                  <RegionSelector
-                    regions={activeImage ? activeImage.regions : emptyArr}
-                    onSelectRegion={action("SELECT_REGION", "region")}
-                    onDeleteRegion={action("DELETE_REGION", "region")}
-                    onChangeRegion={action("CHANGE_REGION", "region")}
-                    key="region-selector"
-                  />,
-                  state.keyframes && (
-                    <KeyframesSelector
-                      onChangeVideoTime={action("CHANGE_VIDEO_TIME", "newTime")}
-                      onDeleteKeyframe={action("DELETE_KEYFRAME", "time")}
-                      onChangeCurrentTime={action("CHANGE_VIDEO_TIME", "newTime")}
-                      currentTime={state.currentVideoTime}
-                      duration={state.videoDuration}
-                      keyframes={state.keyframes}
-                      key="key-frame-selector"
-                    />
-                  ),
-                  !hideHistory && (
-                    <HistorySidebarBox
-                      history={state.history}
-                      onRestoreHistory={action("RESTORE_HISTORY")}
-                      key="history-sidebar"
-                    />
-                  ),
-                  <MetadataEditor state={state} onMetadataChange={onMetadataChange} key="metadata-editor" />,
-                  <GroupsEditor groups={allowedGroups} onAddGroup={onAddGroup} key="groups-editor" />,
-                ].filter(Boolean)}
+                  <RightSidebarItemsWrapper>
+                    {
+                      [
+                        debugModeOn && (
+                          <DebugBox state={debugModeOn} lastAction={state.lastAction} key="debug-box" />
+                        ),
+                        state.taskDescription && (
+                          <TaskDescription description={state.taskDescription} key="task-description" />
+                        ),
+                        state.help && (
+                          <Help help={state.help} key="help" />
+                        ),
+                        state.regionClsList && (
+                          <ClassSelectionMenu
+                            selectedCls={state.selectedCls}
+                            regionClsList={state.regionClsList}
+                            onSelectCls={action("SELECT_CLASSIFICATION", "cls")}
+                            key="class-selection-menu"
+                          />
+                        ),
+                        state.labelImages && (
+                          <TagsSidebarBox
+                            currentImage={activeImage}
+                            imageClsList={state.imageClsList}
+                            imageTagList={state.imageTagList}
+                            onChangeImage={action("CHANGE_IMAGE", "delta")}
+                            expandedByDefault
+                            key="tags-sidebar-box"
+                          />
+                        ),
+                        // (state.images?.length || 0) > 1 && (
+                        //   <ImageSelector
+                        //     onSelect={action("SELECT_REGION", "region")}
+                        //     images={state.images}
+                        //   />
+                        // ),
+                        // groups && (
+                        //   <GroupSelector
+                        //     title="Articles"
+                        //     groups={groups}
+                        //     selectedGroupId={selectedGroupId}
+                        //     onSelect={onGroupSelect}
+                        //   />
+                        // )
+                        ,
+                        <RegionSelector
+                          regions={activeImage ? activeImage.regions : emptyArr}
+                          onSelectRegion={action("SELECT_REGION", "region")}
+                          onDeleteRegion={action("DELETE_REGION", "region")}
+                          onChangeRegion={action("CHANGE_REGION", "region")}
+                          key="region-selector"
+                        />,
+                        state.keyframes && (
+                          <KeyframesSelector
+                            onChangeVideoTime={action("CHANGE_VIDEO_TIME", "newTime")}
+                            onDeleteKeyframe={action("DELETE_KEYFRAME", "time")}
+                            onChangeCurrentTime={action("CHANGE_VIDEO_TIME", "newTime")}
+                            currentTime={state.currentVideoTime}
+                            duration={state.videoDuration}
+                            keyframes={state.keyframes}
+                            key="key-frame-selector"
+                          />
+                        ),
+                        !hideHistory && (
+                          <HistorySidebarBox
+                            history={state.history}
+                            onRestoreHistory={action("RESTORE_HISTORY")}
+                            key="history-sidebar"
+                          />
+                        ),
+                        <MetadataEditor state={state} onMetadataChange={onMetadataChange} key="metadata-editor" />,
+                        <GroupsEditor groups={allowedGroups} onAddGroup={onAddGroup} key="groups-editor" />,
+                      ].filter(Boolean)
+                    }
+                  </RightSidebarItemsWrapper>
+                ]}
               >
                 {canvas}
               </Workspace>
