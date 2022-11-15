@@ -44,3 +44,13 @@
 .ce-settings__plugin-zone {
   padding: 0 .25rem;
 }
+
+button {
+  background-color: white !important;
+  opacity: 1 !important;
+}
+
+button .expanded {
+  background-color: white !important;
+  opacity: 1 !important;
+}
