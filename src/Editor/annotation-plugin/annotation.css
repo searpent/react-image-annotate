@@ -46,11 +46,9 @@
 }
 
 button.MuiButtonBase-root {
-  background-color: white !important;
   opacity: 1 !important;
 }
 
 button.MuiButtonBase-root.expanded {
-  background-color: white !important;
   opacity: 1 !important;
 }
