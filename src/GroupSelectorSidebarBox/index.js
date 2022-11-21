@@ -9,7 +9,7 @@ import { grey } from "@mui/material/colors"
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
-import isEqual from "lodash/isEqual"
+import uuidToHash from '../utils/uuid-to-hash';
 
 const theme = createTheme()
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +33,7 @@ export const GroupSelectorSidebarBox = ({ title, subtitle, groups, onSelect, sel
               <ListItemText
                 primary={<strong style={{
                   color
-                }}>{groupTitle}</strong>}
+                }}>{uuidToHash(groupTitle)}</strong>}
                 secondary={groupSubtitle}
               />
             </ListItem>

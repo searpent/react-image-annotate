@@ -577,8 +577,7 @@ export default (state: MainLayoutState, action: Action) => {
           let groupId = state?.images[state.selectedImage]?.regions?.find(r => r.highlighted === true)?.groupId;
           let groupSelected = true
           if (isNaN(groupId)) {
-            const groupIds = regionsGroups(state?.images[state.selectedImage]?.regions)
-            groupId = nextGroupId(groupIds)
+            groupId = nextGroupId()
             groupSelected = false
           }
           state = saveToHistory(state, "Create Box")

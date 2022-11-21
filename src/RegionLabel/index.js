@@ -15,6 +15,7 @@ import CheckIcon from "@mui/icons-material/Check"
 import TextField from "@mui/material/TextField"
 import Select from "react-select"
 import CreatableSelect from "react-select/creatable"
+import uuidToHash from '../utils/uuid-to-hash';
 
 import { asMutable } from "seamless-immutable"
 
@@ -67,7 +68,7 @@ export const RegionLabel = ({
 
   const allowedGroupsForSelect = allowedGroups ? allowedGroups.map(g => ({
     value: `${g}`,
-    label: `${g}`
+    label: uuidToHash(g)
   })) : []
 
   return (

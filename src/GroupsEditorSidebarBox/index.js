@@ -6,6 +6,7 @@ import FilterNoneIcon from '@mui/icons-material/FilterNone';
 import { styled } from "@mui/material/styles"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { grey } from "@mui/material/colors"
+import uuidToHash from "../utils/uuid-to-hash";
 
 const theme = createTheme()
 
@@ -23,7 +24,7 @@ const GroupItemDiv = styled("div")(({ theme }) => ({
 const GroupItem = ({ group }) => {
   return (
     <GroupItemDiv>
-      {group}
+      {uuidToHash(group)}
     </GroupItemDiv>
   )
 }
