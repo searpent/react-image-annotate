@@ -12,7 +12,7 @@ function RightSidebarItemsWrapper({ children }) {
   }, [])
 
   return (
-    <div ref={elementRef} >
+    <div ref={elementRef} id="right-sidebar">
       {children}
     </div>
   );

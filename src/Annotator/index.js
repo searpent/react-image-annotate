@@ -6,7 +6,8 @@ import type {
   MainLayoutState,
   Mode,
   ToolEnum,
-  Metadata
+  Metadata,
+  MetadataConfig
 } from "../MainLayout/types"
 import React, { useEffect, useReducer } from "react"
 import makeImmutable, { without } from "seamless-immutable"
@@ -68,7 +69,8 @@ hideHeader ?: boolean,
   groupColors ?: Array < string >,
   onRecalc ?: (any) => any,
   onSave ?: (any) => any,
-  metadata ?: Array < Metadata >,
+  albumMetadata ?: Array < Metadata >,
+  metadataConfigs ? : Array < MetadataConfig >
 }
 
 export const Annotator = ({
@@ -125,7 +127,8 @@ export const Annotator = ({
   groupColors,
   onRecalc,
   onSave,
-  metadata
+  albumMetadata,
+  metadataConfigs
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -176,7 +179,8 @@ export const Annotator = ({
         }),
       imagesUpdatedAt: null,
       imagesSavedAt: null,
-      metadata
+      albumMetadata,
+      metadataConfigs
     })
   )
 
@@ -218,12 +222,10 @@ export const Annotator = ({
     }
   }
 
-  const handleMetadataChange = ({ name, value, imageIndex }) => {
+  const handleMetadataChange = (params) => {
     dispatchToReducer({
       type: "UPDATE_METADATA",
-      name,
-      value,
-      imageIndex
+      ...params
     })
   }
 

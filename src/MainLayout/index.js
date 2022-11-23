@@ -287,7 +287,7 @@ const pages = state.images.map((i, idx) => ({
   id: `${idx}`,
   src: i.src,
   isActive: idx === state.selectedImage,
-  pageNumber: i?.metadata?.find(md => md.key === "page").value || null,
+  pageNumber: i?.metadata?.find(md => md.key === "pageNumber")?.value || null,
   metadata: i.metadata || []
 }))
 

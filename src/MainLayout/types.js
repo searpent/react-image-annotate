@@ -28,6 +28,12 @@ export type Metadata = {
   value: string
 }
 
+export type MetadataConfig = {
+  key: string,
+  level: string,
+  options: Array<string>
+}
+
 export type Image = {
   src: string,
   thumbnailSrc?: string,

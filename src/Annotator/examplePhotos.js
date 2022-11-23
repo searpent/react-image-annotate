@@ -839,11 +839,43 @@ const examplePhotos = [
               "id": "346807506913198083"
             }
           ]
-        }
+        },
+        {
+          "modelFamily": "metadata-engine",
+          "name": "metadata-engine",
+          "results": [
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": {
+                "X1": 0,
+                "X2": 1,
+                "Y1": 0,
+                "Y2": 1
+              },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\"}, {\"key\":\"section\",\"value\":\"editorial\"}]",
+              "groupId": "0",
+              "id": "aba453dd-f870-4510-ae40-a19eb52eb7d6"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": {
+                "X1": 0,
+                "X2": 1,
+                "Y1": 0,
+                "Y2": 1
+              },
+              "text": "[{\"key\":\"articleType\",\"value\":\"ads\"}, {\"key\":\"section\",\"value\":\"last page\"}]",
+              "groupId": "1",
+              "id": "aba453dd-f870-4510-ae40-a19eb52eb7d6"
+            },
+          ]
+        },
       ]
     },
     "metadata": [{
-      "key": "page",
+      "key": "pageNumber",
       "value": "1"
     }, {
       "key": "section",
@@ -1450,7 +1482,7 @@ const examplePhotos = [
       ]
     },
     "metadata": [{
-      "key": "page",
+      "key": "pageNumber",
       "value": "2"
     }]
   },
@@ -2233,7 +2265,7 @@ const examplePhotos = [
       ]
     },
     "metadata": [{
-      "key": "page",
+      "key": "pageNumber",
       "value": "3"
     }]
   },

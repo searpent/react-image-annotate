@@ -112,10 +112,35 @@ storiesOf("Annotator", module)
             hideNotEditingLabel={true}
             showEditor={true}
             showPageSelector={true}
-            metadata={[{
-              key: "name", value: "Dennik Aha"
+            albumMetadata={[{
+              key: "issueNumber", value: "12"
             }, {
-              key: "released", value: "20/1/2022"
+              key: "issueType", value: "news"
+            }]}
+            metadataConfigs={[{
+              key: "issueNumber",
+              level: "album",
+              options: []
+            }, {
+              key: "issueType",
+              level: "album",
+              options: ['news', 'magazine', 'q&a']
+            }, {
+              key: "mutation",
+              level: "photo",
+              options: ['Morava', 'Slezsko', 'Cechy']
+            }, {
+              key: "pageNumber",
+              level: "photo",
+              options: []
+            }, {
+              key: "articleType",
+              level: "photo_metadata-engine",
+              options: ['news', 'ads', 'interview']
+            }, {
+              key: "section",
+              level: "photo_metadata-engine",
+              options: ['editorial', 'article', 'last page']
             }]}
             onSave={(d) => console.log("[onSave] triggered:", d)}
             onRecalc={() => console.log("[onRecalc] triggered:")}

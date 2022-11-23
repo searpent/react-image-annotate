@@ -16,40 +16,51 @@ type MetadataItemProps = {
 
 const MetadataItemDiv = styled("div")(({ theme }) => ({
   display: "flex",
-  flexDirection: "column",
-  marginBottom: "1rem",
+  flexDirection: "row",
+  marginBottom: ".5em",
   "& > label": {
     fontSize: "1rem",
-    marginBottom: ".5rem",
+    marginBottom: ".5em",
     textTransform: "capitalize"
+  },
+  label: {
+    width: "50%",
   }
 }))
 
-const MetadataItem = ({ name, value, imageIndex, onChange }: MetadataItemProps) => {
+const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConfig = {} }: MetadataItemProps) => {
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
     onChange({
       name,
       value,
-      imageIndex
+      imageIndex,
+      groupId
     })
   }
 
   return (
     <MetadataItemDiv>
       <label for={name}>{name}</label>
-      <input type="text" value={value} name={name} onChange={handleChange} />
+      <div>
+        <input type="text" value={value} name={name} onChange={handleChange} id={name} list={`${name}-list`} />
+        <datalist id={`${name}-list`}>
+          {
+            metadataConfig?.options?.map(opt => <option key={opt} value={opt}></option>)
+          }
+        </datalist>
+      </div>
     </MetadataItemDiv>
   )
 }
 
-const MetadataList = ({ title, metadata, imageIndex, onMetadataChange }) => (
+const MetadataList = ({ title, metadata, imageIndex, onMetadataChange, metadataConfigs = [], groupId }) => (
   <div>
     <h2>{title}</h2>
     {
       metadata && metadata.map(({ key, value }) => (
-        <MetadataItem name={key} value={value} imageIndex={imageIndex} onChange={onMetadataChange} />
+        <MetadataItem name={key} value={value} imageIndex={imageIndex} groupId={groupId} onChange={onMetadataChange} metadataConfig={metadataConfigs.find(i => i.key === key)} />
       ))
     }
   </div>
@@ -72,7 +83,18 @@ const DivContainer = styled("div")(({ theme }) => ({
 }))
 
 export const MetadataEditorSidebarBox = ({ state, onMetadataChange }) => {
+  const metadataConfigs = state.metadataConfigs || [];
+  const selectedPhotoMetadata = state?.images[state.selectedImage]?.metadata;
+  let selectedGroupId = state?.images[state.selectedImage]?.regions?.find(r => r.highlighted === true)?.groupId;
+  let articleMetadata = [];
 
+  if (selectedGroupId !== undefined) {
+    const articleMetadataRegion = state?.images[state.selectedImage].regions.find(r => r.cls === 'metadata' && `${r.groupId}` === selectedGroupId)
+    if (articleMetadataRegion) {
+      const metadata = JSON.parse(articleMetadataRegion.text)
+      articleMetadata = metadata
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,14 +103,20 @@ export const MetadataEditorSidebarBox = ({ state, onMetadataChange }) => {
         icon={<DescriptionIcon style={{ color: grey[700] }} />}
         expandedByDefault={true}
       >
-        <DivContainer>
-          <MetadataList title="Global" metadata={state.metadata} onMetadataChange={onMetadataChange} />
+        <DivContainer style={{
+          height: "600px",
+        }}>
           {
-            state?.images[state.selectedImage]?.metadata && (
-              <MetadataList title="Local" metadata={state.images[state.selectedImage].metadata} imageIndex={state.selectedImage} onMetadataChange={onMetadataChange} />
+            articleMetadata.length > 0 && (
+              <MetadataList title="Article" metadata={articleMetadata} imageIndex={state.selectedImage} groupId={selectedGroupId} onMetadataChange={onMetadataChange} metadataConfigs={metadataConfigs.filter(mfc => mfc.level === 'photo_metadata-engine')} />
             )
           }
-
+          {
+            selectedPhotoMetadata && (
+              <MetadataList title="Page" metadata={selectedPhotoMetadata} imageIndex={state.selectedImage} onMetadataChange={onMetadataChange} metadataConfigs={metadataConfigs.filter(mfc => mfc.level === 'photo')} />
+            )
+          }
+          <MetadataList title="Issue" metadata={state.albumMetadata} onMetadataChange={onMetadataChange} id="metadata-album" metadataConfigs={metadataConfigs.filter(mfc => mfc.level === 'album')} />
         </DivContainer>
       </SidebarBoxContainer>
     </ThemeProvider>

@@ -993,27 +993,54 @@ export default (state: MainLayoutState, action: Action) => {
       )
     }
     case "UPDATE_METADATA": {
-      const { name, value, imageIndex } = action;
+      const { name, value, imageIndex, groupId } = action;
       if (isNaN(imageIndex)) {
-        // update global metadata
-        const metadataIndex = state.metadata?.findIndex(mt => mt.key === name)
+        // update global/album metadata
+        const metadataIndex = state.albumMetadata?.findIndex(mt => mt.key === name)
         if (metadataIndex < 0) {
           console.error(`can't find metadata by key "${name}"`)
           return
         }
         return setIn(
           state,
-          ["metadata", metadataIndex],
+          ["albumMetadata", metadataIndex],
           {
             key: name,
             value: value
           }
         )
       } else {
-        // update local metadata of imageIndex
+        // update metadata of article
+        if (!isNaN(groupId)) {
+          const articleMetadataRegionIdx = state.images[imageIndex]?.regions.findIndex(r => r.cls === 'metadata' && r.groupId === groupId)
+          if (articleMetadataRegionIdx < 0) {
+            console.error(`can't find article metadata for goupId "${groupId}"`)
+            return
+          }
+
+          const articleRegionToUpdate = state.images[imageIndex]?.regions[articleMetadataRegionIdx]
+          const articleMetadata = JSON.parse(articleRegionToUpdate.text)
+          const toBeUpdatedMetadataIdx = articleMetadata.findIndex(i => i.key === name)
+          if (toBeUpdatedMetadataIdx < 0) {
+            console.error(`can't find metadata field in article metadata for key "${name}"`)
+            return
+          }
+
+          articleMetadata[toBeUpdatedMetadataIdx].value = value
+          return setIn(
+            state,
+            ["images", imageIndex, "regions", articleMetadataRegionIdx],
+            {
+              ...articleRegionToUpdate,
+              text: JSON.stringify(articleMetadata)
+            }
+          )
+        }
+
+        // update metadata of image
         const metadataIndex = state.images[imageIndex]?.metadata?.findIndex(mt => mt.key === name)
         if (metadataIndex < 0) {
-          console.error(`can't find metadata by key "${name}"`)
+          console.error(`can't find photo metadata by key "${name}"`)
           return
         }
         return setIn(
