@@ -271,7 +271,8 @@ const nextImageHasRegions =
 
 // Editor.js blocks
 const selectedGroupId = state.images[state.selectedImage]?.selectedGroupId || null;
-const editorBlocks = regionsToBlocks(state.images[state.selectedImage]?.regions || []);
+const extractionEngineRegions = (state.images[state.selectedImage]?.regions || []).filter(r => r.cls !== 'metadata')
+const editorBlocks = regionsToBlocks(extractionEngineRegions);
 const blocks = editorBlocks.filter(i => i?.data?.groupId === selectedGroupId);
 
 const handleEditorChange = ({ imageIndex, data }) => {
