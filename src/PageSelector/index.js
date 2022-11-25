@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from "classnames"
 import './page-selector.css';
 
-function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, onMetadataChange }) {
+function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, onMetadataChange, metadataConfigs = [] }) {
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
@@ -39,7 +39,12 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
         {
           metadata.map(({ key, value }) => (<>
             <label for={key}>{key}</label>
-            <input type="text" value={value} name={key} onChange={handleChange} onClick={e => e.stopPropagation()} />
+            <input type="text" value={value} name={key} onChange={handleChange} onClick={e => e.stopPropagation()} id={key} list={`${key}-list`} />
+            <datalist id={`${key}-list`}>
+              {
+                metadataConfigs.find(mcf => mcf.key === key)?.options.map(opt => <option key={opt} value={opt}></option>)
+              }
+            </datalist>
           </>))
         }
       </div>
@@ -47,7 +52,7 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
   );
 }
 
-function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive, onMetadataChange }) {
+function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive, onMetadataChange, metadataConfigs }) {
   const [showMetadata, setShowMetadata] = useState(false);
 
   return (
@@ -76,6 +81,7 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
             showMetadata={showMetadata}
             imageIndex={page.id}
             onMetadataChange={onMetadataChange}
+            metadataConfigs={metadataConfigs}
           />
         ))
         }
@@ -99,7 +105,12 @@ PageSelector.propTypes = {
   recalcActive: PropTypes.bool,
   saveActive: PropTypes.bool,
   pageNumber: PropTypes.string,
-  onMetadataChange: PropTypes.func.isRequired
+  onMetadataChange: PropTypes.func.isRequired,
+  metadataConfigs: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    level: PropTypes.string.isRequired,
+    options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }))
 };
 
 PageSelector.defaultProps = {

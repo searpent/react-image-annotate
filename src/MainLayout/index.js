@@ -326,7 +326,7 @@ return (
           }}>
             {
               showPageSelector && (
-                <PageSelector pages={pages} onPageClick={handlePageClick} onRecalc={onRecalc} onSave={onSave} saveActive={saveActive} recalcActive={recalcActive} onMetadataChange={onMetadataChange} />
+                <PageSelector pages={pages} onPageClick={handlePageClick} onRecalc={onRecalc} onSave={onSave} saveActive={saveActive} recalcActive={recalcActive} onMetadataChange={onMetadataChange} metadataConfigs={state.metadataConfigs || []} />
               )
             }
             <WorkspaceWrapper >
