@@ -14,7 +14,7 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
     })
   }
 
-  const pageNumber = metadata?.find?.(md => md.key === 'page')?.value
+  const pageNumber = metadata?.find?.(md => md.key === 'pageNumber')?.value
 
   return (
     <div
