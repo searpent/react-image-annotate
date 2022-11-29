@@ -999,7 +999,7 @@ export default (state: MainLayoutState, action: Action) => {
         const metadataIndex = state.albumMetadata?.findIndex(mt => mt.key === name)
         if (metadataIndex < 0) {
           console.error(`can't find metadata by key "${name}"`)
-          return
+          return state;
         }
         return setIn(
           state,
@@ -1011,7 +1011,7 @@ export default (state: MainLayoutState, action: Action) => {
         )
       } else {
         // update metadata of article
-        if (!isNaN(groupId)) {
+        if (groupId) {
           const articleMetadataRegionIdx = state.images[imageIndex]?.regions.findIndex(r => r.cls === 'metadata' && r.groupId === groupId)
           if (articleMetadataRegionIdx < 0) {
             console.error(`can't find article metadata for goupId "${groupId}"`)
