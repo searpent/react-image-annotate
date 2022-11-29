@@ -1015,7 +1015,7 @@ export default (state: MainLayoutState, action: Action) => {
           const articleMetadataRegionIdx = state.images[imageIndex]?.regions.findIndex(r => r.cls === 'metadata' && r.groupId === groupId)
           if (articleMetadataRegionIdx < 0) {
             console.error(`can't find article metadata for goupId "${groupId}"`)
-            return
+            return state
           }
 
           const articleRegionToUpdate = state.images[imageIndex]?.regions[articleMetadataRegionIdx]
@@ -1023,7 +1023,7 @@ export default (state: MainLayoutState, action: Action) => {
           const toBeUpdatedMetadataIdx = articleMetadata.findIndex(i => i.key === name)
           if (toBeUpdatedMetadataIdx < 0) {
             console.error(`can't find metadata field in article metadata for key "${name}"`)
-            return
+            return state
           }
 
           articleMetadata[toBeUpdatedMetadataIdx].value = value
@@ -1041,7 +1041,7 @@ export default (state: MainLayoutState, action: Action) => {
         const metadataIndex = state.images[imageIndex]?.metadata?.findIndex(mt => mt.key === name)
         if (metadataIndex < 0) {
           console.error(`can't find photo metadata by key "${name}"`)
-          return
+          return state
         }
         return setIn(
           state,
