@@ -458,7 +458,7 @@ const examplePhotos = [
                 "Y2": 0.8037425
               },
               "text": "[{\"label\":\"title\",\"text\":\"Fotbal. Remíza s Ukrajinou\"}]",
-              "groupId": "0",
+              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
               "id": "346807503780052992"
             },
             {
@@ -471,7 +471,7 @@ const examplePhotos = [
                 "Y2": 0.95930564
               },
               "text": "[{\"label\":\"text\",\"text\":\"\"}]",
-              "groupId": "0",
+              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
               "id": "346807503780052993"
             },
             {
@@ -484,7 +484,7 @@ const examplePhotos = [
                 "Y2": 0.95930564
               },
               "text": "[{\"label\":\"author\",\"text\":\"ČTK\"}]",
-              "groupId": "0",
+              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
               "id": "346807503780052994"
             },
             {
@@ -854,7 +854,7 @@ const examplePhotos = [
                 "Y2": 1
               },
               "text": "[{\"key\":\"articleType\",\"value\":\"news\"}, {\"key\":\"section\",\"value\":\"editorial\"}]",
-              "groupId": "0",
+              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
               "id": "aba453dd-f870-4510-ae40-a19eb52eb7d6"
             },
             {

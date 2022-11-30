@@ -37,6 +37,15 @@ function defaultClsColor(cls) {
   }
 }
 
+function stringToNumber(str) {
+  let sum = 0
+  for (let index = 0; index < str.length; index++) {
+    sum += str.charCodeAt(index)
+
+  }
+  return sum
+}
+
 const useColors = () => {
   const { clsColors, groupColors } = useSettings()
 
@@ -47,7 +56,12 @@ const useColors = () => {
   }
 
   const groupColor = (idx) => {
-    return groupColors[idx % groupColors.length] || DEFAULT_GROUP_COLOR
+    if (isNaN(idx)) {
+      return groupColors[stringToNumber(idx) % groupColors.length] || DEFAULT_GROUP_COLOR
+    } else {
+      return groupColors[idx % groupColors.length] || DEFAULT_GROUP_COLOR
+    }
+
   }
 
   return {
