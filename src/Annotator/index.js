@@ -238,7 +238,7 @@ export const Annotator = ({
 
   // trigger this on every BBox manipulation (there is currently no way to detect adding of new box!)
   useEffect(() => {
-    if (!state.lastAction || !["BEGIN_BOX_TRANSFORM", "CHANGE_REGION", "DELETE_REGION", "UPDATE_METADATA", "SELECT_CLASSIFICATION"].includes(state.lastAction.type)) { return }
+    if (!state.lastAction || !["BEGIN_BOX_TRANSFORM", "CHANGE_REGION", "DELETE_REGION", "DELETE_SELECTED_REGION", "UPDATE_METADATA", "SELECT_CLASSIFICATION"].includes(state.lastAction.type)) { return }
     if (onImagesChange) {
       onImagesChange(state.images)
     }
