@@ -868,7 +868,7 @@ const examplePhotos = [
               },
               "text": "[{\"key\":\"articleType\",\"value\":\"ads\"}, {\"key\":\"section\",\"value\":\"last page\"}]",
               "groupId": "1",
-              "id": "aba453dd-f870-4510-ae40-a19eb52eb7d6"
+              "id": "2615bf87-7247-4bde-a0f9-45413034a6a6"
             },
           ]
         },
