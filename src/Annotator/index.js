@@ -205,15 +205,17 @@ export const Annotator = ({
   })
 
   const handleSaveClick = async (e) => {
+    const createdAt = new Date();
     e.preventDefault()
     if (onSave) {
       await onSave({
         images: state.images,
-        albumMetadata: state.albumMetadata
+        albumMetadata: state.albumMetadata,
+        createdAt,
       })
       dispatchToReducer({
         type: "IMAGES_SAVED",
-        savedAt: new Date()
+        savedAt: createdAt
       })
     }
   }
