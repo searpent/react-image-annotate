@@ -212,6 +212,7 @@ export const Annotator = ({
         images: state.images,
         albumMetadata: state.albumMetadata,
         createdAt,
+        selectedImage: state?.selectedImage,
       })
       dispatchToReducer({
         type: "IMAGES_SAVED",
