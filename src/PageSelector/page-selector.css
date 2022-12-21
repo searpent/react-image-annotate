@@ -49,6 +49,10 @@
   opacity: 1;
 }
 
+.ps-page-thumbnail-disabled {
+  pointer-events: none;
+}
+
 .ps-page-thumbnail-image-wrapper {
   width: 100px;
   height: 100%;

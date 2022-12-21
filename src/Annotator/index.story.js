@@ -79,6 +79,7 @@ storiesOf("Annotator", module)
             ]}
             help={`# Tools\n\n**E** - select tool\n\n**D** - frame tool\n\n**Ctrl** + **click frame** - edit frame\n\n**1**- **9** - change class`}
             onImagesChange={(images) => console.log("[images changed to]:", images)}
+            lockedImages={['0f2dc246-77ad-40ea-934b-90980c4f658a']}
             images={photosToImages(examplePhotos)}
             clsColors={{
               title: "#f70202",

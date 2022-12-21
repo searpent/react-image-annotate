@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from "classnames"
 import './page-selector.css';
+import Locker from '../Locker';
 
-function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, onMetadataChange, metadataConfigs = [] }) {
+function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, onMetadataChange, metadataConfigs = [], isLocked }) {
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
@@ -21,10 +22,16 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
       role="button"
       tabIndex={0}
       className={classnames('ps-page-thumbnail', {
-        'ps-page-thumbnail-is-active': isActive
+        'ps-page-thumbnail-is-active': isActive,
+        'ps-page-thumbnail-disabled': isLocked
       })}
       onClick={onClick}
     >
+      {
+        isLocked && (
+          <Locker />
+        )
+      }
       <div className="ps-page-thumbnail-image-wrapper">
         <img src={src} alt="" className="ps-page-thumbnail-image" />
         <div className="page-number-wrapper">
@@ -52,7 +59,7 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
   );
 }
 
-function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive, onMetadataChange, metadataConfigs }) {
+function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive, onMetadataChange, metadataConfigs, lockedImages = [] }) {
   const [showMetadata, setShowMetadata] = useState(false);
 
   return (
@@ -74,6 +81,7 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
         {pages.map((page, idx) => (
           <PageThumbnail
             key={`${page.id}`}
+            isLocked={lockedImages.includes(page.id)}
             src={page.src}
             isActive={page.isActive}
             onClick={() => onPageClick(idx)}

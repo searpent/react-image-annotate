@@ -39,6 +39,7 @@ import regionsToBlocks from '../utils/regions-to-blocks';
 import PageSelector from "../PageSelector"
 import regionsGroups from '../utils/regions-groups';
 import RightSidebarItemsWrapper from './RightSidebarItemsWrapper';
+import Locker from '../Locker';
 
 // import Fullscreen from "../Fullscreen"
 
@@ -96,7 +97,8 @@ type Props = {
   recalcActive?: boolean,
   saveActive?: boolean,
   onMetadataChange: (any) => any,
-  onAddGroup: (any) => any
+  onAddGroup: (any) => any,
+  lockedImages: Array<string>
 }
 
 export const MainLayout = ({
@@ -125,7 +127,8 @@ export const MainLayout = ({
   recalcActive = false,
   saveActive = false,
   onMetadataChange,
-  onAddGroup
+  onAddGroup,
+  lockedImages
 }: Props) => {
   const classes = useStyles()
   const settings = useSettings()
@@ -285,7 +288,7 @@ const handleEditorChange = ({ imageIndex, data }) => {
 }
 
 const pages = state.images.map((i, idx) => ({
-  id: `${idx}`,
+  id: `${i.id}`,
   src: i.src,
   isActive: idx === state.selectedImage,
   pageNumber: i?.metadata?.find(md => md.key === "pageNumber")?.value || null,
@@ -295,6 +298,8 @@ const pages = state.images.map((i, idx) => ({
 const handlePageClick = (pageIndex) => {
   dispatch({ type: "SELECT_IMAGE", imageIndex: pageIndex })
 }
+
+const isSelectedImageLocked = lockedImages.includes(state?.images[state.selectedImage]?.id)
 
 return (
   <ThemeProvider theme={theme}>
@@ -326,7 +331,7 @@ return (
           }}>
             {
               showPageSelector && (
-                <PageSelector pages={pages} onPageClick={handlePageClick} onRecalc={onRecalc} onSave={onSave} saveActive={saveActive} recalcActive={recalcActive} onMetadataChange={onMetadataChange} metadataConfigs={state.metadataConfigs || []} />
+                <PageSelector pages={pages} lockedImages={lockedImages} onPageClick={handlePageClick} onRecalc={onRecalc} onSave={onSave} saveActive={saveActive} recalcActive={recalcActive} onMetadataChange={onMetadataChange} metadataConfigs={state.metadataConfigs || []} />
               )
             }
             <WorkspaceWrapper >
@@ -444,6 +449,7 @@ return (
                   <RightSidebarItemsWrapper>
                     {
                       [
+                        isSelectedImageLocked && (<Locker />),
                         debugModeOn && (
                           <DebugBox state={debugModeOn} lastAction={state.lastAction} key="debug-box" />
                         ),
@@ -518,11 +524,14 @@ return (
                   </RightSidebarItemsWrapper>
                 ]}
               >
+                {
+                  isSelectedImageLocked && (<Locker />)
+                }
                 {canvas}
               </Workspace>
             </WorkspaceWrapper>
             {
-              (showEditor) && (
+              (showEditor && !isSelectedImageLocked) && (
                 <EditorWrapper id="editor-wrapper">
                   <Editor id="editor" blocks={blocks} imageIndex={state.selectedImage} key={`${state.selectedImage}#${selectedGroupId}`} onChange={handleEditorChange} />
                 </EditorWrapper>
