@@ -130,7 +130,7 @@ export const Annotator = ({
   onSave,
   albumMetadata,
   metadataConfigs,
-  lockedImages
+  lockedImages = []
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
