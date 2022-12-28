@@ -576,7 +576,7 @@ export default (state: MainLayoutState, action: Action) => {
         case "create-box": {
           let groupId = state?.images[state.selectedImage]?.regions?.find(r => r.highlighted === true)?.groupId;
           let groupSelected = true
-          if (isNaN(groupId)) {
+          if (groupId === undefined) {
             groupId = nextGroupId()
             groupSelected = false
           }
