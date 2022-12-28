@@ -87,7 +87,7 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
             onClick={() => onPageClick(idx)}
             metadata={page.metadata}
             showMetadata={showMetadata}
-            imageIndex={page.id}
+            imageIndex={idx}
             onMetadataChange={onMetadataChange}
             metadataConfigs={metadataConfigs}
           />
