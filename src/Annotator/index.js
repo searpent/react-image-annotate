@@ -223,10 +223,20 @@ export const Annotator = ({
     }
   }
 
-  const handleRecalcClick = (e) => {
+  const handleRecalcClick = async (e) => {
+    const createdAt = new Date();
     e.preventDefault()
     if (onRecalc) {
-      onRecalc()
+      await onRecalc({
+        images: state.images,
+        albumMetadata: state.albumMetadata,
+        createdAt,
+        selectedImage: state?.selectedImage,
+      })
+      dispatchToReducer({
+        type: "IMAGES_RECALCULATED",
+        recalculatedAt: createdAt
+      })
     }
   }
 

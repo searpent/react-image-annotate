@@ -992,6 +992,14 @@ export default (state: MainLayoutState, action: Action) => {
         savedAt
       )
     }
+    case "IMAGES_RECALCULATED": {
+      const { recalculatedAt } = action;
+      return setIn(
+        state,
+        ["imagesSavedAt"],
+        recalculatedAt
+      )
+    }
     case "UPDATE_METADATA": {
       const { name, value, imageIndex, groupId } = action;
       if (isNaN(imageIndex)) {
