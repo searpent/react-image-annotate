@@ -112,6 +112,7 @@ export default (state: MainLayoutState, action: Action) => {
 
   const setNewImage = (img: string | Object, index: number) => {
     let { src, frameTime } = typeof img === "object" ? img : { src: img }
+    state = setIn(state, ["previouslySelectedImage"], state.selectedImage)
     return setIn(
       setIn(state, ["selectedImage"], index),
       ["selectedImageFrameTime"],

@@ -145,6 +145,7 @@ storiesOf("Annotator", module)
             }]}
             onSave={(d) => console.log("[onSave] triggered:", d)}
             onRecalc={() => console.log("[onRecalc] triggered:")}
+            onSelectedImageChange={(d) => console.log("[onSelectedImageChange] triggered:", d)}
             onExit={(s) => console.log('[onExit] triggered:', s)}
           />
         </div>

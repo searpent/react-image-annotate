@@ -69,6 +69,7 @@ hideHeader ?: boolean,
   groupColors ?: Array < string >,
   onRecalc ?: (any) => any,
   onSave ?: (any) => any,
+  onSelectedImageChange ?: (any) => any,
   albumMetadata ?: Array < Metadata >,
   metadataConfigs ? : Array < MetadataConfig >,
   lockedImages ?: Array < string >
@@ -128,6 +129,7 @@ export const Annotator = ({
   groupColors,
   onRecalc,
   onSave,
+  onSelectedImageChange,
   albumMetadata,
   metadataConfigs,
   lockedImages = []
@@ -253,6 +255,20 @@ export const Annotator = ({
       group
     })
   }
+
+  // trigger onSelectedImageChange() hook when image changed
+  useEffect(() => {
+    const createdAt = new Date();
+    if (typeof onSelectedImageChange === 'function' && state.lastAction?.type === 'SELECT_IMAGE' && state?.selectedImage !== state.previouslySelectedImage) {
+      onSelectedImageChange({
+        selectedImage: state?.selectedImage,
+        previouslySelectedImage: state.previouslySelectedImage,
+        images: state.images,
+        albumMetadata: state.albumMetadata,
+        createdAt,
+      })
+    }
+  }, [state.previouslySelectedImage, state.selectedImage, onSelectedImageChange, state.images, state.albumMetadata, state])
 
   // trigger this on every BBox manipulation (there is currently no way to detect adding of new box!)
   useEffect(() => {
