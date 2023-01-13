@@ -3,6 +3,26 @@
  */
 import './annotation.css';
 
+function whitespaceCharactersToHTML(str = '') {
+  return str
+    // new line whitespace
+    .replaceAll(/[ ]\n[ ]/gm, '&nbsp;<br>&nbsp;') // space both sides adds &nbsp;
+    .replaceAll(/\n[ ]/gm, '<br>&nbsp;') // space right side adds &nbsp;
+    .replaceAll(/[ ]\n/gm, '&nbsp;<br>') // space left side adds &nbsp;
+    .replaceAll(/\n/gm, '<br>') // no spaces
+    // tab whitespace
+    .replaceAll(/\t/gm, '&nbsp;&nbsp;&nbsp;&nbsp;') // no spaces
+
+}
+
+function HTMLToWhitespaceCharacters(str = '') {
+  return str
+    .replaceAll(/((&nbsp;|\s){4})/gm, '\t')
+    .replaceAll('&nbsp;', ' ')
+    .replaceAll('<br>', '\n') // new line whitespace
+}
+
+
 // Possible classes
 // ================
 
@@ -79,7 +99,7 @@ class Annotation {
       data = {};
     }
 
-    newData.text = data.text || '';
+    newData.text = whitespaceCharactersToHTML(data.text)
     newData.labelName = data.labelName || this.defaultLabel.labelName;
 
     return newData;
@@ -211,7 +231,7 @@ class Annotation {
    */
   save(toolsContent) {
     return {
-      text: toolsContent.innerHTML,
+      text: HTMLToWhitespaceCharacters(toolsContent.innerHTML),
       labelName: this.currentLabel.labelName
     };
   }

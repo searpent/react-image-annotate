@@ -747,58 +747,19 @@ const examplePhotos = [
               "groupId": "5",
               "id": "346807506053365764"
             },
-            {
-              "label": "title",
-              "score": 0.99,
-              "box": {
-                "X1": 0.7056229,
-                "X2": 0.9718065,
-                "Y1": 0.049599823,
-                "Y2": 0.18825386
-              },
-              "text": "[{\"label\":\"title\",\"text\":\"Za lidská práva! Vadí Čína i Katar\"}]",
-              "groupId": "6",
-              "id": "346807506909003776"
-            },
-            {
-              "label": "text",
-              "score": 0.99,
-              "box": {
-                "X1": 0.70483536,
-                "X2": 0.7946133,
-                "Y1": 0.1657085,
-                "Y2": 0.53319806
-              },
-              "text": "[{\"label\":\"text\",\"text\":\"\"}]",
-              "groupId": "6",
-              "id": "346807506909003777"
-            },
-            {
-              "label": "text",
-              "score": 0.99,
-              "box": {
-                "X1": 0.7985509,
-                "X2": 0.8875413,
-                "Y1": 0.33028972,
-                "Y2": 0.53432536
-              },
-              "text": "[{\"label\":\"text\",\"text\":\"\"}]",
-              "groupId": "6",
-              "id": "346807506909003778"
-            },
-            {
-              "label": "text",
-              "score": 0.99,
-              "box": {
-                "X1": 0.89147896,
-                "X2": 0.98046935,
-                "Y1": 0.33028972,
-                "Y2": 0.53432536
-              },
-              "text": "[{\"label\":\"text\",\"text\":\"\"}]",
-              "groupId": "6",
-              "id": "346807506913198080"
-            },
+            // {
+            //   "label": "title",
+            //   "score": 0.99,
+            //   "box": {
+            //     "X1": 0.7056229,
+            //     "X2": 0.9718065,
+            //     "Y1": 0.049599823,
+            //     "Y2": 0.18825386
+            //   },
+            //   "text": "[{\"label\":\"title\",\"text\":\"Za lidská práva! Vadí Čína i Katar\"}]",
+            //   "groupId": "6",
+            //   "id": "346807506909003776"
+            // },
             {
               "label": "photo_caption",
               "score": 0.99,
@@ -808,36 +769,36 @@ const examplePhotos = [
                 "Y1": 0.25025365,
                 "Y2": 0.3415624
               },
-              "text": "[{\"label\":\"photo_caption\",\"text\":\"Protest z února v Indii proti konání ZOH v Pekingu\"}]",
+              "text": "[{\"label\":\"photo_caption\",\"text\":\"Protest n z února v Indii,\\n\\tpred proti v Pekingu.\"}]",
               "groupId": "6",
               "id": "346807506913198081"
-            },
-            {
-              "label": "photo_caption",
-              "score": 0.99,
-              "box": {
-                "X1": 0.80248857,
-                "X2": 0.95999366,
-                "Y1": 0.32127157,
-                "Y2": 0.34381694
-              },
-              "text": "[{\"label\":\"photo_caption\",\"text\":\"Protest z února v Indii proti konání ZOH v Pekingu\"}]",
-              "groupId": "6",
-              "id": "346807506913198082"
-            },
-            {
-              "label": "author",
-              "score": 0.99,
-              "box": {
-                "X1": 0.9584186,
-                "X2": 0.9733816,
-                "Y1": 0.51628906,
-                "Y2": 0.53319806
-              },
-              "text": "[{\"label\":\"author\",\"text\":\"PUR\"}]",
-              "groupId": "6",
-              "id": "346807506913198083"
             }
+            // {
+            //   "label": "photo_caption",
+            //   "score": 0.99,
+            //   "box": {
+            //     "X1": 0.80248857,
+            //     "X2": 0.95999366,
+            //     "Y1": 0.32127157,
+            //     "Y2": 0.34381694
+            //   },
+            //   "text": "[{\"label\":\"photo_caption\",\"text\":\"Protest z února v Indii proti konání ZOH v Pekingu\"}]",
+            //   "groupId": "6",
+            //   "id": "346807506913198082"
+            // },
+            // {
+            //   "label": "author",
+            //   "score": 0.99,
+            //   "box": {
+            //     "X1": 0.9584186,
+            //     "X2": 0.9733816,
+            //     "Y1": 0.51628906,
+            //     "Y2": 0.53319806
+            //   },
+            //   "text": "[{\"label\":\"author\",\"text\":\"PUR\"}]",
+            //   "groupId": "6",
+            //   "id": "346807506913198083"
+            // }
           ]
         },
         {
