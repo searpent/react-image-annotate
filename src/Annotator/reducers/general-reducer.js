@@ -110,6 +110,16 @@ export default (state: MainLayoutState, action: Action) => {
     )
   }
 
+  const addSaveableAction = (state: MainLayoutState, action: string) => {
+    if (currentImageIndex === null) return state
+    console.log("[addSaveableAction] action:", action, state.images[currentImageIndex].saveableActions)
+    return setIn(
+      state,
+      [...pathToActiveImage, "saveableActions"],
+      [...(activeImage.saveableActions || []), action]
+    )
+  }
+
   const setNewImage = (img: string | Object, index: number) => {
     let { src, frameTime } = typeof img === "object" ? img : { src: img }
     state = setIn(state, ["previouslySelectedImage"], state.selectedImage)
@@ -143,6 +153,7 @@ export default (state: MainLayoutState, action: Action) => {
         })
         state = setIn(state, [...pathToActiveImage, "regions"], newRegions)
       }
+      state = addSaveableAction(state, "SELECT_CLASSIFICATION")
       return setIn(state, ["selectedCls"], action.cls)
     }
     case "CHANGE_REGION": {
@@ -163,6 +174,7 @@ export default (state: MainLayoutState, action: Action) => {
       if (!isEqual(oldRegion.comment, action.region.comment)) {
         state = saveToHistory(state, "Change Region Comment")
       }
+      state = addSaveableAction(state, "CHANGE_REGION")
       return setIn(
         state,
         [...pathToActiveImage, "regions", regionIndex],
@@ -721,6 +733,7 @@ export default (state: MainLayoutState, action: Action) => {
               Math.abs(state.mode.original.x - x) < 0.002 ||
               Math.abs(state.mode.original.y - y) < 0.002
             ) {
+              state = addSaveableAction(state, "MOUSE_UP_RESIZE_BOX")
               return setIn(
                 modifyRegion(state.mode.regionId, null),
                 ["mode"],
@@ -729,6 +742,7 @@ export default (state: MainLayoutState, action: Action) => {
             }
           }
           if (state.mode.editLabelEditorAfter) {
+            state = addSaveableAction(state, "MOUSE_UP_RESIZE_BOX")
             return {
               ...modifyRegion(state.mode.regionId, { editingLabels: true }),
               mode: null,
@@ -738,6 +752,7 @@ export default (state: MainLayoutState, action: Action) => {
         case "MOVE_REGION":
         case "RESIZE_KEYPOINTS":
         case "MOVE_POLYGON_POINT": {
+          state = addSaveableAction(state, "MOUSE_UP_MOVE_REGION")
           return { ...state, mode: null }
         }
         case "MOVE_KEYPOINT": {
@@ -823,6 +838,7 @@ export default (state: MainLayoutState, action: Action) => {
       const regionIndex = getRegionIndex(action.region)
       if (regionIndex === null) return state
       state = saveToHistory(state, "Delete region")
+      state = addSaveableAction(state, "DELETE_REGION")
       return setIn(
         state,
         [...pathToActiveImage, "regions"],
@@ -833,6 +849,7 @@ export default (state: MainLayoutState, action: Action) => {
       const { groupId } = action
       if (groupId === null || groupId === undefined) return state
       state = saveToHistory(state, "Delete group")
+      state = addSaveableAction(state, "DELETE_REGION")
       return setIn(
         state,
         [...pathToActiveImage, "regions"],
@@ -971,6 +988,7 @@ export default (state: MainLayoutState, action: Action) => {
         }
       })
       // TODO: add mutation of order and deletion of regions - SI-1967
+      state = addSaveableAction(state, "UPDATE_REGIONS")
       return setIn(
         state,
         ["images", imageIndex, "regions"],
@@ -1010,6 +1028,7 @@ export default (state: MainLayoutState, action: Action) => {
           console.error(`can't find metadata by key "${name}"`)
           return state;
         }
+        state = addSaveableAction(state, "UPDATE_METADATA")
         return setIn(
           state,
           ["albumMetadata", metadataIndex],
@@ -1036,6 +1055,7 @@ export default (state: MainLayoutState, action: Action) => {
           }
 
           articleMetadata[toBeUpdatedMetadataIdx].value = value
+          state = addSaveableAction(state, "UPDATE_METADATA")
           return setIn(
             state,
             ["images", imageIndex, "regions", articleMetadataRegionIdx],
