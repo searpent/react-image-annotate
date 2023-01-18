@@ -42,7 +42,8 @@ export type Image = {
   pixelSize?: { w: number, h: number },
   realSize?: { w: number, h: number, unitName: string },
   frameTime?: number,
-  metadata?: Array<Metadata>
+  metadata?: Array<Metadata>,
+  lockedUntil?: string,
 }
 
 export type Mode =

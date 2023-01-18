@@ -59,6 +59,17 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
   );
 }
 
+function isLocked(page) {
+  const { lockedUntil } = page;
+
+  // needs to be defined and greater than current time
+  if (Date.parse(lockedUntil)?.valueOf() > new Date().valueOf()) {
+    return true
+  }
+
+  return false;
+}
+
 function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive, onMetadataChange, metadataConfigs }) {
   const [showMetadata, setShowMetadata] = useState(false);
 
@@ -81,7 +92,7 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
         {pages.map((page, idx) => (
           <PageThumbnail
             key={`${page.id}`}
-            isLocked={false}
+            isLocked={isLocked(page)}
             src={page.src}
             isActive={page.isActive}
             onClick={() => onPageClick(idx)}

@@ -844,7 +844,8 @@ const examplePhotos = [
     }, {
       "key": "mutation",
       "value": "hřensko"
-    }]
+    }],
+    "lockedUntil": "",
   },
   {
     "id": "431fc636-d6d1-4e20-a35b-cc7a201c1833",
@@ -1445,7 +1446,8 @@ const examplePhotos = [
     "metadata": [{
       "key": "pageNumber",
       "value": "2"
-    }]
+    }],
+    "lockedUntil": "2025-01-18T11:35:00.000Z",
   },
   {
     "id": "45f79ec8-fd2e-4ad8-82f6-007a2eec2b97",
@@ -2228,7 +2230,8 @@ const examplePhotos = [
     "metadata": [{
       "key": "pageNumber",
       "value": "3"
-    }]
+    }],
+    "lockedUntil": "",
   },
   {
     "id": "5494ea75-ec1b-4513-b23b-0b2eaa29b576",
