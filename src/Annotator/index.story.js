@@ -146,6 +146,15 @@ storiesOf("Annotator", module)
             onRecalc={() => console.log("[onRecalc] triggered:")}
             onSelectedImageChange={(d) => console.log("[onSelectedImageChange] triggered:", d)}
             onExit={(s) => console.log('[onExit] triggered:', s)}
+            saveImage={async (image, triggerRecalc) => {
+              return new Promise((resolve, reject) => {
+                console.log(`[saveImage] saving image ${image.id}...`)
+                setTimeout(() => {
+                  resolve({ result: "IMAGE_SAVED" })
+                }, 3000)
+              })
+            }}
+
           />
         </div>
       </div>

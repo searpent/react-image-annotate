@@ -15,6 +15,7 @@ import setInLocalStorage from "../../utils/set-in-local-storage"
 import onlyUnique from "../../utils/filter-only-unique"
 import regionsGroups from '../../utils/regions-groups';
 import nextGroupId from "../../utils/next-group-id"
+import defaultLockedUntil from "../../utils/default-locked-until"
 
 const getRandomId = () => Math.random().toString().split(".")[1]
 
@@ -1092,6 +1093,57 @@ export default (state: MainLayoutState, action: Action) => {
       //   ["allowedGroups"],
       //   newAllowedGroups
       // )
+    }
+    case "IMAGE_UPDATE_INIT": {
+      const { imageId } = action;
+      const imageIdx = state.images.findIndex(i => i.id === imageId);
+      if (imageIdx < 0) {
+        throw new Error(`failed to find index of image with id ${imageId}`)
+      }
+
+      return setIn(
+        state,
+        ["images", imageIdx],
+        {
+          ...state.images[imageIdx],
+          lockedUntil: defaultLockedUntil(),
+          syncError: null
+        }
+      )
+    }
+    case "IMAGE_UPDATE_SUCCESS": {
+      const { imageId } = action;
+      const imageIdx = state.images.findIndex(i => i.id === imageId);
+      if (imageIdx < 0) {
+        throw new Error(`failed to find index of image with id ${imageId}`)
+      }
+
+      return setIn(
+        state,
+        ["images", imageIdx],
+        {
+          ...state.images[imageIdx],
+          lockedUntil: null,
+          syncError: null
+        }
+      )
+    }
+    case "IMAGE_UPDATE_FAIL": {
+      const { imageId, error } = action;
+      const imageIdx = state.images.findIndex(i => i.id === imageId);
+      if (imageIdx < 0) {
+        throw new Error(`failed to find index of image with id ${imageId}`)
+      }
+
+      return setIn(
+        state,
+        ["images", imageIdx],
+        {
+          ...state.images[imageIdx],
+          lockedUntil: null,
+          syncError: error
+        }
+      )
     }
     default:
       break

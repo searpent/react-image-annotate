@@ -292,6 +292,7 @@ const pages = state.images.map((i, idx) => ({
   pageNumber: i?.metadata?.find(md => md.key === "pageNumber")?.value || null,
   metadata: i.metadata || [],
   lockedUntil: i.lockedUntil,
+  syncError: i.syncError || null,
 }))
 
 const handlePageClick = (pageIndex) => {

@@ -71,7 +71,8 @@ hideHeader ?: boolean,
   onSave ?: (any) => any,
   onSelectedImageChange ?: (any) => any,
   albumMetadata ?: Array < Metadata >,
-  metadataConfigs ? : Array < MetadataConfig >
+  metadataConfigs ? : Array < MetadataConfig >,
+  saveImage ?: (any) => any,
 }
 
 export const Annotator = ({
@@ -130,7 +131,8 @@ export const Annotator = ({
   onSave,
   onSelectedImageChange,
   albumMetadata,
-  metadataConfigs
+  metadataConfigs,
+  saveImage = () => { }
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -256,17 +258,32 @@ export const Annotator = ({
 
   // trigger onSelectedImageChange() hook when image changed
   useEffect(() => {
-    const createdAt = new Date();
-    if (typeof onSelectedImageChange === 'function' && state.lastAction?.type === 'SELECT_IMAGE' && state?.selectedImage !== state.previouslySelectedImage) {
-      onSelectedImageChange({
-        selectedImage: state?.selectedImage,
-        previouslySelectedImage: state.previouslySelectedImage,
-        images: state.images,
-        albumMetadata: state.albumMetadata,
-        createdAt,
-      })
+    const { selectedImage, previouslySelectedImage, lastAction } = state;
+    if (lastAction?.type === 'SELECT_IMAGE' && selectedImage !== previouslySelectedImage) {
+
+      const saveImageHandler = async (image) => {
+        dispatchToReducer({
+          type: "IMAGE_UPDATE_INIT",
+          imageId: image.id
+        })
+
+        try {
+          await saveImage(image);
+          dispatchToReducer({
+            type: "IMAGE_UPDATE_SUCCESS",
+            imageId: image.id
+          })
+        } catch (error) {
+          dispatchToReducer({
+            type: "IMAGE_UPDATE_FAIL",
+            imageId: image.id,
+            error
+          })
+        }
+      }
+      saveImageHandler({ ...state.images[previouslySelectedImage] })
     }
-  }, [state.previouslySelectedImage, state.selectedImage, onSelectedImageChange, state.images, state.albumMetadata, state])
+  }, [state.previouslySelectedImage, state.selectedImage, state.images, state, saveImage])
 
   // trigger this on every BBox manipulation (there is currently no way to detect adding of new box!)
   useEffect(() => {

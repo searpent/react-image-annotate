@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import classnames from "classnames"
 import './page-selector.css';
 import Locker from '../Locker';
+import Errorer from '../Errorer';
 
-function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, onMetadataChange, metadataConfigs = [], isLocked }) {
+function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, onMetadataChange, metadataConfigs = [], isLocked, error }) {
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
@@ -23,13 +24,18 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
       tabIndex={0}
       className={classnames('ps-page-thumbnail', {
         'ps-page-thumbnail-is-active': isActive,
-        'ps-page-thumbnail-disabled': isLocked
+        'ps-page-thumbnail-disabled': isLocked,
       })}
       onClick={onClick}
     >
       {
         isLocked && (
           <Locker />
+        )
+      }
+      {
+        error && (
+          <Errorer errorMessage={error.message} />
         )
       }
       <div className="ps-page-thumbnail-image-wrapper">
@@ -93,6 +99,7 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
           <PageThumbnail
             key={`${page.id}`}
             isLocked={isLocked(page)}
+            error={page.syncError}
             src={page.src}
             isActive={page.isActive}
             onClick={() => onPageClick(idx)}
