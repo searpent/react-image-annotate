@@ -59,7 +59,7 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
   );
 }
 
-function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive, onMetadataChange, metadataConfigs, lockedImages = [] }) {
+function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive, onMetadataChange, metadataConfigs }) {
   const [showMetadata, setShowMetadata] = useState(false);
 
   return (
@@ -81,7 +81,7 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
         {pages.map((page, idx) => (
           <PageThumbnail
             key={`${page.id}`}
-            isLocked={lockedImages.includes(page.id)}
+            isLocked={false}
             src={page.src}
             isActive={page.isActive}
             onClick={() => onPageClick(idx)}

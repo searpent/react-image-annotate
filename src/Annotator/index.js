@@ -71,8 +71,7 @@ hideHeader ?: boolean,
   onSave ?: (any) => any,
   onSelectedImageChange ?: (any) => any,
   albumMetadata ?: Array < Metadata >,
-  metadataConfigs ? : Array < MetadataConfig >,
-  lockedImages ?: Array < string >
+  metadataConfigs ? : Array < MetadataConfig >
 }
 
 export const Annotator = ({
@@ -131,8 +130,7 @@ export const Annotator = ({
   onSave,
   onSelectedImageChange,
   albumMetadata,
-  metadataConfigs,
-  lockedImages = []
+  metadataConfigs
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -327,7 +325,6 @@ export const Annotator = ({
         recalcActive={saveActive}
         onMetadataChange={handleMetadataChange}
         onAddGroup={handleAddGroup}
-        lockedImages={lockedImages}
       />
     </SettingsProvider>
   )
