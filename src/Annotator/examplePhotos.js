@@ -845,7 +845,7 @@ const examplePhotos = [
       "key": "mutation",
       "value": "hřensko"
     }],
-    "lockedUntil": "",
+    "lockedUntil": "2023-01-28T11:35:00.000Z",
   },
   {
     "id": "431fc636-d6d1-4e20-a35b-cc7a201c1833",
@@ -1447,7 +1447,7 @@ const examplePhotos = [
       "key": "pageNumber",
       "value": "2"
     }],
-    "lockedUntil": "2023-01-28T11:35:00.000Z",
+    "lockedUntil": null,
   },
   {
     "id": "45f79ec8-fd2e-4ad8-82f6-007a2eec2b97",

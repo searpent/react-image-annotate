@@ -92,8 +92,6 @@ type Props = {
   hideNotEditingLabel?: boolean,
   showEditor?: boolean,
   showPageSelector?: boolean,
-  onRecalc?: (any) => any,
-  onSave?: (any) => any,
   recalcActive?: boolean,
   saveActive?: boolean,
   onMetadataChange: (any) => any,
@@ -121,8 +119,6 @@ export const MainLayout = ({
   hideNotEditingLabel = false,
   showEditor = false,
   showPageSelector = false,
-  onRecalc = () => { },
-  onSave = () => { },
   recalcActive = false,
   saveActive = false,
   onMetadataChange,
@@ -299,7 +295,7 @@ const handlePageClick = (pageIndex) => {
   dispatch({ type: "SELECT_IMAGE", imageIndex: pageIndex })
 }
 
-const isSelectedImageLocked = false;
+const isSelectedImageLocked = state.images[state.selectedImage]?.lockedUntil ? true : false;
 
 return (
   <ThemeProvider theme={theme}>
@@ -331,7 +327,7 @@ return (
           }}>
             {
               showPageSelector && (
-                <PageSelector pages={pages} onPageClick={handlePageClick} onRecalc={onRecalc} onSave={onSave} saveActive={saveActive} recalcActive={recalcActive} onMetadataChange={onMetadataChange} metadataConfigs={state.metadataConfigs || []} />
+                <PageSelector pages={pages} onPageClick={handlePageClick} saveActive={saveActive} recalcActive={recalcActive} onMetadataChange={onMetadataChange} metadataConfigs={state.metadataConfigs || []} />
               )
             }
             <WorkspaceWrapper >

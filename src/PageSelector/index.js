@@ -76,7 +76,7 @@ function isLocked(page) {
   return false;
 }
 
-function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, saveActive, onMetadataChange, metadataConfigs }) {
+function PageSelector({ pages, onPageClick, recalcActive, saveActive, onMetadataChange, metadataConfigs }) {
   const [showMetadata, setShowMetadata] = useState(false);
 
   return (
@@ -84,8 +84,6 @@ function PageSelector({ pages, onPageClick, onRecalc, onSave, recalcActive, save
       'page-selector--opened': showMetadata,
     })}>
       <div className="top-buttons">
-        <button onClick={onRecalc} disabled={!recalcActive} className="info">Recalc</button>
-        <button onClick={onSave} disabled={!saveActive} className="success">Save</button>
         <div className="show-metadata-wrapper">
           <label className="switch mr-2">
             <input id="show-metadata" type="checkbox" value={showMetadata} onChange={() => setShowMetadata(prev => !prev)} />
@@ -126,8 +124,6 @@ PageSelector.propTypes = {
     })
   ).isRequired,
   onPageClick: PropTypes.func,
-  onRecalc: PropTypes.func,
-  onSave: PropTypes.func,
   recalcActive: PropTypes.bool,
   saveActive: PropTypes.bool,
   pageNumber: PropTypes.string,
@@ -141,8 +137,6 @@ PageSelector.propTypes = {
 
 PageSelector.defaultProps = {
   onPageClick: () => { },
-  onRecalc: () => { },
-  onSave: () => { },
   recalcActive: false,
   saveActive: false,
   pageNumber: undefined

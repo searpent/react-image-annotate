@@ -69,8 +69,6 @@ hideHeader ?: boolean,
   showPageSelector ?: boolean,
   clsColors ?: Object,
   groupColors ?: Array < string >,
-  onRecalc ?: (any) => any,
-  onSave ?: (any) => any,
   onSelectedImageChange ?: (any) => any,
   albumMetadata ?: Array < Metadata >,
   metadataConfigs ? : Array < MetadataConfig >,
@@ -130,8 +128,6 @@ export const Annotator = ({
   showPageSelector,
   clsColors = {},
   groupColors,
-  onRecalc,
-  onSave,
   onSelectedImageChange,
   albumMetadata,
   metadataConfigs,
@@ -212,40 +208,6 @@ export const Annotator = ({
       cls: cls,
     })
   })
-
-  const handleSaveClick = async (e) => {
-    const createdAt = new Date();
-    e.preventDefault()
-    if (onSave) {
-      await onSave({
-        images: state.images,
-        albumMetadata: state.albumMetadata,
-        createdAt,
-        selectedImage: state?.selectedImage,
-      })
-      dispatchToReducer({
-        type: "IMAGES_SAVED",
-        savedAt: createdAt
-      })
-    }
-  }
-
-  const handleRecalcClick = async (e) => {
-    const createdAt = new Date();
-    e.preventDefault()
-    if (onRecalc) {
-      await onRecalc({
-        images: state.images,
-        albumMetadata: state.albumMetadata,
-        createdAt,
-        selectedImage: state?.selectedImage,
-      })
-      dispatchToReducer({
-        type: "IMAGES_RECALCULATED",
-        recalculatedAt: createdAt
-      })
-    }
-  }
 
   const handleMetadataChange = (params) => {
     dispatchToReducer({
@@ -347,18 +309,6 @@ export const Annotator = ({
     }
   }, [fetchImage, state.toPollImages])
 
-  // // TODO: delete this when work done
-  // useEffect(() => {
-  //   if (!state.lastAction || !["BEGIN_BOX_TRANSFORM", "CHANGE_REGION", "DELETE_REGION", "DELETE_SELECTED_REGION", "UPDATE_METADATA", "SELECT_CLASSIFICATION"].includes(state.lastAction.type)) { return }
-  //   if (onImagesChange) {
-  //     onImagesChange(state.images)
-  //   }
-  //   dispatchToReducer({
-  //     type: "IMAGES_UPDATED",
-  //     updatedAt: new Date()
-  //   })
-  // }, [onImagesChange, state.images, state.lastAction])
-
   useEffect(() => {
     if (selectedImage === undefined) return
     dispatchToReducer({
@@ -398,8 +348,6 @@ export const Annotator = ({
         hideNotEditingLabel={hideNotEditingLabel}
         showEditor={showEditor}
         showPageSelector={showPageSelector}
-        onRecalc={handleRecalcClick}
-        onSave={handleSaveClick}
         saveActive={recalcActive}
         recalcActive={saveActive}
         onMetadataChange={handleMetadataChange}

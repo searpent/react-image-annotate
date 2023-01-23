@@ -143,8 +143,6 @@ storiesOf("Annotator", module)
               level: "photo_metadata-engine",
               options: ['editorial', 'article', 'last page']
             }]}
-            onSave={(d) => console.log("[onSave] triggered:", d)} // TODO: delete this
-            onRecalc={() => console.log("[onRecalc] triggered:")} // TODO: delete this
             onSelectedImageChange={(d) => console.log("[onSelectedImageChange] triggered:", d)}
             onExit={(s) => console.log('[onExit] triggered:', s)}
             save={async ({ image, triggerRecalc, albumMetadata }) => {
