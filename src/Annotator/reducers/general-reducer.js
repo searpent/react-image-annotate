@@ -4,6 +4,7 @@ import { moveRegion } from "../../ImageCanvas/region-tools.js"
 import { getIn, setIn, updateIn } from "seamless-immutable"
 import moment from "moment"
 import isEqual from "lodash/isEqual"
+import uniq from "lodash/uniq"
 import getActiveImage from "./get-active-image"
 import { saveToHistory } from "./history-handler.js"
 import colors from "../../colors"
@@ -113,7 +114,6 @@ export default (state: MainLayoutState, action: Action) => {
 
   const addSaveableAction = (state: MainLayoutState, action: string) => {
     if (currentImageIndex === null) return state
-    console.log("[addSaveableAction] action:", action, state.images[currentImageIndex].saveableActions)
     return setIn(
       state,
       [...pathToActiveImage, "saveableActions"],
@@ -850,7 +850,7 @@ export default (state: MainLayoutState, action: Action) => {
       const { groupId } = action
       if (groupId === null || groupId === undefined) return state
       state = saveToHistory(state, "Delete group")
-      state = addSaveableAction(state, "DELETE_REGION")
+      state = addSaveableAction(state, "DELETE_GROUP")
       return setIn(
         state,
         [...pathToActiveImage, "regions"],
@@ -1029,7 +1029,7 @@ export default (state: MainLayoutState, action: Action) => {
           console.error(`can't find metadata by key "${name}"`)
           return state;
         }
-        state = addSaveableAction(state, "UPDATE_METADATA")
+        state = addSaveableAction(state, "UPDATE_ALBUM_METADATA")
         return setIn(
           state,
           ["albumMetadata", metadataIndex],
@@ -1073,6 +1073,7 @@ export default (state: MainLayoutState, action: Action) => {
           console.error(`can't find photo metadata by key "${name}"`)
           return state
         }
+        state = addSaveableAction(state, "UPDATE_METADATA")
         return setIn(
           state,
           ["images", imageIndex, "metadata", metadataIndex],
@@ -1107,15 +1108,21 @@ export default (state: MainLayoutState, action: Action) => {
         {
           ...state.images[imageIdx],
           lockedUntil: defaultLockedUntil(),
-          syncError: null
+          syncError: null,
+          saveableActions: [],
         }
       )
     }
     case "IMAGE_UPDATE_SUCCESS": {
-      const { imageId } = action;
+      const { imageId, lockedUntil } = action;
       const imageIdx = state.images.findIndex(i => i.id === imageId);
       if (imageIdx < 0) {
         throw new Error(`failed to find index of image with id ${imageId}`)
+      }
+
+      // if there is lockedUntil set, it means we need to poll for updated
+      if (lockedUntil) {
+        state = setIn(state, ["toPollImages"], uniq([...state.toPollImages, imageId]))
       }
 
       return setIn(
@@ -1123,7 +1130,7 @@ export default (state: MainLayoutState, action: Action) => {
         ["images", imageIdx],
         {
           ...state.images[imageIdx],
-          lockedUntil: null,
+          lockedUntil,
           syncError: null
         }
       )
@@ -1142,6 +1149,45 @@ export default (state: MainLayoutState, action: Action) => {
           ...state.images[imageIdx],
           lockedUntil: null,
           syncError: error
+        }
+      )
+    }
+    case "IMAGE_POLL_INIT": {
+      const { imageIds } = action;
+      return setIn(state, ["toPollImages"], state.toPollImages.filter(i => !imageIds.includes(i)))
+    }
+    case "IMAGE_POLL_SUCCESS": {
+      const { image } = action;
+      const imageIdx = state.images.findIndex(i => i.id === image.id);
+      if (imageIdx < 0) {
+        throw new Error(`failed to find index of image with id ${image.id}`)
+      }
+
+      return setIn(
+        state,
+        ["images", imageIdx],
+        {
+          ...state.images[imageIdx],
+          lockedUntil: null,
+          syncError: null,
+          ...image
+        }
+      )
+    }
+    case "IMAGE_POLL_TIMEOUT": {
+      const { imageId } = action;
+      const imageIdx = state.images.findIndex(i => i.id === imageId);
+      if (imageIdx < 0) {
+        throw new Error(`failed to find index of image with id ${imageId}`)
+      }
+
+      return setIn(
+        state,
+        ["images", imageIdx],
+        {
+          ...state.images[imageIdx],
+          lockedUntil: null,
+          syncError: new Error(`polling timeout`)
         }
       )
     }

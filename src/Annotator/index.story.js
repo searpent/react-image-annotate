@@ -15,6 +15,7 @@ import Annotator from "./"
 import { testRegions, testRegionsBoxes } from "../ImageCanvas/index.story"
 import photosToImages from "../utils/photosToImages"
 import examplePhotos from "./examplePhotos"
+import exampleImages from './exampleImages';
 
 const middlewares = [
   (store) => (next) => (action) => {
@@ -142,19 +143,35 @@ storiesOf("Annotator", module)
               level: "photo_metadata-engine",
               options: ['editorial', 'article', 'last page']
             }]}
-            onSave={(d) => console.log("[onSave] triggered:", d)}
-            onRecalc={() => console.log("[onRecalc] triggered:")}
+            onSave={(d) => console.log("[onSave] triggered:", d)} // TODO: delete this
+            onRecalc={() => console.log("[onRecalc] triggered:")} // TODO: delete this
             onSelectedImageChange={(d) => console.log("[onSelectedImageChange] triggered:", d)}
             onExit={(s) => console.log('[onExit] triggered:', s)}
-            saveImage={async (image, triggerRecalc) => {
+            save={async ({ image, triggerRecalc, albumMetadata }) => {
+              console.log(`[SYNC] image ${image.id} saving...  recalc: ${triggerRecalc} albumMetadata: ${albumMetadata.length}`)
               return new Promise((resolve, reject) => {
-                console.log(`[saveImage] saving image ${image.id}...`)
                 setTimeout(() => {
-                  resolve({ result: "IMAGE_SAVED" })
+                  let lockedUntil = null;
+                  if (triggerRecalc) {
+                    var now = new Date();
+                    now.setSeconds(now.getSeconds() + 60);
+                    lockedUntil = now
+                  }
+                  resolve({ lockedUntil })
                 }, 3000)
               })
             }}
-
+            fetchImage={async ({ imageId }) => {
+              console.log(`[SYNC] image ${imageId} fetching...`)
+              return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  console.log(`[SYNC] image ${imageId} fetched`,)
+                  resolve({
+                    image: { ...exampleImages[0], lockedUntil: null, id: imageId }
+                  })
+                }, 5000)
+              })
+            }}
           />
         </div>
       </div>
