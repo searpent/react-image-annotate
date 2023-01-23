@@ -166,6 +166,9 @@ storiesOf("Annotator", module)
               return new Promise((resolve, reject) => {
                 setTimeout(() => {
                   console.log(`[SYNC] image ${imageId} fetched`,)
+                  // resolve({
+                  //   image: { ...exampleImages[0], lockedUntil: new Date().toISOString(), id: imageId }
+                  // })
                   resolve({
                     image: { ...exampleImages[0], lockedUntil: null, id: imageId }
                   })

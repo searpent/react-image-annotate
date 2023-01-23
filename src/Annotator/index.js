@@ -11,7 +11,7 @@ import type {
 } from "../MainLayout/types"
 import React, { useEffect, useReducer } from "react"
 import makeImmutable, { without } from "seamless-immutable"
-
+import intersection from "lodash/intersection"
 import type { KeypointsDefinition } from "../ImageCanvas/region-tools"
 import MainLayout from "../MainLayout"
 import type { Node } from "react"
@@ -23,6 +23,8 @@ import historyHandler from "./reducers/history-handler.js"
 import imageReducer from "./reducers/image-reducer.js"
 import useEventCallback from "use-event-callback"
 import videoReducer from "./reducers/video-reducer.js"
+import { reacalcActionsEnum } from "../utils/saveable-actions-enum"
+import sleep from '../utils/sleep';
 
 type Props = {
   taskDescription?: string,
@@ -72,7 +74,8 @@ hideHeader ?: boolean,
   onSelectedImageChange ?: (any) => any,
   albumMetadata ?: Array < Metadata >,
   metadataConfigs ? : Array < MetadataConfig >,
-  saveImage ?: (any) => any,
+  save : (any) => any,
+    fetchImage : (any) => any,
 }
 
 export const Annotator = ({
@@ -132,7 +135,8 @@ export const Annotator = ({
   onSelectedImageChange,
   albumMetadata,
   metadataConfigs,
-  saveImage = () => { }
+  save = () => { },
+  fetchImage = () => { },
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -184,7 +188,8 @@ export const Annotator = ({
       imagesUpdatedAt: null,
       imagesSavedAt: null,
       albumMetadata,
-      metadataConfigs
+      metadataConfigs,
+      toPollImages: [...images.filter(i => i.lockedUntil).map(i => i.id)],
     })
   )
 
@@ -256,46 +261,103 @@ export const Annotator = ({
     })
   }
 
-  // trigger onSelectedImageChange() hook when image changed
+  // trigger save and recalc
   useEffect(() => {
     const { selectedImage, previouslySelectedImage, lastAction } = state;
     if (lastAction?.type === 'SELECT_IMAGE' && selectedImage !== previouslySelectedImage) {
 
-      const saveImageHandler = async (image) => {
+      // metadata on album level
+      const saveHandler = async (image, triggerRecalc, albumMetadata) => {
         dispatchToReducer({
           type: "IMAGE_UPDATE_INIT",
           imageId: image.id
         })
 
         try {
-          await saveImage(image);
+          const { lockedUntil } = await save({ image, triggerRecalc, albumMetadata });
           dispatchToReducer({
             type: "IMAGE_UPDATE_SUCCESS",
-            imageId: image.id
+            imageId: image.id,
+            lockedUntil,
           })
         } catch (error) {
           dispatchToReducer({
             type: "IMAGE_UPDATE_FAIL",
             imageId: image.id,
-            error
+            error,
           })
         }
       }
-      saveImageHandler({ ...state.images[previouslySelectedImage] })
-    }
-  }, [state.previouslySelectedImage, state.selectedImage, state.images, state, saveImage])
 
-  // trigger this on every BBox manipulation (there is currently no way to detect adding of new box!)
-  useEffect(() => {
-    if (!state.lastAction || !["BEGIN_BOX_TRANSFORM", "CHANGE_REGION", "DELETE_REGION", "DELETE_SELECTED_REGION", "UPDATE_METADATA", "SELECT_CLASSIFICATION"].includes(state.lastAction.type)) { return }
-    if (onImagesChange) {
-      onImagesChange(state.images)
+      // save if previously selected image has any changes
+      if (state.images[previouslySelectedImage]?.saveableActions?.length > 0) {
+        // decide wheather recalc is needed
+        const triggerRecalc = intersection(reacalcActionsEnum, state.images[previouslySelectedImage].saveableActions).length > 0;
+
+        // decide wheather album metadata should be updated
+        let toSaveMetadata = [];
+        if (state.images[previouslySelectedImage]?.saveableActions?.includes("UPDATE_ALBUM_METADATA")) {
+          toSaveMetadata = state.albumMetadata
+        }
+
+        // save image
+        saveHandler({ ...state.images[previouslySelectedImage] }, triggerRecalc, toSaveMetadata)
+      }
     }
-    dispatchToReducer({
-      type: "IMAGES_UPDATED",
-      updatedAt: new Date()
-    })
-  }, [onImagesChange, state.images, state.lastAction])
+  }, [state.previouslySelectedImage, state.selectedImage, state.images, state, save])
+
+  // polling of images
+  useEffect(() => {
+    if (state.toPollImages.length > 0) {
+      const polledImages = state.toPollImages.reduce((acc, imageId) => {
+
+        async function pollImage(fetchImage, imageId, tries = 5) {
+          if (tries === 0) {
+            dispatchToReducer({
+              type: "IMAGE_POLL_TIMEOUT",
+              imageId,
+            })
+            return;
+          }
+
+          const { image } = await fetchImage({ imageId });
+          if (!image.lockedUntil) {
+            dispatchToReducer({
+              type: "IMAGE_POLL_SUCCESS",
+              image,
+            })
+            return;
+          }
+
+          await sleep(5000);
+
+          return await pollImage(fetchImage, imageId, tries - 1);
+        }
+
+        // make recursive calling of polling function
+        pollImage(fetchImage, imageId, 10);
+
+        return imageId;
+      }, [])
+
+      dispatchToReducer({
+        type: "IMAGE_POLL_INIT",
+        imageIds: polledImages
+      })
+    }
+  }, [fetchImage, state.toPollImages])
+
+  // // TODO: delete this when work done
+  // useEffect(() => {
+  //   if (!state.lastAction || !["BEGIN_BOX_TRANSFORM", "CHANGE_REGION", "DELETE_REGION", "DELETE_SELECTED_REGION", "UPDATE_METADATA", "SELECT_CLASSIFICATION"].includes(state.lastAction.type)) { return }
+  //   if (onImagesChange) {
+  //     onImagesChange(state.images)
+  //   }
+  //   dispatchToReducer({
+  //     type: "IMAGES_UPDATED",
+  //     updatedAt: new Date()
+  //   })
+  // }, [onImagesChange, state.images, state.lastAction])
 
   useEffect(() => {
     if (selectedImage === undefined) return
