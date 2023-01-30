@@ -5,7 +5,7 @@ import './page-selector.css';
 import Locker from '../Locker';
 import Errorer from '../Errorer';
 
-function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, onMetadataChange, metadataConfigs = [], isLocked, error }) {
+function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, imageId, onMetadataChange, metadataConfigs = [], isLocked, error, onRecalcClick, isRecalcReady = false }) {
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
@@ -14,6 +14,11 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
       value,
       imageIndex
     })
+  }
+
+  const handleRecalcClick = e => {
+    e.stopPropagation();
+    onRecalcClick({ imageId })
   }
 
   const pageNumber = metadata?.find?.(md => md.key === 'pageNumber')?.value
@@ -39,6 +44,13 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
         )
       }
       <div className="ps-page-thumbnail-image-wrapper">
+        {
+          isRecalcReady && (
+            <div className="ps-page-thumbnail-recalc-wrapper">
+              <button className="recalc-button" onClick={handleRecalcClick}>Extract</button>
+            </div>
+          )
+        }
         <img src={src} alt="" className="ps-page-thumbnail-image" />
         <div className="page-number-wrapper">
           {
@@ -76,7 +88,7 @@ function isLocked(page) {
   return false;
 }
 
-function PageSelector({ pages, onPageClick, recalcActive, saveActive, onMetadataChange, metadataConfigs }) {
+function PageSelector({ pages, onPageClick, onMetadataChange, metadataConfigs, onRecalcClick }) {
   const [showMetadata, setShowMetadata] = useState(false);
 
   return (
@@ -104,8 +116,11 @@ function PageSelector({ pages, onPageClick, recalcActive, saveActive, onMetadata
             metadata={page.metadata}
             showMetadata={showMetadata}
             imageIndex={idx}
+            imageId={page.id}
             onMetadataChange={onMetadataChange}
             metadataConfigs={metadataConfigs}
+            onRecalcClick={onRecalcClick}
+            isRecalcReady={page.isRecalcReady}
           />
         ))
         }

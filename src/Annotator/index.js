@@ -9,7 +9,7 @@ import type {
   Metadata,
   MetadataConfig
 } from "../MainLayout/types"
-import React, { useEffect, useReducer } from "react"
+import React, { useCallback, useEffect, useReducer } from "react"
 import makeImmutable, { without } from "seamless-immutable"
 import intersection from "lodash/intersection"
 import type { KeypointsDefinition } from "../ImageCanvas/region-tools"
@@ -186,6 +186,7 @@ export const Annotator = ({
       albumMetadata,
       metadataConfigs,
       toPollImages: [...images.filter(i => i.lockedUntil).map(i => i.id)],
+      toSaveImage: null,
     })
   )
 
@@ -223,11 +224,42 @@ export const Annotator = ({
     })
   }
 
-  // trigger save and recalc
+  const handleRecalcClicked = useCallback(({ imageId }) => {
+    dispatchToReducer({
+      type: "RECALC_CLICKED",
+      imageId
+    })
+  }, [dispatchToReducer])
+
+  // detect on page change if anything changed, if so trigger save and recalc
   useEffect(() => {
     const { selectedImage, previouslySelectedImage, lastAction } = state;
     if (lastAction?.type === 'SELECT_IMAGE' && selectedImage !== previouslySelectedImage) {
+      // save if previously selected image has any changes
+      if (state.images[previouslySelectedImage]?.saveableActions?.length > 0) {
+        // decide wheather recalc is needed
+        const triggerRecalc = intersection(reacalcActionsEnum, state.images[previouslySelectedImage].saveableActions).length > 0;
 
+        // decide whether album metadata should be updated
+        let toSaveMetadata = [];
+        if (state.images[previouslySelectedImage]?.saveableActions?.includes("UPDATE_ALBUM_METADATA")) {
+          toSaveMetadata = state.albumMetadata
+        }
+
+        // set this image to be saved
+        dispatchToReducer({
+          type: "SAVE_IMAGE",
+          image: { ...state.images[previouslySelectedImage] },
+          triggerRecalc,
+          toSaveMetadata
+        })
+      }
+    }
+  }, [state.previouslySelectedImage, state.selectedImage, state.images, state, save])
+
+  // handle save of image
+  useEffect(() => {
+    if (state.toSaveImage !== null) {
       // metadata on album level
       const saveHandler = async (image, triggerRecalc, albumMetadata) => {
         dispatchToReducer({
@@ -251,22 +283,10 @@ export const Annotator = ({
         }
       }
 
-      // save if previously selected image has any changes
-      if (state.images[previouslySelectedImage]?.saveableActions?.length > 0) {
-        // decide wheather recalc is needed
-        const triggerRecalc = intersection(reacalcActionsEnum, state.images[previouslySelectedImage].saveableActions).length > 0;
-
-        // decide wheather album metadata should be updated
-        let toSaveMetadata = [];
-        if (state.images[previouslySelectedImage]?.saveableActions?.includes("UPDATE_ALBUM_METADATA")) {
-          toSaveMetadata = state.albumMetadata
-        }
-
-        // save image
-        saveHandler({ ...state.images[previouslySelectedImage] }, triggerRecalc, toSaveMetadata)
-      }
+      const { image, triggerRecalc, toSaveMetadata } = state.toSaveImage;
+      saveHandler(image, triggerRecalc, toSaveMetadata);
     }
-  }, [state.previouslySelectedImage, state.selectedImage, state.images, state, save])
+  }, [save, state.toSaveImage])
 
   // polling of images
   useEffect(() => {
@@ -322,7 +342,6 @@ export const Annotator = ({
   if (!images && !videoSrc)
     return 'Missing required prop "images" or "videoSrc"'
 
-
   const [recalcActive, saveActive] = state.imagesSavedAt < state.imagesUpdatedAt ? [true, true] : [false, false];
 
   return (
@@ -352,6 +371,7 @@ export const Annotator = ({
         recalcActive={saveActive}
         onMetadataChange={handleMetadataChange}
         onAddGroup={handleAddGroup}
+        onRecalcClick={handleRecalcClicked}
       />
     </SettingsProvider>
   )

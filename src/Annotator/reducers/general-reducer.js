@@ -1095,12 +1095,27 @@ export default (state: MainLayoutState, action: Action) => {
       //   newAllowedGroups
       // )
     }
+    case "SAVE_IMAGE": {
+      const { image, triggerRecalc, toSaveMetadata } = action;
+      return setIn(state, ["toSaveImage"], { image, triggerRecalc, toSaveMetadata });
+    }
+    case "RECALC_CLICKED": {
+      const { imageId } = action;
+      const imageIdx = state.images.findIndex(i => i.id === imageId);
+      if (imageIdx < 0) {
+        throw new Error(`failed to find index of image with id ${imageId}`)
+      }
+      const image = { ...state.images[imageIdx] }
+      return setIn(state, ["toSaveImage"], { image, triggerRecalc: true, toSaveMetadata: [] });
+    }
     case "IMAGE_UPDATE_INIT": {
       const { imageId } = action;
       const imageIdx = state.images.findIndex(i => i.id === imageId);
       if (imageIdx < 0) {
         throw new Error(`failed to find index of image with id ${imageId}`)
       }
+
+      state = setIn(state, ["toSaveImage"], null);
 
       return setIn(
         state,

@@ -236,3 +236,29 @@ input:checked+.slider:before {
 .mr-2 {
   margin-right: 1rem;
 }
+
+.ps-page-thumbnail-recalc-wrapper {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0), #8898aa);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ps-page-thumbnail-recalc-wrapper>.recalc-button {
+  width: 80%;
+  height: 40%;
+  border: none;
+  background-image: linear-gradient(310deg, #377ceb, #a8b8d8);
+  color: white;
+  font-weight: 400;
+  border-radius: 8px !important;
+  transition: transform .2s;
+}
+
+.ps-page-thumbnail-recalc-wrapper>.recalc-button:hover {
+  cursor: pointer;
+  font-weight: 600;
+  transform: scale(1.15);
+}

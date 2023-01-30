@@ -40,6 +40,8 @@ import PageSelector from "../PageSelector"
 import regionsGroups from '../utils/regions-groups';
 import RightSidebarItemsWrapper from './RightSidebarItemsWrapper';
 import Locker from '../Locker';
+import { reacalcActionsEnum } from "../utils/saveable-actions-enum";
+import intersection from "lodash/intersection";
 
 // import Fullscreen from "../Fullscreen"
 
@@ -95,7 +97,8 @@ type Props = {
   recalcActive?: boolean,
   saveActive?: boolean,
   onMetadataChange: (any) => any,
-  onAddGroup: (any) => any
+  onAddGroup: (any) => any,
+  onRecalcClick: (any) => any
 }
 
 export const MainLayout = ({
@@ -122,7 +125,8 @@ export const MainLayout = ({
   recalcActive = false,
   saveActive = false,
   onMetadataChange,
-  onAddGroup
+  onAddGroup,
+  onRecalcClick
 }: Props) => {
   const classes = useStyles()
   const settings = useSettings()
@@ -289,6 +293,7 @@ const pages = state.images.map((i, idx) => ({
   metadata: i.metadata || [],
   lockedUntil: i.lockedUntil,
   syncError: i.syncError || null,
+  isRecalcReady: intersection(reacalcActionsEnum, state.images[idx].saveableActions).length > 0
 }))
 
 const handlePageClick = (pageIndex) => {
@@ -327,7 +332,7 @@ return (
           }}>
             {
               showPageSelector && (
-                <PageSelector pages={pages} onPageClick={handlePageClick} saveActive={saveActive} recalcActive={recalcActive} onMetadataChange={onMetadataChange} metadataConfigs={state.metadataConfigs || []} />
+                <PageSelector pages={pages} onPageClick={handlePageClick} onMetadataChange={onMetadataChange} metadataConfigs={state.metadataConfigs || []} onRecalcClick={onRecalcClick} />
               )
             }
             <WorkspaceWrapper >
