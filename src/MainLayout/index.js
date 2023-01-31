@@ -287,7 +287,7 @@ const handleEditorChange = ({ imageIndex, data }) => {
 
 const pages = state.images.map((i, idx) => ({
   id: `${i.id}`,
-  src: i.src,
+  src: i.thumbnail,
   isActive: idx === state.selectedImage,
   pageNumber: i?.metadata?.find(md => md.key === "pageNumber")?.value || null,
   metadata: i.metadata || [],
