@@ -29,7 +29,6 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
       tabIndex={0}
       className={classnames('ps-page-thumbnail', {
         'ps-page-thumbnail-is-active': isActive,
-        'ps-page-thumbnail-disabled': isLocked,
       })}
       onClick={onClick}
     >
