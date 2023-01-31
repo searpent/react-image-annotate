@@ -36,6 +36,7 @@ import VideoOrImageCanvasBackground from "../VideoOrImageCanvasBackground"
 import useEventCallback from "use-event-callback"
 import RegionShapes from "../RegionShapes"
 import useWasdMode from "./use-wasd-mode"
+import useKey from "use-key-hook"
 
 const theme = createTheme()
 const useStyles = makeStyles((theme) => styles)
@@ -228,6 +229,21 @@ export const ImageCanvas = ({
       canvasHeight: clientHeight,
     }
   }
+
+  const resetZoom = () => {
+    changeMat(
+      getDefaultMat(
+        zoomOnAllowedArea ? allowedArea : null,
+        layoutParams.current
+      )
+    )
+
+  }
+
+  useKey(resetZoom, {
+    detectKeys: ['r'],
+  })
+
 
   useEffect(() => {
     if (!imageLoaded) return
