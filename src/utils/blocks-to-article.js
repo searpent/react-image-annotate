@@ -9,11 +9,14 @@ function sanitizedText(text) {
 }
 
 function blocksToArticle(blocks) {
-  const renamedBlocks = [...blocks].map(b => {
-    if (b.data.labelName === 'interview') {
-      b.data.labelName = 'text'
+  const renamedBlocks = blocks.map(b => {
+    const newBlock = {
+      ...b, data: {
+        ...b.data,
+        labelName: b.data.labelName === 'interview' ? 'text' : b.data.labelName
+      }
     }
-    return { ...b }
+    return newBlock
   })
 
   const article = renamedBlocks.reduce((acc, curr) => {
