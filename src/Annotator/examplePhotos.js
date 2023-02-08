@@ -470,7 +470,7 @@ const examplePhotos = [
                 "Y1": 0.784579,
                 "Y2": 0.95930564
               },
-              "text": "[{\"label\":\"text\",\"text\":\"\"}]",
+              "text": "[{\"label\":\"text\",\"text\":\"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae placerat pede sem sit amet enim. Aliquam in lorem sit amet leo accumsan lacinia. In rutrum. Phasellus rhoncus. In convallis. Nulla non arcu lacinia neque faucibus fringilla. Integer tempor. Nullam rhoncus aliquam metus. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Nullam rhoncus aliquam metus. Etiam dictum tincidunt diam. In sem justo, commodo ut, suscipit at, pharetra vitae, orci.\"}]",
               "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
               "id": "346807503780052993"
             },
@@ -496,8 +496,8 @@ const examplePhotos = [
                 "Y1": 0.7462519,
                 "Y2": 0.7778154
               },
-              "text": "[{\"label\":\"title\",\"text\":\"Číslo dne\"}]",
-              "groupId": "1",
+              "text": "[{\"label\":\"title\",\"text\":\"Lorem ipsum NOT dolor sit amet, consectetuer adipiscing elit.\"}]",
+              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
               "id": "346807503993962496"
             },
             {
@@ -522,7 +522,7 @@ const examplePhotos = [
                 "Y1": 0.52305263,
                 "Y2": 0.61999774
               },
-              "text": "[{\"label\":\"title\",\"text\":\"Extraliga. Nová pravidla pro brankáře i vysokou hůl\"}]",
+              "text": "[{\"label\":\"text\",\"text\":\"Extraliga. Nová pravidla pro brankáře i vysokou hůl\"}]",
               "groupId": "2",
               "id": "346807504648273920"
             },
@@ -652,7 +652,7 @@ const examplePhotos = [
                 "Y1": 0.38327134,
                 "Y2": 0.5264345
               },
-              "text": "[{\"label\":\"title\",\"text\":\"Už popáté se v Karlových Varech uskuteční Světový pohár v triatlonu. Třídenní akce s bohatým doprovodným programem vyvrcholí nedělními závody mužů a žen elitní kategorie. Vedle domácí špičky nebude chybět řada účastníků OH v Tokiu, nad plánovanou účastí dvojnásobné vítězky Venduly Frintové visí otazník. Nejlepší česká triatlonistka měla žaludeční problémy a o jejím startu se rozhodne na poslední chvíli. Vedle Frintové je přihlášena i druhá česká olympionička Petra Kuříková, jejímž karlovarským maximem je předloňské čtvrté místo. Mezi devítkou domácích závodníků je též Jan Čelůstka i nadějní Tereza Zimovjanová (na snímku) s Radimem Grebíkem. ČTK\"}]",
+              "text": "[{\"label\":\"text\",\"text\":\"Už popáté se v Karlových Varech uskuteční Světový pohár v triatlonu. Třídenní akce s bohatým doprovodným programem vyvrcholí nedělními závody mužů a žen elitní kategorie.\"}]",
               "groupId": "4",
               "id": "346807505487134721"
             },
@@ -665,7 +665,7 @@ const examplePhotos = [
                 "Y1": 0.38327134,
                 "Y2": 0.5264345
               },
-              "text": "[{\"label\":\"text\",\"text\":\"\"}]",
+              "text": "[{\"label\":\"text\",\"text\":\"Vedle domácí špičky nebude chybět řada účastníků OH v Tokiu, nad plánovanou účastí dvojnásobné vítězky Venduly Frintové visí otazník. Nejlepší česká triatlonistka měla žaludeční problémy a o jejím startu se rozhodne na poslední chvíli. Vedle Frintové je přihlášena i druhá česká olympionička Petra Kuříková, jejímž karlovarským maximem je předloňské čtvrté místo. Mezi devítkou domácích závodníků je též Jan Čelůstka i nadějní Tereza Zimovjanová (na snímku) s Radimem Grebíkem.\"}]",
               "groupId": "4",
               "id": "346807505487134722"
             },
@@ -845,7 +845,7 @@ const examplePhotos = [
       "key": "mutation",
       "value": "hřensko"
     }],
-    "lockedUntil": "2023-01-28T11:35:00.000Z",
+    "lockedUntil": null,
   },
   {
     "id": "431fc636-d6d1-4e20-a35b-cc7a201c1833",
@@ -2873,7 +2873,7 @@ const examplePhotos = [
                 "Y1": 0.37425318,
                 "Y2": 0.48585278
               },
-              "text": "[{\"label\":\"title\",\"text\":\"Běloruský vůdce Alexandr Lukašenko včera pohrozil Evropské unii tvrdou odplatou za úterní uvalení nových sankcí proti Minsku. Ve hře je podle něj i přerušení tranzitu ruského zemního plynu a přepravy dalšího zboží přes Bělorusko. EU se chystá postihnout Lukašenkův režim za vyostřování migrační krize na hranicích s Polskem a pobaltskými státy. „Zahříváme Evropu, ale ještě nám vyhrožují, že uzavřou hranice. A co když my jim přerušíme zemní plyn?“ řekl doslova Lukašenko. AP\"}]",
+              "text": "[{\"label\":\"text\",\"text\":\"Běloruský vůdce Alexandr Lukašenko včera pohrozil Evropské unii tvrdou odplatou za úterní uvalení nových sankcí proti Minsku. Ve hře je podle něj i přerušení tranzitu ruského zemního plynu a přepravy dalšího zboží přes Bělorusko. EU se chystá postihnout Lukašenkův režim za vyostřování migrační krize na hranicích s Polskem a pobaltskými státy. „Zahříváme Evropu, ale ještě nám vyhrožují, že uzavřou hranice. A co když my jim přerušíme zemní plyn?“ řekl doslova Lukašenko. AP\"}]",
               "groupId": "3",
               "id": "346807630221541376"
             },
@@ -7311,7 +7311,7 @@ const examplePhotos = [
                 "Y1": 0.043963477,
                 "Y2": 0.18149026
               },
-              "text": "[{\"label\":\"title\",\"text\":\"komerční příloha čtvrtek 29. dubna 2021 Robotické sekačky na trávu - nový pohled na sekání trávy\"}]",
+              "text": "[{\"label\":\"text\",\"text\":\"komerční příloha čtvrtek 29. dubna 2021 Robotické sekačky na trávu - nový pohled na sekání trávy\"}]",
               "groupId": "0",
               "id": "346807698131517440"
             },
