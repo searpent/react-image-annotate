@@ -6,26 +6,32 @@ import ReadOnly from './readOnly';
 
 const ReactEditorJS = createReactEditorJS()
 
-function Editor({ blocks, onChange, imageIndex }) {
-  const [isReadOnly, setIsReadOnly] = useState(false);
+function Editor({ blocks = [], onChange, imageIndex }) {
+  const [editMode, setEditMode] = useState(false);
   const handleChange = async instance => {
     const data = await instance.saver.save();
     onChange({ imageIndex, data })
   };
-  const toggleIsReadOnly = () => {
-    setIsReadOnly(prev => !prev)
+  const toggleEditMode = () => {
+    setEditMode(prev => !prev)
   }
+
+  if (blocks.length < 1) {
+    return <div className='instructions'><h1>Click article to display text.</h1></div>
+  }
+
   return (
     <div>
       <div className="show-metadata-wrapper">
         <label className="switch mr-2">
-          <input id="show-metadata" type="checkbox" value={isReadOnly} onChange={toggleIsReadOnly} />
+          <input id="show-metadata" type="checkbox" value={editMode} onChange={toggleEditMode} />
           <span className="slider round"></span>
         </label>
-        <label>Preview</label>
+        <label>Edit mode</label>
       </div>
+
       {
-        isReadOnly ?
+        !editMode ?
           (<ReadOnly article={blocksToArticle(blocks)} />) :
           (<ReactEditorJS defaultValue={{
             blocks

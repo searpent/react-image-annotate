@@ -52,3 +52,43 @@ button.MuiButtonBase-root {
 button.MuiButtonBase-root.expanded {
   opacity: 1 !important;
 }
+
+.ro-title {}
+
+.ro-subtitle {}
+
+.ro-text {}
+
+.ro-author {
+  font-style: italic;
+}
+
+.ro-about-author {
+  font-style: italic;
+}
+
+.ro-appendix {}
+
+.ro-photo-author {}
+
+.ro-photo-caption {}
+
+.ro-advertisment {}
+
+.ro-other-graphics {}
+
+.ro-unknown {}
+
+.ro-table {}
+
+.instructions {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.instructions h1 {
+  color: #707684;
+}

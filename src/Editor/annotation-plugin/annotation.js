@@ -3,7 +3,7 @@
  */
 import './annotation.css';
 
-function whitespaceCharactersToHTML(str = '') {
+export function whitespaceCharactersToHTML(str = '') {
   return str
     // new line whitespace
     .replaceAll(/[ ]\n[ ]/gm, '&nbsp;<br>&nbsp;') // space both sides adds &nbsp;
@@ -12,7 +12,6 @@ function whitespaceCharactersToHTML(str = '') {
     .replaceAll(/\n/gm, '<br>') // no spaces
     // tab whitespace
     .replaceAll(/\t/gm, '&nbsp;&nbsp;&nbsp;&nbsp;') // no spaces
-
 }
 
 function HTMLToWhitespaceCharacters(str = '') {

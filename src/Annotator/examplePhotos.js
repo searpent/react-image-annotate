@@ -652,7 +652,7 @@ const examplePhotos = [
                 "Y1": 0.38327134,
                 "Y2": 0.5264345
               },
-              "text": "[{\"label\":\"text\",\"text\":\"Už popáté se v Karlových Varech uskuteční Světový pohár v triatlonu. Třídenní akce s bohatým doprovodným programem vyvrcholí nedělními závody mužů a žen elitní kategorie.\"}]",
+              "text": "[{\"label\":\"text\",\"text\":\"\\tUž popáté se \\n\\nv Karlových Varech uskuteční Světový pohár v triatlonu. Třídenní akce s bohatým doprovodným programem vyvrcholí nedělními závody mužů a žen elitní kategorie.\"}]",
               "groupId": "4",
               "id": "346807505487134721"
             },

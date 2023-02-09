@@ -1,6 +1,10 @@
+import { whitespaceCharactersToHTML } from '../Editor/annotation-plugin/annotation';
+
 function sanitizedText(text) {
+  const escapedWhitespaces = whitespaceCharactersToHTML(text);
+
   // remove whitespaces
-  const trimmed = text.trim();
+  const trimmed = escapedWhitespaces.trim();
 
   // replace dashes at the end of sentence
   const noTrailingDash = trimmed.replace(/-$/, "")
