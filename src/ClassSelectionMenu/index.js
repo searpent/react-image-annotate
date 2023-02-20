@@ -4,10 +4,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import * as muiColors from "@mui/material/colors"
 import SidebarBoxContainer from "../SidebarBoxContainer"
-import colors from "../colors"
 import BallotIcon from "@mui/icons-material/Ballot"
 import capitalize from "lodash/capitalize"
 import classnames from "classnames"
+import useColors from "../hooks/use-colors"
 
 const theme = createTheme()
 const LabelContainer = styled("div")(({ theme }) => ({
@@ -58,6 +58,9 @@ export const ClassSelectionMenu = ({
   regionClsList,
   onSelectCls,
 }) => {
+  const { clsColor } = useColors()
+
+
   useEffect(() => {
     const keyMapping = {}
     for (let i = 0; i < 9 && i < regionClsList.length; i++) {
@@ -89,7 +92,7 @@ export const ClassSelectionMenu = ({
             onClick={() => onSelectCls(label)}
           >
             <Circle
-              style={{ backgroundColor: colors[index % colors.length] }}
+              style={{ backgroundColor: clsColor(label) }}
             />
             <Label className={classnames({ selected: label === selectedCls })}>
               {capitalize(label)}
