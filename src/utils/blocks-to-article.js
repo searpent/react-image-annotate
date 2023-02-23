@@ -29,7 +29,7 @@ function blocksToArticle(blocks) {
       acc[labelName] = ""
     }
 
-    let connectingSymbol = "";
+    let connectingSymbol = labelName === 'text' ? "" : "<br>";
 
     // if last symbol is dot, next sentence should start with space
     if (acc[labelName].charAt(acc[labelName].length - 1) === ".") {
