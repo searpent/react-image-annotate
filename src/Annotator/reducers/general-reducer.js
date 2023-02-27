@@ -14,7 +14,6 @@ import clamp from "clamp"
 import getLandmarksWithTransform from "../../utils/get-landmarks-with-transform"
 import setInLocalStorage from "../../utils/set-in-local-storage"
 import onlyUnique from "../../utils/filter-only-unique"
-import regionsGroups from '../../utils/regions-groups';
 import nextGroupId from "../../utils/next-group-id"
 import defaultLockedUntil from "../../utils/default-locked-until"
 

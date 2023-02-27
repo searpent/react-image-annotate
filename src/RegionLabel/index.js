@@ -65,10 +65,9 @@ export const RegionLabel = ({
   }
 
   if (hideNotEditingLabel && !editing) return null
-
   const allowedGroupsForSelect = allowedGroups ? allowedGroups.map(g => ({
-    value: `${g}`,
-    label: uuidToHash(g)
+    value: `${g.id}`,
+    label: g.label || uuidToHash(g.id)
   })) : []
 
   return (

@@ -24,7 +24,7 @@ const GroupItemDiv = styled("div")(({ theme }) => ({
 const GroupItem = ({ group }) => {
   return (
     <GroupItemDiv>
-      {uuidToHash(group)}
+      {uuidToHash(group.id)}
     </GroupItemDiv>
   )
 }
