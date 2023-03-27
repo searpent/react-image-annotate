@@ -12,6 +12,17 @@ function sanitizedText(text) {
   return noTrailingDash;
 }
 
+function getConnectingSymbol(labelName) {
+  switch (labelName) {
+    case 'text':
+      return "";
+    case 'appendix':
+      return "<br><br>"
+    default:
+      return "<br>"
+  }
+}
+
 function blocksToArticle(blocks) {
   const renamedBlocks = blocks.map(b => {
     const newBlock = {
@@ -29,10 +40,10 @@ function blocksToArticle(blocks) {
       acc[labelName] = ""
     }
 
-    let connectingSymbol = labelName === 'text' ? "" : "<br>";
+    let connectingSymbol = getConnectingSymbol(labelName);
 
     // if last symbol is dot, next sentence should start with space
-    if (acc[labelName].charAt(acc[labelName].length - 1) === ".") {
+    if (acc[labelName].charAt(acc[labelName].length - 1) === "." && connectingSymbol === "") {
       connectingSymbol = " "
     }
 

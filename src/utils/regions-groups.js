@@ -9,7 +9,7 @@ function regionsGroups(regions) {
     if (acc.some(e => e.id === groupId)) {
       return acc
     }
-    acc.push({ id: groupId, label: curr.text.substring(0, MAX_GROUP_LENGTH) })
+    acc.push({ id: groupId, label: curr?.text?.substring(0, MAX_GROUP_LENGTH) || groupId })
     return acc;
   }, [])
 
