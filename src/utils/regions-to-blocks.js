@@ -1,4 +1,4 @@
-function regionsToBlocks(regions) {
+function regionsToBlocks(regions, clsColor) {
   return regions.map(r => ({
     id: r.id,
     type: "annotation",
@@ -6,7 +6,9 @@ function regionsToBlocks(regions) {
       text: r.text || '',
       labelName: r.cls,
       groupColor: r.groupColor,
-      groupId: r.groupId
+      groupId: r.groupId,
+      clsColor: clsColor(r.cls),
+      highlighted: r.highlighted,
     }
   }))
 }

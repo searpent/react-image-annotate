@@ -48,7 +48,8 @@ class Annotation {
       block: this.api.styles.block,
       settingsButton: this.api.styles.settingsButton,
       settingsButtonActive: this.api.styles.settingsButtonActive,
-      wrapper: 'ce-header'
+      wrapper: 'ce-header',
+      backgroundColor: (data?.highlighted && data?.clsColor) ? data.clsColor : undefined,
     };
 
     /**
@@ -338,8 +339,8 @@ class Annotation {
      * Create element for current Block's label
      */
     const tag = document.createElement(this.currentLabel.tag);
-    if (this.currentLabel.backgroundColor) {
-      tag.style.backgroundColor = this.currentLabel.backgroundColor;
+    if (this._CSS.backgroundColor) {
+      tag.style.backgroundColor = this._CSS.backgroundColor
     }
 
     /**
@@ -429,22 +430,22 @@ class Annotation {
       {
         labelName: 'title',
         tag: 'h1',
-        name: 'title'
-        // backgroundColor: '#d0fffe'
+        name: 'title',
+        backgroundColor: '#ffcccc'
       },
-      { labelName: 'subtitle', tag: 'h2', name: 'subtitle' },
-      { labelName: 'text', tag: 'p', name: 'text' },
-      { labelName: 'author', tag: 'i', name: 'author' },
-      { labelName: 'appendix', tag: 'p', name: 'appendix' },
-      { labelName: 'photo_author', tag: 'p', name: 'photo_author' },
-      { labelName: 'photo_caption', tag: 'p', name: 'photo_caption' },
-      { labelName: 'advertisement', tag: 'p', name: 'advertisement' },
-      { labelName: 'other_graphics', tag: 'p', name: 'other_graphics' },
-      { labelName: 'unknown', tag: 's', name: 'unknown' },
-      { labelName: 'about_author', tag: 'p', name: 'about_author' },
-      { labelName: 'image', tag: 'p', name: 'image' },
-      { labelName: 'interview', tag: 'p', name: 'interview' },
-      { labelName: 'table', tag: 'p', name: 'table' }
+      { labelName: 'subtitle', tag: 'h2', name: 'subtitle', backgroundColor: '#ffccff' },
+      { labelName: 'text', tag: 'p', name: 'text', backgroundColor: '#14deef' },
+      { labelName: 'author', tag: 'i', name: 'author', backgroundColor: '#00bb00' },
+      { labelName: 'appendix', tag: 'p', name: 'appendix', backgroundColor: '#dcfcec' },
+      { labelName: 'photo_author', tag: 'p', name: 'photo_author', backgroundColor: '#bb0000' },
+      { labelName: 'photo_caption', tag: 'p', name: 'photo_caption', backgroundColor: '#ccffff' },
+      { labelName: 'advertisement', tag: 'p', name: 'advertisement', backgroundColor: '#ffeccc' },
+      { labelName: 'other_graphics', tag: 'p', name: 'other_graphics', backgroundColor: '#ff5400' },
+      { labelName: 'unknown', tag: 's', name: 'unknown', backgroundColor: '#cccccc' },
+      { labelName: 'about_author', tag: 'p', name: 'about_author', backgroundColor: '#ecffec' },
+      { labelName: 'image', tag: 'p', name: 'image', backgroundColor: '#ffffcc' },
+      { labelName: 'interview', tag: 'p', name: 'interview', backgroundColor: '#23b20f' },
+      { labelName: 'table', tag: 'p', name: 'table', backgroundColor: '#0000bb' }
     ];
 
     return this._settings.labels

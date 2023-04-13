@@ -6,7 +6,7 @@ import ReadOnly from './readOnly';
 
 const ReactEditorJS = createReactEditorJS()
 
-function Editor({ blocks = [], onChange, imageIndex }) {
+function Editor({ blocks = [], onChange, imageIndex, selectedFrame }) {
   const [editMode, setEditMode] = useState(false);
   const handleChange = async instance => {
     const data = await instance.saver.save();
@@ -39,6 +39,7 @@ function Editor({ blocks = [], onChange, imageIndex }) {
             tools={EDITOR_JS_TOOLS}
             onChange={handleChange}
             enableReInitialize
+            key={selectedFrame}
           />)
       }
     </div>

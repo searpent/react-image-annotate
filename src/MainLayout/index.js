@@ -42,6 +42,7 @@ import RightSidebarItemsWrapper from './RightSidebarItemsWrapper';
 import Locker from '../Locker';
 import { reacalcActionsEnum } from "../utils/saveable-actions-enum";
 import intersection from "lodash/intersection";
+import useColors from '../hooks/use-colors';
 
 // import Fullscreen from "../Fullscreen"
 
@@ -131,6 +132,7 @@ export const MainLayout = ({
   const classes = useStyles()
   const settings = useSettings()
   const fullScreenHandle = useFullScreenHandle()
+  const { clsColor } = useColors();
 
   const memoizedActionFns = useRef({})
   const action = (type: string, ...params: Array<string>) => {
@@ -273,7 +275,7 @@ const nextImageHasRegions =
 // Editor.js blocks
 const selectedGroupId = state.images[state.selectedImage]?.selectedGroupId || null;
 const extractionEngineRegions = (state.images[state.selectedImage]?.regions || []).filter(r => r.cls !== 'metadata')
-const editorBlocks = regionsToBlocks(extractionEngineRegions);
+const editorBlocks = regionsToBlocks(extractionEngineRegions, clsColor);
 const blocks = editorBlocks.filter(i => i?.data?.groupId === selectedGroupId);
 
 const handleEditorChange = ({ imageIndex, data }) => {
@@ -301,6 +303,7 @@ const handlePageClick = (pageIndex) => {
 }
 
 const isSelectedImageLocked = state.images[state.selectedImage]?.lockedUntil ? true : false;
+const selectedFrame = state.images[state.selectedImage]?.regions.find(i => i.highlighted === true)?.id || '';
 
 return (
   <ThemeProvider theme={theme}>
@@ -534,7 +537,7 @@ return (
             {
               (showEditor && !isSelectedImageLocked) && (
                 <EditorWrapper id="editor-wrapper">
-                  <Editor id="editor" blocks={blocks} imageIndex={state.selectedImage} key={`${state.selectedImage}#${selectedGroupId}`} onChange={handleEditorChange} />
+                  <Editor id="editor" blocks={blocks} imageIndex={state.selectedImage} key={`${state.selectedImage}#${selectedGroupId}`} selectedFrame={selectedFrame} onChange={handleEditorChange} />
                 </EditorWrapper>
               )
             }
