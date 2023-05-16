@@ -131,6 +131,19 @@ storiesOf("Annotator", module)
               level: "photo",
               options: ['Morava', 'Slezsko', 'Cechy']
             }, {
+              key: "previousArticleId",
+              level: "photo_metadata-engine",
+              options: [{
+                value: "alpha",
+                label: "0 - alpha"
+              }, {
+                value: "beta",
+                label: "1 - beta"
+              }, {
+                value: "gamma",
+                label: "2 - gamma"
+              }]
+            }, {
               key: "pageNumber",
               level: "photo",
               options: []

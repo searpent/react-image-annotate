@@ -47,7 +47,12 @@ const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConf
         <input type="text" value={value} name={name} onChange={handleChange} id={name} list={`${name}-list`} />
         <datalist id={`${name}-list`}>
           {
-            metadataConfig?.options?.map(opt => <option key={opt} value={opt}></option>)
+            metadataConfig?.options?.map(opt => {
+              if (opt.value && opt.label) {
+                return <option key={opt.value} value={opt.value}>{opt.label}</option>
+              }
+              return <option key={opt} value={opt}></option>
+            })
           }
         </datalist>
       </div>
