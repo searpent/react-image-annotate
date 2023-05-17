@@ -44,17 +44,38 @@ const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConf
     <MetadataItemDiv>
       <label for={name}>{name}</label>
       <div>
-        <input type="text" value={value} name={name} onChange={handleChange} id={name} list={`${name}-list`} />
-        <datalist id={`${name}-list`}>
-          {
-            metadataConfig?.options?.map(opt => {
-              if (opt.value && opt.label) {
-                return <option key={opt.value} value={opt.value}>{opt.label}</option>
+        {
+          metadataConfig?.selectable !== true && (
+            <>
+              <input type="text" value={value} name={name} onChange={handleChange} id={name} list={`${name}-list`} />
+              <datalist id={`${name}-list`}>
+                {
+                  metadataConfig?.options?.map(opt => {
+                    if (opt.value && opt.label) {
+                      return <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    }
+                    return <option key={opt} value={opt}></option>
+                  })
+                }
+              </datalist>
+            </>
+          )
+        }
+        {
+          metadataConfig?.selectable === true && (
+            <select name={name} id={name} onChange={handleChange}>
+              {
+                metadataConfig?.options?.map(opt => {
+                  if (opt.value && opt.label) {
+                    return <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  }
+                  return <option key={opt} value={opt}></option>
+                })
               }
-              return <option key={opt} value={opt}></option>
-            })
-          }
-        </datalist>
+            </select>
+          )
+        }
+
       </div>
     </MetadataItemDiv>
   )
