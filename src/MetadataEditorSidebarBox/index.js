@@ -32,6 +32,7 @@ const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConf
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
+    console.log("onChange", { name, value })
     onChange({
       name,
       value,
@@ -67,7 +68,7 @@ const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConf
               {
                 metadataConfig?.options?.map(opt => {
                   if (opt.value && opt.label) {
-                    return <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    return <option key={opt.value} value={opt.value} selected={opt.value === value}>{opt.label}</option>
                   }
                   return <option key={opt} value={opt}></option>
                 })
