@@ -21,18 +21,21 @@ const MetadataItemDiv = styled("div")(({ theme }) => ({
   "& > label": {
     fontSize: "1rem",
     marginBottom: ".5em",
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+    wordWrap: "break-word",
   },
   label: {
     width: "50%",
-  }
+  },
+  select: {
+    width: "100%",
+  },
 }))
 
 const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConfig = {} }: MetadataItemProps) => {
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
-    console.log("onChange", { name, value })
     onChange({
       name,
       value,
@@ -44,11 +47,13 @@ const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConf
   return (
     <MetadataItemDiv>
       <label for={name}>{name}</label>
-      <div>
+      <div style={{
+        width: "50%",
+      }}>
         {
           metadataConfig?.selectable !== true && (
             <>
-              <input type="text" value={value} name={name} onChange={handleChange} id={name} list={`${name}-list`} />
+              <input type="text" value={value} name={name} onChange={handleChange} id={name} list={`${name}-list`} style={{ width: "100%" }} />
               <datalist id={`${name}-list`}>
                 {
                   metadataConfig?.options?.map(opt => {
@@ -64,7 +69,7 @@ const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConf
         }
         {
           metadataConfig?.selectable === true && (
-            <select name={name} id={name} onChange={handleChange}>
+            <select name={name} id={name} onChange={handleChange} style={{ width: '100%' }}>
               {
                 metadataConfig?.options?.map(opt => {
                   if (opt.value && opt.label) {
