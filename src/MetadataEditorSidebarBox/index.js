@@ -11,6 +11,7 @@ type MetadataItemProps = {
   name: string,
   value: string,
   imageIndex: number,
+  metadataId?: string,
   onChange: ({ name: string, value: String, imageIndex: number }) => void
 }
 
@@ -32,7 +33,7 @@ const MetadataItemDiv = styled("div")(({ theme }) => ({
   },
 }))
 
-const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConfig = {} }: MetadataItemProps) => {
+const MetadataItem = ({ name, value, metadataId, imageIndex, groupId, onChange, metadataConfig = {} }: MetadataItemProps) => {
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
@@ -40,7 +41,8 @@ const MetadataItem = ({ name, value, imageIndex, groupId, onChange, metadataConf
       name,
       value,
       imageIndex,
-      groupId
+      groupId,
+      metadataId
     })
   }
 
@@ -91,8 +93,8 @@ const MetadataList = ({ title, metadata, imageIndex, onMetadataChange, metadataC
   <div>
     <h2>{title}</h2>
     {
-      metadata && metadata.map(({ key, value }) => (
-        <MetadataItem name={key} value={value} imageIndex={imageIndex} groupId={groupId} onChange={onMetadataChange} metadataConfig={metadataConfigs.find(i => i.key === key)} />
+      metadata && metadata.map(({ key, value, metadataId }) => (
+        <MetadataItem name={key} value={value} imageIndex={imageIndex} metadataId={metadataId} groupId={groupId} onChange={onMetadataChange} metadataConfig={metadataConfigs.find(i => i.key === key)} />
       ))
     }
   </div>
@@ -118,7 +120,7 @@ export const MetadataEditorSidebarBox = ({ state, onMetadataChange }) => {
   const metadataConfigs = state.metadataConfigs || [];
   const selectedPhotoMetadata = state?.images[state.selectedImage]?.metadata;
   let selectedGroupId = state?.images[state.selectedImage]?.regions?.find(r => r.highlighted === true)?.groupId;
-  let articleMetadata = [];
+  let articleMetadata = []; // example: [{key: "previousArticleId", value "123-123-123-123-123"}]
 
   if (selectedGroupId !== undefined) {
     const articleMetadataRegion = state?.images[state.selectedImage].regions.find(r => r.cls === 'metadata' && `${r.groupId}` === selectedGroupId)

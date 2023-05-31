@@ -1020,7 +1020,7 @@ export default (state: MainLayoutState, action: Action) => {
       )
     }
     case "UPDATE_METADATA": {
-      const { name, value, imageIndex, groupId } = action;
+      const { name, value, imageIndex, groupId, metadataId } = action;
       if (isNaN(imageIndex)) {
         // update global/album metadata
         const metadataIndex = state.albumMetadata?.findIndex(mt => mt.key === name)
@@ -1048,7 +1048,7 @@ export default (state: MainLayoutState, action: Action) => {
 
           const articleRegionToUpdate = state.images[imageIndex]?.regions[articleMetadataRegionIdx]
           const articleMetadata = JSON.parse(articleRegionToUpdate.text)
-          const toBeUpdatedMetadataIdx = articleMetadata.findIndex(i => i.key === name)
+          const toBeUpdatedMetadataIdx = articleMetadata.findIndex(i => i.metadataId === metadataId)
           if (toBeUpdatedMetadataIdx < 0) {
             console.error(`can't find metadata field in article metadata for key "${name}"`)
             return state
