@@ -225,6 +225,9 @@ const canvas = (
     onDeleteRegion={action("DELETE_REGION", "region")}
     onDeleteGroup={action("DELETE_GROUP", "groupId")}
     onBeginBoxTransform={action("BEGIN_BOX_TRANSFORM", "box", "directions")}
+    onResetZoom={() => dispatch({
+      type: "ZOOM_RESET",
+    }}
     onBeginMovePolygonPoint={action(
       "BEGIN_MOVE_POLYGON_POINT",
       "polygon",

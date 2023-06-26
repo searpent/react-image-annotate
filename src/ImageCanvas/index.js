@@ -89,6 +89,7 @@ type Props = {
   onChangeVideoTime: (number) => any,
   onRegionClassAdded: () => {},
   onChangeVideoPlaying?: Function,
+  onResetZoom: Function,
   hideNotEditingLabel?: boolean,
   allowedGroups?: []
 }
@@ -142,6 +143,7 @@ export const ImageCanvas = ({
   onDeleteGroup,
   onChangeVideoTime,
   onChangeVideoPlaying,
+  onResetZoom,
   onRegionClassAdded,
   zoomOnAllowedArea = true,
   modifyingAllowedArea = false,
@@ -231,13 +233,13 @@ export const ImageCanvas = ({
   }
 
   const resetZoom = () => {
+    onResetZoom();
     changeMat(
       getDefaultMat(
         zoomOnAllowedArea ? allowedArea : null,
         layoutParams.current
       )
     )
-
   }
 
   useKey(resetZoom, {

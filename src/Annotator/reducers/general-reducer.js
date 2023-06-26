@@ -1205,6 +1205,21 @@ export default (state: MainLayoutState, action: Action) => {
         }
       )
     }
+    case "ZOOM_RESET":
+      {
+        if (state.selectedImage === undefined || state.selectedImage === null) {
+          return state
+        }
+
+        const deselectedRegions = state.images[state.selectedImage].regions.map(i => ({
+          ...i,
+          highlighted: false,
+          groupHighlighted: false
+        }));
+
+        state = setIn(state, ["selectedGroupId"], null);
+        return setIn(state, ["images", state.selectedImage, "regions"], deselectedRegions);
+      }
     default:
       break
   }

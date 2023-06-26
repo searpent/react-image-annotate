@@ -24,11 +24,12 @@ const useStyles = makeStyles((theme) => ({
       opacity: 0.6,
     },
     "& path": {
-      vectorEffect: "non-scaling-stroke",
-      strokeWidth: 2,
-      stroke: "#FFF",
+      // NOTE: attributes below commnted because resetting screen caused old frame to highlight
+      // vectorEffect: "non-scaling-stroke",
+      // strokeWidth: 2,
+      // stroke: "#FFF",
+      // strokeDasharray: 5,
       fill: "none",
-      strokeDasharray: 5,
       animationName: "$borderDance",
       animationDuration: "4s",
       animationTimingFunction: "linear",
@@ -79,8 +80,7 @@ export const HighlightBox = ({
 
   const pathD =
     r.type === "point"
-      ? `M5,5 L${styleCoords.width - 5} 5L${styleCoords.width - 5} ${
-          styleCoords.height - 5
+      ? `M5,5 L${styleCoords.width - 5} 5L${styleCoords.width - 5} ${styleCoords.height - 5
       }L5 ${styleCoords.height - 5}Z`
       : `M5,5 L${pbox.w + 5},5 L${pbox.w + 5},${pbox.h + 5} L5,${pbox.h + 5} Z`
 
