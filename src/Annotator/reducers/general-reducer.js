@@ -858,6 +858,7 @@ export default (state: MainLayoutState, action: Action) => {
     }
     case "DELETE_SELECTED_REGION": {
       state = saveToHistory(state, "Delete selected region")
+      state = addSaveableAction(state, "DELETE_SELECTED_REGION")
       return setIn(
         state,
         [...pathToActiveImage, "regions"],
