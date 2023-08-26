@@ -14,6 +14,7 @@ function ReadOnly({ article }) {
     <p className='ro-other-graphics' dangerouslySetInnerHTML={{ __html: article.other_graphics }}></p>
     <p className='ro-unknown' dangerouslySetInnerHTML={{ __html: article.unknown }}></p>
     <p className='ro-table' dangerouslySetInnerHTML={{ __html: article.table }}></p>
+    <p className='ro-section' dangerouslySetInnerHTML={{ __html: article.section }}></p>
   </div>)
 }
 

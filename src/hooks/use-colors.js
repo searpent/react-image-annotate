@@ -32,6 +32,8 @@ function defaultClsColor(cls) {
       return "#23b20f"
     case 'table':
       return "#02b4ba"
+    case 'section':
+      return "#ffcccc"
     default:
       return "#02b4ba"
   }

@@ -445,7 +445,8 @@ class Annotation {
       { labelName: 'about_author', tag: 'p', name: 'about_author', backgroundColor: '#ecffec' },
       { labelName: 'image', tag: 'p', name: 'image', backgroundColor: '#ffffcc' },
       { labelName: 'interview', tag: 'p', name: 'interview', backgroundColor: '#23b20f' },
-      { labelName: 'table', tag: 'p', name: 'table', backgroundColor: '#0000bb' }
+      { labelName: 'table', tag: 'p', name: 'table', backgroundColor: '#0000bb' },
+      { labelName: 'section', tag: 'p', name: 'section', backgroundColor: '#ffcccc' }
     ];
 
     return this._settings.labels
