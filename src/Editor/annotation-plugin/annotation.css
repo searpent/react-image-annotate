@@ -83,6 +83,26 @@ button.MuiButtonBase-root.expanded {
 
 .ro-table {}
 
+.ro-continuation_ref {}
+
+.ro-cover_clip {}
+
+.ro-page_id {}
+
+.ro-continuation_mark {}
+
+.ro-follow_up_mark {}
+
+.ro-article_termination_mark {}
+
+.ro-page_splitting_stripe {}
+
+.ro-column_id_stripe {}
+
+.ro-prev_page_reference {}
+
+.ro-section_subcategory {}
+
 .instructions {
   height: 100%;
   display: flex;

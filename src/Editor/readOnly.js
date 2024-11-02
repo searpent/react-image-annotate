@@ -15,6 +15,16 @@ function ReadOnly({ article }) {
     <p className='ro-unknown' dangerouslySetInnerHTML={{ __html: article.unknown }}></p>
     <p className='ro-table' dangerouslySetInnerHTML={{ __html: article.table }}></p>
     <p className='ro-section' dangerouslySetInnerHTML={{ __html: article.section }}></p>
+    <p className='ro-continuation_ref' dangerouslySetInnerHTML={{ __html: article.continuation_ref }}></p>
+    <p className='ro-cover_clip' dangerouslySetInnerHTML={{ __html: article.cover_clip }}></p>
+    <p className='ro-page_id' dangerouslySetInnerHTML={{ __html: article.page_id }}></p>
+    <p className='ro-continuation_mark' dangerouslySetInnerHTML={{ __html: article.continuation_mark }}></p>
+    <p className='ro-follow_up_mark' dangerouslySetInnerHTML={{ __html: article.follow_up_mark }}></p>
+    <p className='ro-article_termination_mark' dangerouslySetInnerHTML={{ __html: article.article_termination_mark }}></p>
+    <p className='ro-page_splitting_stripe' dangerouslySetInnerHTML={{ __html: article.page_splitting_stripe }}></p>
+    <p className='ro-column_id_stripe' dangerouslySetInnerHTML={{ __html: article.column_id_stripe }}></p>
+    <p className='ro-prev_page_reference' dangerouslySetInnerHTML={{ __html: article.prev_page_reference }}></p>
+    <p className='ro-section_subcategory' dangerouslySetInnerHTML={{ __html: article.section_subcategory }}></p>
   </div>)
 }
 

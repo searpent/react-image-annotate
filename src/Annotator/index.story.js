@@ -77,6 +77,17 @@ storiesOf("Annotator", module)
               "interview",
               "table",
               "text",
+              "continuation_ref",
+              "cover_clip",
+              "page_id",
+              "continuation_mark",
+              "follow_up_mark",
+              "article_termination_mark",
+              "page_splitting_stripe",
+              "column_id_stripe",
+              "prev_page_reference",
+              "section_subcategory"
+
             ]}
             help={`# Tools\n\n**E** - select tool\n\n**D** - frame tool\n\n**Ctrl** + **click frame** - edit frame\n\n**1**- **9** - change class`}
             onImagesChange={(images) => console.log("[images changed to]:", images)}
@@ -96,6 +107,17 @@ storiesOf("Annotator", module)
               image: "#14deef",
               interview: "#23b20f",
               table: "#02b4ba",
+              continuation_ref: '#FF33CC',
+              cover_clip: '#669966',
+              page_id: '#4433AA',
+              continuation_mark: '#660066',
+              follow_up_mark: '#873e23',
+              article_termination_mark: '#873e23',
+              page_splitting_stripe: '#873e23',
+              column_id_stripe: '#873e23',
+              prev_page_reference: '#f3a864',
+              section_subcategory: '#442c55',
+
             }}
             // groupColors={[
             //   "#3853F1",
@@ -150,7 +172,18 @@ storiesOf("Annotator", module)
             }, {
               key: "articleType",
               level: "photo_metadata-engine",
-              options: ['news', 'ads', 'interview']
+              // options: ['news', 'ads', 'interview']
+              selectable: true,
+              options: [{
+                value: "alpha",
+                label: "0 - alpha"
+              }, {
+                value: "beta",
+                label: "1 - beta"
+              }, {
+                value: "gamma",
+                label: "2 - gamma"
+              }]
             }, {
               key: "section",
               level: "photo_metadata-engine",

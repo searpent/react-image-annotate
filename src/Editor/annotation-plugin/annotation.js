@@ -446,7 +446,17 @@ class Annotation {
       { labelName: 'image', tag: 'p', name: 'image', backgroundColor: '#ffffcc' },
       { labelName: 'interview', tag: 'p', name: 'interview', backgroundColor: '#23b20f' },
       { labelName: 'table', tag: 'p', name: 'table', backgroundColor: '#0000bb' },
-      { labelName: 'section', tag: 'p', name: 'section', backgroundColor: '#ffcccc' }
+      { labelName: 'section', tag: 'p', name: 'section', backgroundColor: '#ffcccc' },
+      { labelName: 'continuation_ref', backgroundColor: '#FF33CC', name: 'continuation_ref', tag: 'p' },
+      { labelName: 'cover_clip', backgroundColor: '#669966', name: 'cover_clip', tag: 'p' },
+      { labelName: 'page_id', backgroundColor: '#4433AA', name: 'page_id', tag: 'p' },
+      { labelName: 'continuation_mark', backgroundColor: '#660066', name: 'continuation_mark', tag: 'p' },
+      { labelName: 'follow_up_mark', backgroundColor: '#873e23', name: 'follow_up_mark', tag: 'p' },
+      { labelName: 'article_termination_mark', backgroundColor: '#873e23', name: 'article_termination_mark', tag: 'p' },
+      { labelName: 'page_splitting_stripe', backgroundColor: '#873e23', name: 'page_splitting_stripe', tag: 'p' },
+      { labelName: 'column_id_stripe', backgroundColor: '#873e23', name: 'column_id_stripe', tag: 'p' },
+      { labelName: 'prev_page_reference', backgroundColor: '#f3a864', name: 'prev_page_reference', tag: 'p' },
+      { labelName: 'section_subcategory', backgroundColor: '#442c55', name: 'section_subcategory', tag: 'p' },
     ];
 
     return this._settings.labels
