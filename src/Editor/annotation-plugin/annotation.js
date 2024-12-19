@@ -363,6 +363,11 @@ class Annotation {
      */
     tag.dataset.placeholder = this.api.i18n.t(this._settings.placeholder || '');
 
+    /**
+     * Add spellcheck
+     */
+    tag.spellcheck = 'true'
+
     return tag;
   }
 
