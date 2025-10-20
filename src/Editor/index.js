@@ -38,6 +38,7 @@ function Editor({ blocks = [], onChange, imageIndex, selectedFrame }) {
           }}
             tools={EDITOR_JS_TOOLS}
             onChange={handleChange}
+            onInitialize={() => {}}
             enableReInitialize
             key={selectedFrame}
           />)
