@@ -4,7 +4,7 @@ function regionsGroups(regions) {
   if (!regions) {
     return []
   }
-  const groups = regions.reduce((acc, curr) => {
+  const groups = regions.filter(region => region.cls !== 'metadata').reduce((acc, curr) => {
     const { groupId } = curr;
     if (acc.some(e => e.id === groupId)) {
       return acc

@@ -588,10 +588,12 @@ export default (state: MainLayoutState, action: Action) => {
         }
         case "create-box": {
           let groupId = state?.images[state.selectedImage]?.regions?.find(r => r.highlighted === true)?.groupId;
-          let groupSelected = true
+          let groupSelected = true;
+          let isNewRegion = false;
           if (groupId === undefined) {
-            groupId = nextGroupId()
-            groupSelected = false
+            isNewRegion = true;
+            groupId = nextGroupId();
+            groupSelected = false;
           }
           state = saveToHistory(state, "Create Box")
           newRegion = {
@@ -608,6 +610,39 @@ export default (state: MainLayoutState, action: Action) => {
             groupHighlighted: true,
             groupId,
           }
+
+          if (isNewRegion) {
+            const selectedImageIdx = state.selectedImage;
+
+            const metadataTextValue = state?.metadataConfigs
+              .filter(metadataConfig => metadataConfig.level === "photo_metadata-engine")
+              .map(metadataConfig => ({ key: metadataConfig.key, value: "", metadataId: getRandomId() }));
+
+            const newRegionMetadata = {
+              cls: "metadata",
+              editingLabels: false,
+              groupHighlighted: false,
+              groupId,
+              x: 0,
+              y: 0,
+              w: 1,
+              h: 1,
+              highlighted: false,
+              id: getRandomId(),
+              text: JSON.stringify(metadataTextValue),
+              type: "box",
+              undefined: false,
+              visible: false,
+            }
+
+            state = addSaveableAction(state, "ADD_METADATA")
+            state = setIn(
+              state,
+              ["images", selectedImageIdx, "regions"],
+              [...state.images[selectedImageIdx].regions, newRegionMetadata]
+            )
+          }
+
           state = setIn(state, ["mode"], {
             mode: "RESIZE_BOX",
             editLabelEditorAfter: !groupSelected,

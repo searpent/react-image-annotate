@@ -34,6 +34,26 @@ function defaultClsColor(cls) {
       return "#02b4ba"
     case 'section':
       return "#ffcccc"
+    case 'continuation_ref':
+      return '#FF33CC'
+    case 'cover_clip':
+      return '#669966'
+    case 'page_id':
+      return '#4433AA'
+    case 'continuation_mark':
+      return '#660066'
+    case 'follow_up_mark':
+      return '#873e23'
+    case 'article_termination_mark':
+      return '#873e23'
+    case 'page_splitting_stripe':
+      return '#873e23'
+    case 'column_id_stripe':
+      return '#873e23'
+    case 'prev_page_reference':
+      return '#f3a864'
+    case 'section_subcategory':
+      return '#442c55'
     default:
       return "#02b4ba"
   }
