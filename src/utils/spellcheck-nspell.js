@@ -8,9 +8,14 @@
  * 4. Default fallback (en-US)
  *
  * Usage:
+ * - setSpellcheckEnabled(true)    // Enable spellchecking (disabled by default for performance)
  * - setSpellcheckLanguage('cs-CZ') // Set explicit language
  * - setSpellcheckLanguage(null)    // Clear setting (use auto-detection)
  * - highlightMisspellingsInHtml(html, 'auto') // Auto-detect with priority
+ *
+ * Configuration:
+ * - Set REACT_APP_SPELLCHECK_ENABLED=true in .env file to enable spellchecking (default: disabled)
+ * - Or call setSpellcheckEnabled(true) programmatically at app startup to enable
  */
 
 // Simple nspell loader usable in the browser. It lazy-loads the aff/dic
@@ -23,71 +28,84 @@ const loadPromises = new Map()
 export async function getSpell(lang = 'en-US') {
   // Check if dictionary is available
   if (!AVAILABLE_DICTIONARIES[lang]) {
-    throw new Error(`Dictionary not available for language: ${lang}`)
+    console.warn(`Dictionary not available for language: ${lang}`)
+    return null // Return null instead of throwing
   }
 
   if (spellInstances.has(lang)) return spellInstances.get(lang)
-  if (loadPromises.has(lang)) return loadPromises.get(lang)
+  if (loadPromises.has(lang)) {
+    const result = await loadPromises.get(lang)
+    return result // May be null if loading failed
+  }
 
   const promise = (async () => {
-    const { default: nspell } = await import('nspell')
-    // Use the mapped dictionary name
-    const dictName = AVAILABLE_DICTIONARIES[lang]
-    const affUrl = `/dicts/${dictName}.aff`
-    const dicUrl = `/dicts/${dictName}.dic`
+    try {
+      const { default: nspell } = await import('nspell')
+      // Use the mapped dictionary name
+      const dictName = AVAILABLE_DICTIONARIES[lang]
+      const affUrl = `/dicts/${dictName}.aff`
+      const dicUrl = `/dicts/${dictName}.dic`
 
-    console.log('Loading dictionary files:', affUrl, dicUrl)
+      console.log('Loading dictionary files:', affUrl, dicUrl)
 
-    const [affRes, dicRes] = await Promise.all([
-      fetch(affUrl, { mode: 'cors' }),
-      fetch(dicUrl, { mode: 'cors' })
-    ])
+      const [affRes, dicRes] = await Promise.all([
+        fetch(affUrl, { mode: 'cors' }),
+        fetch(dicUrl, { mode: 'cors' })
+      ])
 
-    console.log('Fetch responses:', affRes.status, dicRes.status)
+      console.log('Fetch responses:', affRes.status, dicRes.status)
 
-    if (!affRes.ok || !dicRes.ok) {
-      throw new Error(`Failed to load dictionary files: ${affUrl} (${affRes.status}), ${dicUrl} (${dicRes.status})`)
-    }
-    // Load as raw bytes to support legacy encodings declared by SET in .aff
-    const [affBuf, dicBuf] = await Promise.all([affRes.arrayBuffer(), dicRes.arrayBuffer()])
-
-    // Decode .aff as UTF-8 first to read SET <encoding>
-    const utf8Decoder = new TextDecoder('utf-8')
-    let affUtf8 = utf8Decoder.decode(affBuf)
-    let enc = 'utf-8'
-    const setMatch = /\n\s*SET\s+([^\r\n]+)/i.exec("\n" + affUtf8)
-    if (setMatch) {
-      const raw = setMatch[1].trim()
-      // Map common Hunspell enc names to TextDecoder labels
-      const map = {
-        'UTF-8': 'utf-8', 'UTF8': 'utf-8',
-        'ISO8859-1': 'iso-8859-1', 'ISO-8859-1': 'iso-8859-1',
-        'ISO8859-2': 'iso-8859-2', 'ISO-8859-2': 'iso-8859-2',
-        'ISO8859-5': 'iso-8859-5', 'ISO-8859-5': 'iso-8859-5',
-        'KOI8-R': 'koi8-r', 'KOI8-U': 'koi8-u',
-        'WINDOWS-1250': 'windows-1250', 'CP1250': 'windows-1250',
-        'WINDOWS-1251': 'windows-1251', 'CP1251': 'windows-1251',
-        'WINDOWS-1252': 'windows-1252', 'CP1252': 'windows-1252',
-        'MICROSOFT-CP1251': 'windows-1251', 'microsoft-cp1251': 'windows-1251'
+      if (!affRes.ok || !dicRes.ok) {
+        const errorMsg = `Failed to load dictionary files: ${affUrl} (${affRes.status}), ${dicUrl} (${dicRes.status})`
+        console.error(`[Spellcheck Error] ${errorMsg}`)
+        console.error(`[Spellcheck Error] Make sure dictionary files are served from /dicts/ path`)
+        console.error(`[Spellcheck Error] Check that public/dicts/ files are copied during build`)
+        return null // Return null instead of throwing
       }
-      const mapped = map[raw.toUpperCase()] || raw
-      try {
-        // Probe if browser supports it
-        new TextDecoder(mapped)
-        enc = mapped
-      } catch (_) {
-        console.warn(`Unsupported dictionary encoding '${raw}' resolved to '${mapped}'. Falling back to UTF-8.`)
+      // Load as raw bytes to support legacy encodings declared by SET in .aff
+      const [affBuf, dicBuf] = await Promise.all([affRes.arrayBuffer(), dicRes.arrayBuffer()])
+
+      // Decode .aff as UTF-8 first to read SET <encoding>
+      const utf8Decoder = new TextDecoder('utf-8')
+      let affUtf8 = utf8Decoder.decode(affBuf)
+      let enc = 'utf-8'
+      const setMatch = /\n\s*SET\s+([^\r\n]+)/i.exec("\n" + affUtf8)
+      if (setMatch) {
+        const raw = setMatch[1].trim()
+        // Map common Hunspell enc names to TextDecoder labels
+        const map = {
+          'UTF-8': 'utf-8', 'UTF8': 'utf-8',
+          'ISO8859-1': 'iso-8859-1', 'ISO-8859-1': 'iso-8859-1',
+          'ISO8859-2': 'iso-8859-2', 'ISO-8859-2': 'iso-8859-2',
+          'ISO8859-5': 'iso-8859-5', 'ISO-8859-5': 'iso-8859-5',
+          'KOI8-R': 'koi8-r', 'KOI8-U': 'koi8-u',
+          'WINDOWS-1250': 'windows-1250', 'CP1250': 'windows-1250',
+          'WINDOWS-1251': 'windows-1251', 'CP1251': 'windows-1251',
+          'WINDOWS-1252': 'windows-1252', 'CP1252': 'windows-1252',
+          'MICROSOFT-CP1251': 'windows-1251', 'microsoft-cp1251': 'windows-1251'
+        }
+        const mapped = map[raw.toUpperCase()] || raw
+        try {
+          // Probe if browser supports it
+          new TextDecoder(mapped)
+          enc = mapped
+        } catch (_) {
+          console.warn(`Unsupported dictionary encoding '${raw}' resolved to '${mapped}'. Falling back to UTF-8.`)
+        }
       }
+
+      const decoder = new TextDecoder(enc)
+      const aff = enc === 'utf-8' ? affUtf8 : decoder.decode(affBuf)
+      const dic = decoder.decode(dicBuf)
+
+      const spellInstance = nspell(aff, dic)
+      spellInstances.set(lang, spellInstance)
+      console.log(`Dictionary loaded successfully for ${lang}`)
+      return spellInstance
+    } catch (error) {
+      console.error(`[Spellcheck Error] Failed to load dictionary for ${lang}:`, error)
+      return null // Return null instead of throwing
     }
-
-    const decoder = new TextDecoder(enc)
-    const aff = enc === 'utf-8' ? affUtf8 : decoder.decode(affBuf)
-    const dic = decoder.decode(dicBuf)
-
-    const spellInstance = nspell(aff, dic)
-    spellInstances.set(lang, spellInstance)
-    console.log(`Dictionary loaded successfully for ${lang}`)
-    return spellInstance
   })()
 
   loadPromises.set(lang, promise)
@@ -111,6 +129,38 @@ const AVAILABLE_DICTIONARIES = {
 
 // Spellcheck language setting (can be set by user)
 let spellcheckLanguageSetting = null
+
+// Spellcheck enabled/disabled flag
+// Defaults to false (disabled) for performance. Enable via REACT_APP_SPELLCHECK_ENABLED=true or setSpellcheckEnabled()
+let spellcheckEnabled = (() => {
+  try {
+    // Check for environment variable (works in Create React App, Storybook, etc.)
+    if (typeof process !== 'undefined' && process.env && process.env.REACT_APP_SPELLCHECK_ENABLED !== undefined) {
+      const envValue = process.env.REACT_APP_SPELLCHECK_ENABLED
+      console.log('[Spellcheck] REACT_APP_SPELLCHECK_ENABLED from env:', envValue)
+      const enabledFromEnv = envValue === 'true' || envValue === '1'
+      console.log('[Spellcheck] Initial spellcheckEnabled from env:', enabledFromEnv)
+      return enabledFromEnv
+    }
+  } catch (e) {
+    // Ignore errors accessing process.env
+    console.warn('[Spellcheck] Failed to read REACT_APP_SPELLCHECK_ENABLED from process.env:', e)
+  }
+  console.log('[Spellcheck] REACT_APP_SPELLCHECK_ENABLED not set, defaulting spellcheckEnabled=false')
+  return false // Default to disabled for performance
+})()
+
+// Function to enable/disable spellchecking
+// Call this from your application to control spellchecking at runtime
+export function setSpellcheckEnabled(enabled) {
+  spellcheckEnabled = Boolean(enabled)
+  console.log(`Spellcheck ${spellcheckEnabled ? 'enabled' : 'disabled'}`)
+}
+
+// Function to check if spellchecking is enabled
+export function isSpellcheckEnabled() {
+  return spellcheckEnabled
+}
 
 // Function to set spellcheck language preference
 export function setSpellcheckLanguage(lang) {
@@ -227,6 +277,11 @@ function detectLanguage(text, browserLang = null, spellcheckLang = null) {
 }
 
 export async function findMisspellings(text, lang = 'auto') {
+  // Early return if spellchecking is disabled
+  if (!spellcheckEnabled) {
+    return []
+  }
+
   try {
     // Get browser language preferences
     const browserLang = getBrowserSpellcheckLanguage()
@@ -245,6 +300,12 @@ export async function findMisspellings(text, lang = 'auto') {
 
     const spell = await getSpell(detectedLang)
 
+    // If dictionary failed to load, return empty array (no misspellings found)
+    if (!spell) {
+      console.warn(`[Spellcheck] Dictionary not available for ${detectedLang}, skipping spellcheck`)
+      return []
+    }
+
     // Unicode-aware word extraction across scripts (Latin, Cyrillic, etc.)
     // Matches sequences of letters, allowing internal apostrophes/dashes.
     const wordRegex = /\p{L}[\p{L}'’\-]*/gu
@@ -259,13 +320,19 @@ export async function findMisspellings(text, lang = 'auto') {
 
     return Array.from(miss)
   } catch (error) {
-    console.warn(`Spellcheck failed for language ${lang}:`, error)
+    console.error(`[Spellcheck Error] Spellcheck failed for language ${lang}:`, error)
+    console.error(`[Spellcheck Error] Stack:`, error.stack)
     return [] // Return empty array instead of throwing
   }
 }
 
 export async function highlightMisspellingsInHtml(html, lang = 'auto') {
   if (!html) return html
+
+  // Early return if spellchecking is disabled
+  if (!spellcheckEnabled) {
+    return html
+  }
 
   try {
     // Decode HTML entities for spellchecking, but preserve original HTML
