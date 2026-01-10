@@ -172,17 +172,34 @@ storiesOf("Annotator", module)
             }, {
               key: "articleType",
               level: "photo_metadata-engine",
-              // options: ['news', 'ads', 'interview']
               selectable: true,
               options: [{
-                value: "alpha",
-                label: "0 - alpha"
+                value: "no_article_type",
+                label: "no_article_type"
               }, {
-                value: "beta",
-                label: "1 - beta"
+                value: "article",
+                label: "article"
               }, {
-                value: "gamma",
-                label: "2 - gamma"
+                value: "column",
+                label: "column"
+              }, {
+                value: "editorial",
+                label: "editorial"
+              }, {
+                value: "obituary",
+                label: "obituary"
+              }, {
+                value: "office_hours",
+                label: "office_hours"
+              }, {
+                value: "advertisement",
+                label: "advertisement"
+              }, {
+                value: "headline",
+                label: "headline"
+              }, {
+                value: "cover",
+                label: "cover"
               }]
             }, {
               key: "section",
@@ -193,6 +210,32 @@ storiesOf("Annotator", module)
             onExit={(s) => console.log('[onExit] triggered:', s)}
             save={async ({ image, triggerRecalc, albumMetadata }) => {
               console.log(`[SYNC] image ${image.id} saving...  recalc: ${triggerRecalc} albumMetadata: ${albumMetadata.length}`)
+              
+              // Extract and log ArticleType and other article metadata
+              const metadataRegions = image.regions?.filter(r => r.cls === 'metadata') || []
+              console.log(`[SYNC] Found ${metadataRegions.length} metadata region(s)`)
+              
+              metadataRegions.forEach((region, idx) => {
+                try {
+                  const articleMetadata = JSON.parse(region.text || '[]')
+                  console.log(`[SYNC] Metadata Region ${idx + 1} (groupId: ${region.groupId}):`, articleMetadata)
+                  
+                  // Find and log ArticleType specifically
+                  const articleType = articleMetadata.find(m => m.key === 'articleType')
+                  if (articleType) {
+                    console.log(`✅ [ARTICLE TYPE SAVED] Group ${region.groupId}: ArticleType = "${articleType.value}" (metadataId: ${articleType.metadataId})`)
+                  } else {
+                    console.log(`⚠️  [ARTICLE TYPE] Group ${region.groupId}: No ArticleType found in metadata`)
+                  }
+                  
+                  // Log all metadata keys for this group
+                  const metadataKeys = articleMetadata.map(m => m.key).join(', ')
+                  console.log(`[SYNC] Group ${region.groupId} metadata keys: [${metadataKeys}]`)
+                } catch (e) {
+                  console.error(`[SYNC] Error parsing metadata for region ${idx + 1}:`, e, region.text)
+                }
+              })
+              
               return new Promise((resolve, reject) => {
                 setTimeout(() => {
                   let lockedUntil = null;
@@ -201,6 +244,7 @@ storiesOf("Annotator", module)
                     now.setSeconds(now.getSeconds() + 60);
                     lockedUntil = now
                   }
+                  console.log(`[SYNC] Save completed for image ${image.id}`)
                   resolve({ lockedUntil })
                 }, 3000)
               })

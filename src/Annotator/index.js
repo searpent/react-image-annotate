@@ -9,7 +9,7 @@ import type {
   Metadata,
   MetadataConfig
 } from "../MainLayout/types"
-import React, { useCallback, useEffect, useReducer } from "react"
+import React, { useCallback, useEffect, useReducer, useRef } from "react"
 import makeImmutable, { without } from "seamless-immutable"
 import intersection from "lodash/intersection"
 import type { KeypointsDefinition } from "../ImageCanvas/region-tools"
@@ -193,6 +193,21 @@ export const Annotator = ({
   const dispatch = useEventCallback((action: Action) => {
     if (action.type === "HEADER_BUTTON_CLICKED") {
       if (["Exit", "Done", "Save", "Complete"].includes(action.buttonName)) {
+        // Before exiting, save current image if there are unsaved changes
+        if (state.selectedImage !== undefined && state.images[state.selectedImage]?.saveableActions?.length > 0) {
+          const currentImage = state.images[state.selectedImage]
+          const triggerRecalc = intersection(reacalcActionsEnum, currentImage.saveableActions).length > 0
+          let toSaveMetadata = []
+          if (currentImage.saveableActions?.includes("UPDATE_ALBUM_METADATA")) {
+            toSaveMetadata = state.albumMetadata
+          }
+          dispatchToReducer({
+            type: "SAVE_IMAGE",
+            image: { ...currentImage },
+            triggerRecalc,
+            toSaveMetadata
+          })
+        }
         return onExit(without(state, "history"))
       } else if (action.buttonName === "Next" && onNextImage) {
         return onNextImage(without(state, "history"))
@@ -287,6 +302,71 @@ export const Annotator = ({
       saveHandler(image, triggerRecalc, toSaveMetadata);
     }
   }, [save, state.toSaveImage])
+
+
+  // Auto-save article metadata changes after a delay (debounced)
+  const autoSaveTimeoutRef = useRef(null)
+  const stateRef = useRef(state)
+
+  // Keep stateRef in sync with state
+  useEffect(() => {
+    stateRef.current = state
+  }, [state])
+
+  useEffect(() => {
+    // Only trigger on UPDATE_METADATA actions for article metadata (with groupId)
+    if (state.lastAction?.type === 'UPDATE_METADATA' && state.lastAction?.groupId) {
+      const { name, value, imageIndex, groupId } = state.lastAction
+
+      // Log the change
+      if (name === 'articleType') {
+        console.log(`⏱️  [AUTO-SAVE] ArticleType changed to "${value}" for group ${groupId}. Auto-save will trigger in 1 second...`)
+      } else {
+        console.log(`⏱️  [AUTO-SAVE] ${name} changed to "${value}" for group ${groupId}. Auto-save will trigger in 1 second...`)
+      }
+
+      // Clear any existing timeout
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current)
+        console.log(`⏱️  [AUTO-SAVE] Previous auto-save cancelled, restarting timer...`)
+      }
+
+      if (imageIndex !== undefined) {
+        // Debounce: wait 1 second after last change before saving
+        autoSaveTimeoutRef.current = setTimeout(() => {
+          // Read latest state from ref
+          const latestState = stateRef.current
+          const imageToSave = latestState?.images?.[imageIndex]
+
+          // Double-check that there are still unsaved changes and image exists
+          if (imageToSave?.saveableActions?.includes("UPDATE_METADATA")) {
+            console.log(`💾 [AUTO-SAVE] Triggering auto-save for image ${imageToSave.id} (group ${groupId})...`)
+            const triggerRecalc = intersection(reacalcActionsEnum, imageToSave.saveableActions).length > 0
+            let toSaveMetadata = []
+            if (imageToSave.saveableActions?.includes("UPDATE_ALBUM_METADATA")) {
+              toSaveMetadata = latestState.albumMetadata || []
+            }
+
+            dispatchToReducer({
+              type: "SAVE_IMAGE",
+              image: { ...imageToSave },
+              triggerRecalc,
+              toSaveMetadata
+            })
+          } else {
+            console.log(`⚠️  [AUTO-SAVE] Skipping auto-save - no unsaved changes for image ${imageIndex}`)
+          }
+        }, 1000) // 1 second delay
+      }
+    }
+
+    // Cleanup timeout on unmount or when dependencies change
+    return () => {
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current)
+      }
+    }
+  }, [state.lastAction, dispatchToReducer])
 
   // polling of images
   useEffect(() => {

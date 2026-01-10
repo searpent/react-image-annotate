@@ -814,8 +814,73 @@ const examplePhotos = [
                 "Y1": 0,
                 "Y2": 1
               },
-              "text": "[{\"key\":\"articleType\",\"value\":\"news\"}, {\"key\":\"section\",\"value\":\"editorial\"}]",
-              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"articleType-0\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"section-0\"}]",
+              "groupId": "0",
+              "id": "metadata-0"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": {
+                "X1": 0,
+                "X2": 1,
+                "Y1": 0,
+                "Y2": 1
+              },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"articleType-1\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"section-1\"}]",
+              "groupId": "1",
+              "id": "metadata-1"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": {
+                "X1": 0,
+                "X2": 1,
+                "Y1": 0,
+                "Y2": 1
+              },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"articleType-2\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"section-2\"}]",
+              "groupId": "2",
+              "id": "metadata-2"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": {
+                "X1": 0,
+                "X2": 1,
+                "Y1": 0,
+                "Y2": 1
+              },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"articleType-3\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"section-3\"}]",
+              "groupId": "3",
+              "id": "metadata-3"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": {
+                "X1": 0,
+                "X2": 1,
+                "Y1": 0,
+                "Y2": 1
+              },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"articleType-4\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"section-4\"}]",
+              "groupId": "4",
+              "id": "metadata-4"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": {
+                "X1": 0,
+                "X2": 1,
+                "Y1": 0,
+                "Y2": 1
+              },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"articleType-5\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"section-5\"}]",
+              "groupId": "5",
               "id": "aba453dd-f870-4510-ae40-a19eb52eb7d6"
             },
             {
@@ -827,9 +892,22 @@ const examplePhotos = [
                 "Y1": 0,
                 "Y2": 1
               },
-              "text": "[{\"key\":\"articleType\",\"value\":\"ads\"}, {\"key\":\"section\",\"value\":\"last page\"}]",
-              "groupId": "1",
+              "text": "[{\"key\":\"articleType\",\"value\":\"ads\",\"metadataId\":\"articleType-6\"}, {\"key\":\"section\",\"value\":\"last page\",\"metadataId\":\"section-6\"}]",
+              "groupId": "6",
               "id": "2615bf87-7247-4bde-a0f9-45413034a6a6"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": {
+                "X1": 0,
+                "X2": 1,
+                "Y1": 0,
+                "Y2": 1
+              },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"articleType-uuid\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"section-uuid\"}]",
+              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
+              "id": "metadata-uuid"
             },
           ]
         },

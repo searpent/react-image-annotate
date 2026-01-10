@@ -1090,8 +1090,20 @@ export default (state: MainLayoutState, action: Action) => {
             return state
           }
 
+
+          const oldValue = articleMetadata[toBeUpdatedMetadataIdx].value
           articleMetadata[toBeUpdatedMetadataIdx].value = value
-          state = addSaveableAction(state, "UPDATE_METADATA")
+
+          // Add saveableAction to the correct image (using imageIndex from action, not selectedImage)
+          // This ensures the saveableAction is added to the image being modified, not the currently selected one
+          if (state.images[imageIndex]) {
+            const currentSaveableActions = state.images[imageIndex]?.saveableActions || []
+            state = setIn(
+              state,
+              ["images", imageIndex, "saveableActions"],
+              [...currentSaveableActions, "UPDATE_METADATA"]
+            )
+          }
           return setIn(
             state,
             ["images", imageIndex, "regions", articleMetadataRegionIdx],
@@ -1108,7 +1120,16 @@ export default (state: MainLayoutState, action: Action) => {
           console.error(`can't find photo metadata by key "${name}"`)
           return state
         }
-        state = addSaveableAction(state, "UPDATE_METADATA")
+        // Add saveableAction to the correct image (using imageIndex from action, not selectedImage)
+        // This ensures the saveableAction is added to the image being modified, not the currently selected one
+        if (state.images[imageIndex]) {
+          const currentSaveableActions = state.images[imageIndex]?.saveableActions || []
+          state = setIn(
+            state,
+            ["images", imageIndex, "saveableActions"],
+            [...currentSaveableActions, "UPDATE_METADATA"]
+          )
+        }
         return setIn(
           state,
           ["images", imageIndex, "metadata", metadataIndex],
