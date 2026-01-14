@@ -172,7 +172,6 @@ storiesOf("Annotator", module)
             }, {
               key: "articleType",
               level: "photo_metadata-engine",
-              // options: ['news', 'ads', 'interview']
               selectable: true,
               options: [{
                 value: "alpha",
@@ -224,6 +223,179 @@ storiesOf("Annotator", module)
       </div>
     </HotKeys >
   ))
+  .add("Basic with onImagesChange (missing articleType value -> reproduce hang)", () => {
+    // This story intentionally simulates a production-like bug trigger:
+    // article metadata contains `{ key: "articleType" }` with NO `value` field
+    // (i.e. `value` is undefined), not an empty string.
+    const storyPhoto = JSON.parse(JSON.stringify(examplePhotos[0]))
+    const metadataEngine = storyPhoto?.modelResults?.v1?.find(
+      (mr) => mr.modelFamily === "metadata-engine" || mr.name === "metadata-engine"
+    )
+    if (metadataEngine?.results?.length) {
+      metadataEngine.results = metadataEngine.results.map((r) => {
+        if (r.label !== "metadata") return r
+        const alphaGroupId = "6"
+        if (r.groupId === alphaGroupId) {
+          return {
+            ...r,
+            text: '[{"key":"articleType","value":"alpha"},{"key":"section","value":"editorial"}]'
+          }
+        }
+        // NOTE: `text` is a JSON string; omit `value` for articleType (undefined).
+        // This is the production-like shape that can lead to "hanging" DOM input values
+        // when switching directly from an article that had a value.
+        return {
+          ...r,
+          text: '[{"key":"articleType"},{"key":"section","value":"last page"}]'
+        }
+      })
+    }
+
+    // Enable before first render (critical) so keys + value handling use buggy mode immediately.
+    if (typeof window !== "undefined") {
+      window.__RIA_ALLOW_UNCONTROLLED_METADATA_INPUTS__ = true
+    }
+
+    const EnableBuggyMetadataInputMode = ({ children }) => {
+      React.useEffect(() => {
+        return () => {
+          delete window.__RIA_ALLOW_UNCONTROLLED_METADATA_INPUTS__
+        }
+      }, [])
+      return children
+    }
+
+    return (
+      <HotKeys keyMap={defaultKeyMap}>
+        <EnableBuggyMetadataInputMode>
+          <div>
+            <div>
+              <Annotator
+              middlewares={middlewares}
+              labelImages
+              regionClsList={[
+                "author",
+                "appendix",
+                "photo_author",
+                "photo_caption",
+                "advertisement",
+                "other_graphics",
+                "unknown",
+                "title",
+                "about_author",
+                "image",
+                "subtitle",
+                "interview",
+                "table",
+                "text",
+                "continuation_ref",
+                "cover_clip",
+                "page_id",
+                "continuation_mark",
+                "follow_up_mark",
+                "article_termination_mark",
+                "page_splitting_stripe",
+                "column_id_stripe",
+                "prev_page_reference",
+                "section_subcategory"
+              ]}
+              help={`# Tools\n\n**E** - select tool\n\n**D** - frame tool\n\n**Ctrl** + **click frame** - edit frame\n\n**1**- **9** - change class`}
+              onImagesChange={(images) => console.log("[images changed to]:", images)}
+              images={photosToImages([storyPhoto])}
+              clsColors={{
+                title: "#f70202",
+                subtitle: "#ffb405",
+                text: "#14deef",
+                author: "#f8d51e",
+                appendix: "#bfede2",
+                photo_author: "#9a17bb",
+                photo_caption: "#ff84f6",
+                advertisement: "#ffb201",
+                other_graphics: "#ff5400",
+                unknown: "#bfede2",
+                about_author: "#9a17bb",
+                image: "#14deef",
+                interview: "#23b20f",
+                table: "#02b4ba",
+                continuation_ref: "#FF33CC",
+                cover_clip: "#669966",
+                page_id: "#4433AA",
+                continuation_mark: "#660066",
+                follow_up_mark: "#873e23",
+                article_termination_mark: "#873e23",
+                page_splitting_stripe: "#873e23",
+                column_id_stripe: "#873e23",
+                prev_page_reference: "#f3a864",
+                section_subcategory: "#442c55"
+              }}
+              enabledTools={[]}
+              groupColors={["#343434", "#989898", "#dcdcdc"]}
+              onGroupSelect={(groupId) => console.log("selected groupid:", groupId)}
+              hideHeader={true}
+              hideHistory={true}
+              hideNotEditingLabel={true}
+              showEditor={true}
+              showPageSelector={true}
+              albumMetadata={[
+                { key: "issueNumber", value: "12" },
+                { key: "issueType", value: "news" }
+              ]}
+              metadataConfigs={[
+                { key: "issueNumber", level: "album", options: [] },
+                { key: "issueType", level: "album", options: ["news", "magazine", "q&a"] },
+                { key: "mutation", level: "photo", options: ["Morava", "Slezsko", "Cechy"] },
+                {
+                  key: "previousArticleId",
+                  level: "photo_metadata-engine",
+                  selectable: true,
+                  options: [
+                    { value: "alpha", label: "0 - alpha" },
+                    { value: "beta", label: "1 - beta" },
+                    { value: "gamma", label: "2 - gamma" }
+                  ]
+                },
+                { key: "pageNumber", level: "photo", options: [] },
+                // IMPORTANT: articleType is a text input here (not selectable),
+                // to match production (`<input type="text" ...>`).
+                { key: "articleType", level: "photo_metadata-engine", options: ["alpha", "beta", "gamma"] },
+                { key: "section", level: "photo_metadata-engine", options: ["editorial", "article", "last page"] }
+              ]}
+              onSelectedImageChange={(d) => console.log("[onSelectedImageChange] triggered:", d)}
+              onExit={(s) => console.log("[onExit] triggered:", s)}
+              save={async ({ image, triggerRecalc, albumMetadata }) => {
+                console.log(
+                  `[SYNC] image ${image.id} saving...  recalc: ${triggerRecalc} albumMetadata: ${albumMetadata.length}`
+                )
+                return new Promise((resolve) => {
+                  setTimeout(() => {
+                    let lockedUntil = null
+                    if (triggerRecalc) {
+                      var now = new Date()
+                      now.setSeconds(now.getSeconds() + 60)
+                      lockedUntil = now
+                    }
+                    resolve({ lockedUntil })
+                  }, 3000)
+                })
+              }}
+              fetchImage={async ({ imageId }) => {
+                console.log(`[SYNC] image ${imageId} fetching...`)
+                return new Promise((resolve) => {
+                  setTimeout(() => {
+                    console.log(`[SYNC] image ${imageId} fetched`)
+                    resolve({
+                      image: { ...exampleImages[0], lockedUntil: null, id: imageId }
+                    })
+                  }, 5000)
+                })
+              }}
+            />
+            </div>
+          </div>
+        </EnableBuggyMetadataInputMode>
+      </HotKeys>
+    )
+  })
   .add("Basic - Allow Comments", () => (
     <Annotator
       onExit={actionAddon("onExit")}
@@ -386,7 +558,6 @@ storiesOf("Annotator", module)
   ))
   .add("Car Annotation", () => (
     <Annotator
-      onExit={actionAddon("onExit")}
       middlewares={middlewares}
       labelImages
       regionClsList={["Car", "Sign", "Construction Barrier"]}

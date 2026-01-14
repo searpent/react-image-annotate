@@ -808,28 +808,66 @@ const examplePhotos = [
             {
               "label": "metadata",
               "score": 1,
-              "box": {
-                "X1": 0,
-                "X2": 1,
-                "Y1": 0,
-                "Y2": 1
-              },
-              "text": "[{\"key\":\"articleType\",\"value\":\"news\"}, {\"key\":\"section\",\"value\":\"editorial\"}]",
-              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
-              "id": "aba453dd-f870-4510-ae40-a19eb52eb7d6"
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"alpha\"}, {\"key\":\"section\",\"value\":\"editorial\"}]",
+              "groupId": "0",
+              "id": "meta-0"
             },
             {
               "label": "metadata",
               "score": 1,
-              "box": {
-                "X1": 0,
-                "X2": 1,
-                "Y1": 0,
-                "Y2": 1
-              },
-              "text": "[{\"key\":\"articleType\",\"value\":\"ads\"}, {\"key\":\"section\",\"value\":\"last page\"}]",
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"\"}, {\"key\":\"section\",\"value\":\"news\"}]",
               "groupId": "1",
-              "id": "2615bf87-7247-4bde-a0f9-45413034a6a6"
+              "id": "meta-1"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"beta\"}, {\"key\":\"section\",\"value\":\"article\"}]",
+              "groupId": "2",
+              "id": "meta-2"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"\"}, {\"key\":\"section\",\"value\":\"last page\"}]",
+              "groupId": "3",
+              "id": "meta-3"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"gamma\"}, {\"key\":\"section\",\"value\":\"editorial\"}]",
+              "groupId": "4",
+              "id": "meta-4"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"\"}, {\"key\":\"section\",\"value\":\"article\"}]",
+              "groupId": "5",
+              "id": "meta-5"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"alpha\"}, {\"key\":\"section\",\"value\":\"news\"}]",
+              "groupId": "6",
+              "id": "meta-6"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"\"}, {\"key\":\"section\",\"value\":\"editorial\"}]",
+              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
+              "id": "meta-uuid"
             },
           ]
         },
