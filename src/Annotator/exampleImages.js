@@ -32,48 +32,6 @@ const mockedImage = {
       "groupId": "0",
       "text": "Udržet trávník v perfektním stavu, znamená věnovat mu ohromné množství času a cítit se neustále odpovědný za jeho stav. Znamená to nepopulární, mnohdy obtížnou, časově náročnou práci a také starost o likvidaci zahradního odpadu. Dobrou zprávou je, že robotická sekačka na trávu všechny tyto věci obstará za Vás."
     },
-    {
-      "id": "346807698131517442",
-      "type": "box",
-      "visible": true,
-      "cls": "title",
-      "highlighted": false,
-      "groupHighlighted": false,
-      "x": 0.1,
-      "y": 0.35,
-      "w": 0.4,
-      "h": 0.08,
-      "groupId": "1",
-      "text": "Revolutionary AI Technology Transforms Healthcare"
-    },
-    {
-      "id": "346807698131517443",
-      "type": "box",
-      "visible": true,
-      "cls": "text",
-      "highlighted": false,
-      "groupHighlighted": false,
-      "x": 0.1,
-      "y": 0.43,
-      "w": 0.4,
-      "h": 0.15,
-      "groupId": "1",
-      "text": "Artificial intelligence is revolutionizing the healthcare sector, enabling doctors to diagnose diseases faster and more accurately than ever before."
-    },
-    {
-      "id": "346807698131517444",
-      "type": "box",
-      "visible": true,
-      "cls": "author",
-      "highlighted": false,
-      "groupHighlighted": false,
-      "x": 0.1,
-      "y": 0.58,
-      "w": 0.2,
-      "h": 0.03,
-      "groupId": "1",
-      "text": "By Dr. Sarah Johnson"
-    },
   ],
   "metadata": [
     {

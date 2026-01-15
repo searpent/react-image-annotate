@@ -8,7 +8,7 @@ import './editor.css';
 
 const ReactEditorJS = createReactEditorJS()
 
-function Editor({ blocks = [], onChange, imageIndex, selectedFrame, selectedGroupId = null, originalSelectedGroupId = null }) {
+function Editor({ blocks = [], onChange, imageIndex, selectedFrame}) {
   const [editMode, setEditMode] = useState(false);
   const [autoSpellcheck, setAutoSpellcheck] = useState(isSpellcheckEnabled());
   const handleChange = async instance => {
@@ -26,29 +26,6 @@ function Editor({ blocks = [], onChange, imageIndex, selectedFrame, selectedGrou
       return next
     })
   }
-
-  // BUG SIMULATION: Only activate with ?bug=true parameter (not just localhost)
-  // This allows Storybook to test both the fix and the bug simulation
-  const isBugMode = typeof window !== 'undefined' && window.location.search.includes('bug=true');
-  
-  // In bug mode: selectedGroupId is null (simulating the bug), but originalSelectedGroupId has the actual selection
-  // Use originalSelectedGroupId for filtering in read-only mode to show correct article
-  // Use selectedGroupId (null) for edit mode to reproduce the bug
-  const groupIdForReadOnly = isBugMode && originalSelectedGroupId != null 
-    ? originalSelectedGroupId  // Use original selection for read-only filtering
-    : selectedGroupId;          // Otherwise use selectedGroupId
-  
-  const groupIdForEdit = selectedGroupId; // Always use selectedGroupId for edit mode (null in bug mode = bug)
-  
-  // Filter blocks for read-only mode
-  const blocksForReadOnly = groupIdForReadOnly === null
-    ? (isBugMode ? blocks : []) // In bug mode show all blocks, otherwise show empty
-    : blocks.filter(i => i?.data?.groupId === groupIdForReadOnly); // Filter by selected article
-  
-  // Filter blocks for edit mode - this is where the bug manifests
-  const blocksForEdit = groupIdForEdit === null
-    ? blocks.filter(i => i?.data?.groupId === groupIdForEdit) // BUG: Filter to empty array when selectedGroupId is null
-    : blocks.filter(i => i?.data?.groupId === groupIdForEdit); // Normal: filter by selected article
 
   return (
     <div>
@@ -74,13 +51,13 @@ function Editor({ blocks = [], onChange, imageIndex, selectedFrame, selectedGrou
         </div>
       </div>
 
-      {blocksForReadOnly.length < 1 ? (
+      {blocks.length < 1 ? (
         <div className='instructions'><h1>Click article to display text.</h1></div>
       ) : (
         !editMode ?
-          (<ReadOnly article={blocksToArticle(blocksForReadOnly)} />) :
+          (<ReadOnly article={blocksToArticle(blocks)} />) :
           (<ReactEditorJS defaultValue={{
-            blocks: blocksForEdit
+            blocks: blocks
           }}
             tools={EDITOR_JS_TOOLS}
             onChange={handleChange}
