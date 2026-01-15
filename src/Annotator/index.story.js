@@ -55,44 +55,71 @@ storiesOf("Annotator", module)
       ]}
     />
   ))
-  .add("Basic with onImagesChange", () => (
-    <HotKeys keyMap={defaultKeyMap}>
-      <div>
-        <div >
-          <Annotator
-            middlewares={middlewares}
-            labelImages
-            regionClsList={[
-              "author",
-              "appendix",
-              "photo_author",
-              "photo_caption",
-              "advertisement",
-              "other_graphics",
-              "unknown",
-              "title",
-              "about_author",
-              "image",
-              "subtitle",
-              "interview",
-              "table",
-              "text",
-              "continuation_ref",
-              "cover_clip",
-              "page_id",
-              "continuation_mark",
-              "follow_up_mark",
-              "article_termination_mark",
-              "page_splitting_stripe",
-              "column_id_stripe",
-              "prev_page_reference",
-              "section_subcategory"
+  .add("Basic with onImagesChange", () => {
+    // Use exampleImages which has regions with groupId to reproduce the MainLayout bug
+    // The bug: when selectedGroupId is null but regions have groupId, filtering returns empty blocks
+    // Force selectedGroupId to null by ensuring no regions are highlighted/selected
+    const imagesToUse = exampleImages.length > 0 
+      ? exampleImages.map(img => ({
+          ...img,
+          // Ensure no regions are highlighted/selected so selectedGroupId stays null
+          regions: img.regions ? img.regions.map(r => ({
+            ...r,
+            highlighted: false,
+            groupHighlighted: false
+          })) : [],
+          // Explicitly set selectedGroupId to null to trigger the bug
+          selectedGroupId: null
+        }))
+      : photosToImages([examplePhotos[0]])
+    
+    return (
+      <HotKeys keyMap={defaultKeyMap}>
+        <div>
+          <div style={{ padding: "10px", backgroundColor: "#fff3cd", marginBottom: "10px", border: "1px solid #ffc107" }}>
+            <strong>⚠️ Bug Reproduction Test:</strong>
+            <br />
+            Images have regions with <code>groupId="0"</code>, but <code>selectedGroupId</code> may be null.
+            <br />
+            <strong>To see the bug:</strong> Toggle "Edit mode" ON. If text disappears, the bug is present.
+            <br />
+            <strong>Expected after fix:</strong> Text should remain visible because MainLayout now shows all blocks when selectedGroupId is null.
+          </div>
+          <div >
+            <Annotator
+              middlewares={middlewares}
+              labelImages
+              regionClsList={[
+                "author",
+                "appendix",
+                "photo_author",
+                "photo_caption",
+                "advertisement",
+                "other_graphics",
+                "unknown",
+                "title",
+                "about_author",
+                "image",
+                "subtitle",
+                "interview",
+                "table",
+                "text",
+                "continuation_ref",
+                "cover_clip",
+                "page_id",
+                "continuation_mark",
+                "follow_up_mark",
+                "article_termination_mark",
+                "page_splitting_stripe",
+                "column_id_stripe",
+                "prev_page_reference",
+                "section_subcategory"
 
-            ]}
-            help={`# Tools\n\n**E** - select tool\n\n**D** - frame tool\n\n**Ctrl** + **click frame** - edit frame\n\n**1**- **9** - change class`}
-            onImagesChange={(images) => console.log("[images changed to]:", images)}
-            images={photosToImages([examplePhotos[0]])}
-            clsColors={{
+              ]}
+              help={`# Tools\n\n**E** - select tool\n\n**D** - frame tool\n\n**Ctrl** + **click frame** - edit frame\n\n**1**- **9** - change class`}
+              onImagesChange={(images) => console.log("[images changed to]:", images)}
+              images={imagesToUse}
+              clsColors={{
               title: "#f70202",
               subtitle: "#ffb405",
               text: "#14deef",
@@ -222,8 +249,9 @@ storiesOf("Annotator", module)
           />
         </div>
       </div>
-    </HotKeys >
-  ))
+    </HotKeys>
+    )
+  })
   .add("Basic - Allow Comments", () => (
     <Annotator
       onExit={actionAddon("onExit")}

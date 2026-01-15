@@ -276,10 +276,53 @@ const nextImageHasRegions =
   !nextImage || (nextImage.regions && nextImage.regions.length > 0)
 
 // Editor.js blocks
-const selectedGroupId = state.images[state.selectedImage]?.selectedGroupId || null;
-const extractionEngineRegions = (state.images[state.selectedImage]?.regions || []).filter(r => r.cls !== 'metadata')
-const editorBlocks = regionsToBlocks(extractionEngineRegions, clsColor);
-const blocks = editorBlocks.filter(i => i?.data?.groupId === selectedGroupId);
+let selectedGroupId = state.images[state.selectedImage]?.selectedGroupId || null;
+// BUG SIMULATION: Only activate with ?bug=true parameter (not just localhost)
+// This allows Storybook to test both the fix and the bug simulation
+const isBugMode = typeof window !== 'undefined' && (window.location.search.includes('bug=true') || window.location.search.includes('bug=on'));
+const originalSelectedGroupId = selectedGroupId; // Preserve original for filtering
+const selectedGroupIdForBug = isBugMode ? null : selectedGroupId; // Use null in bug mode to simulate the bug
+// Only process blocks if there's a valid selected image with regions
+const selectedImage = state.selectedImage != null && state.images[state.selectedImage]
+  ? state.images[state.selectedImage]
+  : null;
+const extractionEngineRegions = selectedImage?.regions 
+  ? (selectedImage.regions || []).filter(r => r.cls !== 'metadata')
+  : [];
+const editorBlocks = extractionEngineRegions.length > 0 
+  ? regionsToBlocks(extractionEngineRegions, clsColor)
+  : [];
+
+// DEBUG: Always log the filtering process
+console.log('[MainLayout DEBUG] ===========================================');
+console.log('[MainLayout DEBUG] selectedImage:', state.selectedImage);
+console.log('[MainLayout DEBUG] originalSelectedGroupId:', originalSelectedGroupId, '(type:', typeof originalSelectedGroupId, ')');
+console.log('[MainLayout DEBUG] selectedGroupIdForBug:', selectedGroupIdForBug, '(type:', typeof selectedGroupIdForBug, ')');
+console.log('[MainLayout DEBUG] extractionEngineRegions count:', extractionEngineRegions.length);
+console.log('[MainLayout DEBUG] extractionEngineRegions groupIds:', extractionEngineRegions.map(r => r.groupId));
+console.log('[MainLayout DEBUG] editorBlocks count:', editorBlocks.length);
+if (editorBlocks.length > 0) {
+  console.log('[MainLayout DEBUG] editorBlocks groupIds:', editorBlocks.map(b => b?.data?.groupId));
+  console.log('[MainLayout DEBUG] editorBlocks sample:', editorBlocks[0]);
+}
+const filteredBlocks = editorBlocks.filter(i => i?.data?.groupId === originalSelectedGroupId);
+console.log('[MainLayout DEBUG] filtered blocks count:', filteredBlocks.length);
+console.log('[MainLayout DEBUG] BUG CHECK: selectedGroupIdForBug is', selectedGroupIdForBug === null ? 'NULL' : selectedGroupIdForBug, 'but blocks have groupIds:', editorBlocks.map(b => b?.data?.groupId).filter((v, i, a) => a.indexOf(v) === i));
+if (selectedGroupIdForBug === null && editorBlocks.length > 0 && editorBlocks.some(b => b?.data?.groupId != null)) {
+  console.warn('[MainLayout DEBUG] ⚠️ BUG SCENARIO: selectedGroupIdForBug is null but blocks have groupId! Filtered blocks will be empty.');
+}
+console.log('[MainLayout DEBUG] ===========================================');
+
+// FIX: Show all blocks when selectedGroupId is null
+// This fixes the bug where text disappears in edit mode when selectedGroupId is null but blocks have groupId
+// BUG SIMULATION: In bug mode, pass unfiltered blocks to Editor so read-only mode works
+// Editor component will handle buggy filtering for edit mode only
+// Use originalSelectedGroupId for normal filtering, but pass all blocks in bug mode
+const blocks = isBugMode
+  ? editorBlocks // Pass unfiltered blocks in bug mode (Editor will filter using originalSelectedGroupId)
+  : (originalSelectedGroupId === null 
+      ? editorBlocks 
+      : editorBlocks.filter(i => i?.data?.groupId === originalSelectedGroupId));
 
 const handleEditorChange = ({ imageIndex, data }) => {
   const newRegions = data.blocks.map(i => ({
@@ -540,7 +583,7 @@ return (
             {
               (showEditor && !isSelectedImageLocked) && (
                 <EditorWrapper id="editor-wrapper">
-                  <Editor id="editor" blocks={blocks} imageIndex={state.selectedImage} key={`${state.selectedImage}#${selectedGroupId}`} selectedFrame={selectedFrame} onChange={handleEditorChange} />
+                  <Editor id="editor" blocks={blocks} imageIndex={state.selectedImage} key={`${state.selectedImage}#${originalSelectedGroupId}`} selectedFrame={selectedFrame} onChange={handleEditorChange} selectedGroupId={selectedGroupIdForBug} originalSelectedGroupId={originalSelectedGroupId} />
                 </EditorWrapper>
               )
             }
