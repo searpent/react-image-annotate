@@ -665,7 +665,7 @@ const examplePhotos = [
                 "Y1": 0.38327134,
                 "Y2": 0.5264345
               },
-              "text": "[{\"label\":\"text\",\"text\":\"Vedle domácí špičky nebude chybět řada účastníků OH v Tokiu, nad plánovanou účastí dvojnásobné vítězky Venduly Frintové visí otazník. Nejlepší česká triatlonistka měla žaludeční problémy a o jejím startu se rozhodne na poslední chvíli. Vedle Frintové je přihlášena i druhá česká olympionička Petra Kuříková, jejímž karlovarským maximem je předloňské čtvrté místo. Mezi devítkou domácích závodníků je též Jan Čelůstka i nadějní Tereza Zimovjanová (na snímku) s Radimem Grebíkem.\"}]",
+                "text": "[{\"label\":\"text\",\"text\":\"Konec vedddlké opravy. Přinesla také teplejší vodu v bazénu. Vedle domácíhhhhhhh špičky nebude chybět řada účastníků OH v Tokiu, nad plánovanou účastí dvojnásobné vítězky Venduly Frintové visí otazník. Nejlepší česká triatlonistka měla žaludeční problémy a o jejím startu se rozhodne na poslední chvíli. Vedle Frintové je přihlášena i druhá česká olympionička Petra Kuříková, jejímž karlovarským maximem je předloňské čtvrté místo. Mezi devítkou domácích závodníků je též Jan Čelůstka i nadějní Tereza Zimovjanová (na snímku) s Radimem Grebíkem.\"}]",
               "groupId": "4",
               "id": "346807505487134722"
             },
