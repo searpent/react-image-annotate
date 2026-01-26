@@ -91,28 +91,7 @@ storiesOf("Annotator", module)
             ]}
             help={`# Tools\n\n**E** - select tool\n\n**D** - frame tool\n\n**Ctrl** + **click frame** - edit frame\n\n**1**- **9** - change class`}
             onImagesChange={(images) => console.log("[images changed to]:", images)}
-            images={(() => {
-              const images = photosToImages([examplePhotos[0]])
-              // Add Czech spellcheck test text at the beginning of the first image
-              // Test case: "vedddlké" should be marked as wrong, "Přinesla" should be correct
-              if (images[0] && images[0].regions) {
-                images[0].regions.unshift({
-                  id: "spellcheck-test-region",
-                  type: "box",
-                  visible: true,
-                  cls: "text",
-                  highlighted: false,
-                  groupHighlighted: false,
-                  x: 0.1,
-                  y: 0.1,
-                  w: 0.4,
-                  h: 0.1,
-                  groupId: images[0].regions[0]?.groupId || "0",
-                  text: "Konec vedddlké opravy. Přinesla také teplejší vodu v bazénu"
-                })
-              }
-              return images
-            })()}
+            images={photosToImages([examplePhotos[0]])}
             clsColors={{
               title: "#f70202",
               subtitle: "#ffb405",
