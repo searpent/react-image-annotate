@@ -503,6 +503,7 @@ return (
                           regions={activeImage ? activeImage.regions : emptyArr}
                           onSelectRegion={action("SELECT_REGION", "region")}
                           onDeleteRegion={action("DELETE_REGION", "region")}
+                          onDeleteAllRegions={action("DELETE_ALL_REGIONS")}
                           onChangeRegion={action("CHANGE_REGION", "region")}
                           key="region-selector"
                         />,
@@ -510,6 +511,7 @@ return (
                           <KeyframesSelector
                             onChangeVideoTime={action("CHANGE_VIDEO_TIME", "newTime")}
                             onDeleteKeyframe={action("DELETE_KEYFRAME", "time")}
+                            onDeleteAllKeyframes={action("DELETE_ALL_KEYFRAMES")}
                             onChangeCurrentTime={action("CHANGE_VIDEO_TIME", "newTime")}
                             currentTime={state.currentVideoTime}
                             duration={state.videoDuration}

@@ -34,6 +34,10 @@ const MetadataItemDiv = styled("div")(({ theme }) => ({
 }))
 
 const MetadataItem = ({ name, value, metadataId, imageIndex, groupId, onChange, metadataConfig = {} }: MetadataItemProps) => {
+  // Ensure inputs are always controlled: when metadata value is undefined/null,
+  // use an empty string so we don't keep stale values from a previously selected article.
+  const normalizedValue = value == null ? "" : value
+
   const handleChange = e => {
     e.preventDefault()
     const { name, value } = e.target
@@ -55,7 +59,7 @@ const MetadataItem = ({ name, value, metadataId, imageIndex, groupId, onChange, 
         {
           metadataConfig?.selectable !== true && (
             <>
-              <input type="text" value={value} name={name} onChange={handleChange} id={name} list={`${name}-list`} style={{ width: "100%" }} />
+              <input type="text" value={normalizedValue} name={name} onChange={handleChange} id={name} list={`${name}-list`} style={{ width: "100%" }} />
               <datalist id={`${name}-list`}>
                 {
                   metadataConfig?.options?.map(opt => {
@@ -75,7 +79,7 @@ const MetadataItem = ({ name, value, metadataId, imageIndex, groupId, onChange, 
               {
                 metadataConfig?.options?.map(opt => {
                   if (opt.value && opt.label) {
-                    return <option key={opt.value} value={opt.value} selected={opt.value === value}>{opt.label}</option>
+                    return <option key={opt.value} value={opt.value} selected={opt.value === normalizedValue}>{opt.label}</option>
                   }
                   return <option key={opt} value={opt}></option>
                 })
