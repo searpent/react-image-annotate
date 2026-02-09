@@ -172,6 +172,7 @@ const emptyArr = []
 export const RegionSelectorSidebarBox = ({
   regions = emptyArr,
   onDeleteRegion,
+  onDeleteAllRegions,
   onChangeRegion,
   onSelectRegion,
 }) => {
@@ -185,6 +186,40 @@ export const RegionSelectorSidebarBox = ({
         expandedByDefault
       >
         <div className={classes.container}>
+          {regions.length > 0 && onDeleteAllRegions && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginBottom: 4,
+              }}
+            >
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  if (
+                    window.confirm(
+                      "Are you really sure you want to delete all frames on this page? This will remove all non-metadata regions."
+                    )
+                  ) {
+                    onDeleteAllRegions()
+                  }
+                }}
+                style={{
+                  fontSize: 12,
+                  color: "#d32f2f",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  textDecoration: "underline",
+                }}
+              >
+                Delete all frames
+              </button>
+            </div>
+          )}
           <MemoRowHeader />
           <HeaderSep />
           {regions.map((r, i) => (

@@ -50,17 +50,48 @@ const KeyframesSelectorSidebarBox = ({
   keyframes,
   onChangeVideoTime,
   onDeleteKeyframe,
+  onDeleteAllKeyframes,
 }) => {
   const keyframeTimes = Object.keys(keyframes).map((t) => parseInt(t))
 
   return (
     <ThemeProvider theme={theme}>
-      <SidebarBoxContainer
-        title="Keyframes"
-        subTitle=""
-        icon={<AddLocationIcon style={{ color: colors.grey[700] }} />}
-        expandedByDefault
-      >
+        <SidebarBoxContainer
+          title="Keyframes"
+          subTitle=""
+          icon={<AddLocationIcon style={{ color: colors.grey[700] }} />}
+          expandedByDefault
+        >
+          {keyframeTimes.length > 0 && (
+            <div style={{ padding: 8, paddingBottom: 0 }}>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  if (
+                    window.confirm(
+                      "Are you really sure you want to delete all frames? This will remove all keyframes for this video."
+                    )
+                  ) {
+                    if (onDeleteAllKeyframes) {
+                      onDeleteAllKeyframes()
+                    }
+                  }
+                }}
+                style={{
+                  fontSize: 12,
+                  color: colors.red[700],
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  textDecoration: "underline",
+                }}
+              >
+                Delete all frames
+              </button>
+            </div>
+          )}
         {keyframeTimes.map((t) => (
           <KeyframeRow
             fullWidth

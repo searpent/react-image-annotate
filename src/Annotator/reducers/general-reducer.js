@@ -880,6 +880,19 @@ export default (state: MainLayoutState, action: Action) => {
         (activeImage.regions || []).filter((r) => r.id !== action.region.id)
       )
     }
+    case "DELETE_ALL_REGIONS": {
+      // Delete all non-metadata regions (frames) and article-level metadata,
+      // but keep page-level/global metadata (metadata without groupId).
+      state = saveToHistory(state, "Delete all regions")
+      state = addSaveableAction(state, "DELETE_REGION")
+      return setIn(
+        state,
+        [...pathToActiveImage, "regions"],
+        (activeImage.regions || []).filter(
+          (r) => r.cls === "metadata" && (r.groupId === null || r.groupId === undefined)
+        )
+      )
+    }
     case "DELETE_GROUP": {
       const { groupId } = action
       if (groupId === null || groupId === undefined) return state

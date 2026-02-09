@@ -28,6 +28,7 @@ export default (state: MainLayoutVideoAnnotationState, action: Action) => {
       if (typeof duration === "number") {
         return setIn(state, ["videoDuration"], duration * 1000)
       }
+      break
     }
     case "HEADER_BUTTON_CLICKED": {
       switch (action.buttonName.toLowerCase()) {
@@ -35,7 +36,10 @@ export default (state: MainLayoutVideoAnnotationState, action: Action) => {
           return setIn(state, ["videoPlaying"], true)
         case "pause":
           return setIn(state, ["videoPlaying"], false)
+        default:
+          break
       }
+      break
     }
     case "CHANGE_VIDEO_TIME": {
       return setIn(state, ["currentVideoTime"], action.newTime)
@@ -45,6 +49,9 @@ export default (state: MainLayoutVideoAnnotationState, action: Action) => {
     }
     case "DELETE_KEYFRAME": {
       return setIn(state, ["keyframes"], without(state.keyframes, action.time))
+    }
+    case "DELETE_ALL_KEYFRAMES": {
+      return setIn(state, ["keyframes"], {})
     }
     default:
       break
