@@ -279,7 +279,9 @@ const nextImageHasRegions =
 const selectedGroupId = state.images[state.selectedImage]?.selectedGroupId || null;
 const extractionEngineRegions = (state.images[state.selectedImage]?.regions || []).filter(r => r.cls !== 'metadata')
 const editorBlocks = regionsToBlocks(extractionEngineRegions, clsColor);
-const blocks = editorBlocks.filter(i => i?.data?.groupId === selectedGroupId);
+const blocks = selectedGroupId === null
+  ? editorBlocks
+  : editorBlocks.filter(i => i?.data?.groupId === selectedGroupId);
 
 const handleEditorChange = ({ imageIndex, data }) => {
   const newRegions = data.blocks.map(i => ({
