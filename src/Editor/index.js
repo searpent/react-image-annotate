@@ -28,10 +28,6 @@ function Editor({ blocks = [], onChange, imageIndex, selectedFrame }) {
     })
   }
 
-  if (blocks.length < 1) {
-    return <div className='instructions'><h1>Click article to display text.</h1></div>
-  }
-
   return (
     <div>
       <div className="show-metadata-wrapper editor-toggle-wrapper">
@@ -61,7 +57,9 @@ function Editor({ blocks = [], onChange, imageIndex, selectedFrame }) {
         </div>
       </div>
 
-      {
+      {blocks.length < 1 ? (
+        <div className='instructions'><h1>Click article to display text.</h1></div>
+      ) : (
         !editMode ?
           (<ReadOnly article={blocksToArticle(blocks)} />) :
           (<ReactEditorJS defaultValue={{
@@ -73,7 +71,7 @@ function Editor({ blocks = [], onChange, imageIndex, selectedFrame }) {
             enableReInitialize
             key={selectedFrame}
           />)
-      }
+      )}
     </div>
 
   );
