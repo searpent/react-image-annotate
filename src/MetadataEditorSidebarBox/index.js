@@ -75,11 +75,11 @@ const MetadataItem = ({ name, value, metadataId, imageIndex, groupId, onChange, 
         }
         {
           metadataConfig?.selectable === true && (
-            <select name={name} id={name} onChange={handleChange} style={{ width: '100%' }}>
+            <select name={name} id={name} value={normalizedValue} onChange={handleChange} style={{ width: '100%' }}>
               {
                 metadataConfig?.options?.map(opt => {
                   if (opt.value && opt.label) {
-                    return <option key={opt.value} value={opt.value} selected={opt.value === normalizedValue}>{opt.label}</option>
+                    return <option key={opt.value} value={opt.value}>{opt.label}</option>
                   }
                   return <option key={opt} value={opt}></option>
                 })
@@ -98,7 +98,7 @@ const MetadataList = ({ title, metadata, imageIndex, onMetadataChange, metadataC
     <h2>{title}</h2>
     {
       metadata && metadata.map(({ key, value, metadataId }) => (
-        <MetadataItem name={key} value={value} imageIndex={imageIndex} metadataId={metadataId} groupId={groupId} onChange={onMetadataChange} metadataConfig={metadataConfigs.find(i => i.key === key)} />
+        <MetadataItem key={`${groupId}-${key}`} name={key} value={value} imageIndex={imageIndex} metadataId={metadataId} groupId={groupId} onChange={onMetadataChange} metadataConfig={metadataConfigs.find(i => i.key === key)} />
       ))
     }
   </div>
@@ -146,7 +146,7 @@ export const MetadataEditorSidebarBox = ({ state, onMetadataChange }) => {
         }}>
           {
             articleMetadata.length > 0 && (
-              <MetadataList title="Article" metadata={articleMetadata} imageIndex={state.selectedImage} groupId={selectedGroupId} onMetadataChange={onMetadataChange} metadataConfigs={metadataConfigs.filter(mfc => mfc.level === 'photo_metadata-engine')} />
+              <MetadataList key={`article-${selectedGroupId}`} title="Article" metadata={articleMetadata} imageIndex={state.selectedImage} groupId={selectedGroupId} onMetadataChange={onMetadataChange} metadataConfigs={metadataConfigs.filter(mfc => mfc.level === 'photo_metadata-engine')} />
             )
           }
           {
