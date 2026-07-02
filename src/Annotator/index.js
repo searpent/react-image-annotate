@@ -258,13 +258,13 @@ export const Annotator = ({
   }, [state.previouslySelectedImage, state.selectedImage, state.images, state, save])
 
   // Automatically save image shortly after specific metadata fields change
-  // (ArticleType, PreviousArticleId), but debounce so we don't save on every keystroke.
+  // (ArticleType, PreviousArticleId, Section), but debounce so we don't save on every keystroke.
   useEffect(() => {
     const { lastAction } = state
     if (
       !lastAction ||
       lastAction.type !== "UPDATE_METADATA" ||
-      (lastAction.name !== "articleType" && lastAction.name !== "previousArticleId") ||
+      (lastAction.name !== "articleType" && lastAction.name !== "previousArticleId" && lastAction.name !== "section") ||
       isNaN(lastAction.imageIndex)
     ) {
       return
