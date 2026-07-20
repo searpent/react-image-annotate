@@ -74,6 +74,8 @@ hideHeader ?: boolean,
   metadataConfigs ? : Array < MetadataConfig >,
   save : (any) => any,
     fetchImage : (any) => any,
+  updatedBy ?: ?string,
+  mediaPresenterLeaseUntil ?: ?string,
 }
 
 export const Annotator = ({
@@ -133,6 +135,8 @@ export const Annotator = ({
   metadataConfigs,
   save = () => { },
   fetchImage = () => { },
+  updatedBy,
+  mediaPresenterLeaseUntil,
 }: Props) => {
   if (typeof selectedImage === "string") {
     selectedImage = (images || []).findIndex((img) => img.src === selectedImage)
@@ -406,6 +410,8 @@ export const Annotator = ({
         onMetadataChange={handleMetadataChange}
         onAddGroup={handleAddGroup}
         onRecalcClick={handleRecalcClicked}
+        updatedBy={updatedBy}
+        mediaPresenterLeaseUntil={mediaPresenterLeaseUntil}
       />
     </SettingsProvider>
   )

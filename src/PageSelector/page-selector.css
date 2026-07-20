@@ -105,6 +105,124 @@
   z-index: 100;
 }
 
+.page-selector-top-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+/* Same typography as "Metadata" label (plain label next to switch) */
+.ps-top-bar-label {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: inherit;
+  cursor: default;
+}
+
+.ps-semaphore-below-metadata {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding-top: 0.15rem;
+  padding-left: 0;
+  box-sizing: border-box;
+}
+
+/* Same slot as .switch (60px) + .mr-2 (1rem) — lines up with Metadata toggle row */
+.ps-semaphore-toggle-column {
+  width: 60px;
+  margin-right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Plain text + discs to the right — no box */
+.ps-updated-by-semaphore {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+  flex-shrink: 0;
+}
+
+.ps-updated-by-semaphore__label {
+  text-align: left;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.ps-semaphore-lamps {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Same diameter as Metadata toggle knob (.slider:before: 26×26) */
+.ps-semaphore-lamp {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+/* Inactive lamps read as "off" (neutral); lit lamp pops. */
+.ps-semaphore-lamp:not(.ps-semaphore-lit) {
+  opacity: 0.88;
+}
+
+.ps-semaphore-lamp.ps-semaphore-lit {
+  opacity: 1;
+  transform: scale(1.02);
+}
+
+/* Off state: neutral gray so only the lit lamp reads as red/green (traffic-light style). */
+.ps-semaphore-red:not(.ps-semaphore-lit),
+.ps-semaphore-green:not(.ps-semaphore-lit) {
+  background: linear-gradient(165deg, #ececec 0%, #d4d4d4 45%, #bdbdbd 100%);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.55),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ps-semaphore-red.ps-semaphore-lit {
+  background: linear-gradient(180deg, #ff5252 0%, #d50000 55%, #b71c1c 100%);
+  border-color: rgba(255, 200, 200, 0.85);
+  box-shadow:
+    0 0 10px rgba(213, 0, 0, 0.88),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.18);
+}
+
+.ps-semaphore-green.ps-semaphore-lit {
+  background: linear-gradient(180deg, #b9f6ca 0%, #00e676 40%, #00c853 100%);
+  border-color: rgba(200, 255, 220, 0.9);
+  box-shadow:
+    0 0 10px rgba(0, 200, 83, 0.88),
+    inset 0 -2px 5px rgba(0, 0, 0, 0.14);
+}
+
 .top-buttons button {
   margin-bottom: 1rem;
   width: 100%;

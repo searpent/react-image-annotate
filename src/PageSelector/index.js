@@ -4,6 +4,7 @@ import classnames from "classnames"
 import './page-selector.css';
 import Locker from '../Locker';
 import Errorer from '../Errorer';
+import UpdatedBySemaphore, { normalizeMediaPresenterLeaseUntil } from './UpdatedBySemaphore';
 
 function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIndex, imageId, onMetadataChange, metadataConfigs = [], isLocked, error, onRecalcClick, isRecalcReady = false }) {
   const handleChange = e => {
@@ -87,20 +88,47 @@ function isLocked(page) {
   return false;
 }
 
-function PageSelector({ pages, onPageClick, onMetadataChange, metadataConfigs, onRecalcClick }) {
+function showUpdatedBySemaphore(updatedBy, mediaPresenterLeaseUntil) {
+  if (updatedBy !== undefined && updatedBy !== null) return true;
+  if (normalizeMediaPresenterLeaseUntil(mediaPresenterLeaseUntil) != null) return true;
+  return false;
+}
+
+function PageSelector({
+  pages,
+  onPageClick,
+  onMetadataChange,
+  metadataConfigs,
+  onRecalcClick,
+  updatedBy,
+  mediaPresenterLeaseUntil,
+}) {
   const [showMetadata, setShowMetadata] = useState(false);
+  const activePage = pages.find(p => p.isActive);
+  const selectionKey = activePage?.id ?? activePage?.src ?? String(pages.length);
 
   return (
     <div className={classnames('page-selector', {
       'page-selector--opened': showMetadata,
     })}>
       <div className="top-buttons">
-        <div className="show-metadata-wrapper">
-          <label className="switch mr-2">
-            <input id="show-metadata" type="checkbox" value={showMetadata} onChange={() => setShowMetadata(prev => !prev)} />
-            <span className="slider round"></span>
-          </label>
-          <label>Metadata</label>
+        <div className="page-selector-top-controls">
+          <div className="show-metadata-wrapper">
+            <label className="switch mr-2">
+              <input id="show-metadata" type="checkbox" value={showMetadata} onChange={() => setShowMetadata(prev => !prev)} />
+              <span className="slider round"></span>
+            </label>
+            <label className="ps-top-bar-label">Metadata</label>
+          </div>
+          {showUpdatedBySemaphore(updatedBy, mediaPresenterLeaseUntil) && (
+            <div className="ps-semaphore-below-metadata">
+              <UpdatedBySemaphore
+                updatedBy={updatedBy}
+                mediaPresenterLeaseUntil={mediaPresenterLeaseUntil}
+                selectionKey={selectionKey}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="pages">
@@ -142,6 +170,8 @@ PageSelector.propTypes = {
   saveActive: PropTypes.bool,
   pageNumber: PropTypes.string,
   onMetadataChange: PropTypes.func.isRequired,
+  updatedBy: PropTypes.string,
+  mediaPresenterLeaseUntil: PropTypes.string,
   metadataConfigs: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,
     level: PropTypes.string.isRequired,

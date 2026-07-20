@@ -99,7 +99,9 @@ type Props = {
   saveActive?: boolean,
   onMetadataChange: (any) => any,
   onAddGroup: (any) => any,
-  onRecalcClick: (any) => any
+  onRecalcClick: (any) => any,
+  updatedBy?: ?string,
+  mediaPresenterLeaseUntil?: ?string,
 }
 
 export const MainLayout = ({
@@ -127,7 +129,9 @@ export const MainLayout = ({
   saveActive = false,
   onMetadataChange,
   onAddGroup,
-  onRecalcClick
+  onRecalcClick,
+  updatedBy,
+  mediaPresenterLeaseUntil,
 }: Props) => {
   const classes = useStyles()
   const settings = useSettings()
@@ -340,7 +344,15 @@ return (
           }}>
             {
               showPageSelector && (
-                <PageSelector pages={pages} onPageClick={handlePageClick} onMetadataChange={onMetadataChange} metadataConfigs={state.metadataConfigs || []} onRecalcClick={onRecalcClick} />
+                <PageSelector
+                  pages={pages}
+                  onPageClick={handlePageClick}
+                  onMetadataChange={onMetadataChange}
+                  metadataConfigs={state.metadataConfigs || []}
+                  onRecalcClick={onRecalcClick}
+                  updatedBy={updatedBy}
+                  mediaPresenterLeaseUntil={mediaPresenterLeaseUntil}
+                />
               )
             }
             <WorkspaceWrapper >
