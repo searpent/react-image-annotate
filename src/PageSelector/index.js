@@ -27,10 +27,14 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
   return (
     <div
       role="button"
-      tabIndex={0}
+      tabIndex={-1}
       className={classnames('ps-page-thumbnail', {
         'ps-page-thumbnail-is-active': isActive,
       })}
+      onMouseDown={(e) => {
+        if (e.target.tagName && e.target.tagName.toLowerCase() === "input") return
+        e.preventDefault()
+      }}
       onClick={onClick}
     >
       {
@@ -47,7 +51,7 @@ function PageThumbnail({ src, isActive, onClick, metadata, showMetadata, imageIn
         {
           isRecalcReady && (
             <div className="ps-page-thumbnail-recalc-wrapper">
-              <button className="recalc-button" onClick={handleRecalcClick}>Extract</button>
+              <button type="button" className="recalc-button" onClick={handleRecalcClick}>Extract</button>
             </div>
           )
         }

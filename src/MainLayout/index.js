@@ -28,12 +28,12 @@ import getActiveImage from "../Annotator/reducers/get-active-image"
 import getHotkeyHelpText from "../utils/get-hotkey-help-text"
 import iconDictionary from "./icon-dictionary"
 import styles from "./styles"
-import { useDispatchHotkeyHandlers } from "../ShortcutsManager"
+import { defaultKeyMap, useDispatchHotkeyHandlers } from "../ShortcutsManager"
 import useEventCallback from "use-event-callback"
 import useImpliedVideoRegions from "./use-implied-video-regions"
 import useKey from "use-key-hook"
 import { useSettings } from "../SettingsProvider"
-import { withHotKeys } from "react-hotkeys"
+import { GlobalHotKeys, withHotKeys } from "react-hotkeys"
 import Editor from "../Editor"
 import regionsToBlocks from '../utils/regions-to-blocks';
 import PageSelector from "../PageSelector"
@@ -55,6 +55,17 @@ const HotkeyDiv = withHotKeys(({ hotKeys, children, divRef, ...props }) => (
     {children}
   </div>
 ))
+
+const isEditableKeyboardTarget = (target) => {
+  if (!target || !target.tagName) return false
+  const tag = target.tagName.toLowerCase()
+  return (
+    tag === "input" ||
+    tag === "textarea" ||
+    tag === "select" ||
+    Boolean(target.isContentEditable)
+  )
+}
 
 const FullScreenContainer = styled("div")(({ theme }) => ({
   width: "100%",
@@ -170,16 +181,35 @@ useKey(() => dispatch({ type: "CANCEL" }), {
 const isAVideoFrame = activeImage && activeImage.frameTime !== undefined
 const innerContainerRef = useRef()
 const hotkeyHandlers = useDispatchHotkeyHandlers({ dispatch })
+const lastHotkeyRef = useRef({ name: null, at: 0 })
+const guardedHotkeyHandlers = useMemo(() => {
+  const lastHotkey = lastHotkeyRef.current
+  return Object.keys(hotkeyHandlers).reduce((acc, name) => {
+    acc[name] = (...args) => {
+      const now = typeof performance !== "undefined" ? performance.now() : Date.now()
+      if (lastHotkey.name === name && now - lastHotkey.at < 20) return
+      lastHotkey.name = name
+      lastHotkey.at = now
+      return hotkeyHandlers[name](...args)
+    }
+    return acc
+  }, {})
+}, [hotkeyHandlers])
 
 let impliedVideoRegions = useImpliedVideoRegions(state)
 
 const refocusOnMouseEvent = useCallback((e) => {
   if (!innerContainerRef.current) return
-  if (innerContainerRef.current.contains(document.activeElement)) return
+  if (isEditableKeyboardTarget(e.target)) return
   if (innerContainerRef.current.contains(e.target)) {
     innerContainerRef.current.focus()
-    e.target.focus()
   }
+}, [])
+
+const preventEnterActivatingButtons = useCallback((e) => {
+  if (e.key !== "Enter") return
+  if (isEditableKeyboardTarget(e.target)) return
+  e.preventDefault()
 }, [])
 
 const allowedGroups = useMemo(() => regionsGroups(state.images[state.selectedImage].regions), [state.images, state.selectedImage])
@@ -326,13 +356,20 @@ return (
           }
         }}
       >
+        <GlobalHotKeys
+          allowChanges
+          keyMap={defaultKeyMap}
+          handlers={guardedHotkeyHandlers}
+        />
         <HotkeyDiv
           tabIndex={-1}
           divRef={innerContainerRef}
           onMouseDown={refocusOnMouseEvent}
           onMouseOver={refocusOnMouseEvent}
+          onKeyDownCapture={preventEnterActivatingButtons}
           allowChanges
-          handlers={hotkeyHandlers}
+          keyMap={defaultKeyMap}
+          handlers={guardedHotkeyHandlers}
           className={classnames(
             classes.container,
             state.fullScreen && "Fullscreen"
