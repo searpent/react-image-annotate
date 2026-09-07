@@ -288,7 +288,7 @@ export const Annotator = ({
         triggerRecalc: false,
         toSaveMetadata: [],
       })
-    }, 800)
+    }, 3000)
 
     return () => {
       clearTimeout(timeoutId)
