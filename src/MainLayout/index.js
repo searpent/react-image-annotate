@@ -200,7 +200,10 @@ let impliedVideoRegions = useImpliedVideoRegions(state)
 
 const refocusOnMouseEvent = useCallback((e) => {
   if (!innerContainerRef.current) return
+  // Keep typing in metadata fields (Section, Mutation, …) while the mouse
+  // moves over the canvas. Hotkeys still work via GlobalHotKeys.
   if (isEditableKeyboardTarget(e.target)) return
+  if (isEditableKeyboardTarget(document.activeElement)) return
   if (innerContainerRef.current.contains(e.target)) {
     innerContainerRef.current.focus()
   }
@@ -365,7 +368,6 @@ return (
           tabIndex={-1}
           divRef={innerContainerRef}
           onMouseDown={refocusOnMouseEvent}
-          onMouseOver={refocusOnMouseEvent}
           onKeyDownCapture={preventEnterActivatingButtons}
           allowChanges
           keyMap={defaultKeyMap}
