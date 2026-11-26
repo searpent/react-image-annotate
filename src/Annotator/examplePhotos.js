@@ -808,28 +808,66 @@ const examplePhotos = [
             {
               "label": "metadata",
               "score": 1,
-              "box": {
-                "X1": 0,
-                "X2": 1,
-                "Y1": 0,
-                "Y2": 1
-              },
-              "text": "[{\"key\":\"articleType\",\"value\":\"news\"}, {\"key\":\"section\",\"value\":\"editorial\"}]",
-              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
-              "id": "aba453dd-f870-4510-ae40-a19eb52eb7d6"
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"at-0\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"sec-0\"}, {\"key\":\"previousArticleId\",\"value\":\"\",\"metadataId\":\"prev-0\"}]",
+              "groupId": "0",
+              "id": "meta-group-0"
             },
             {
               "label": "metadata",
               "score": 1,
-              "box": {
-                "X1": 0,
-                "X2": 1,
-                "Y1": 0,
-                "Y2": 1
-              },
-              "text": "[{\"key\":\"articleType\",\"value\":\"ads\"}, {\"key\":\"section\",\"value\":\"last page\"}]",
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"ads\",\"metadataId\":\"at-1\"}, {\"key\":\"section\",\"value\":\"last page\",\"metadataId\":\"sec-1\"}, {\"key\":\"previousArticleId\",\"value\":\"beta\",\"metadataId\":\"prev-1\"}]",
               "groupId": "1",
-              "id": "2615bf87-7247-4bde-a0f9-45413034a6a6"
+              "id": "meta-group-1"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"at-2\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"sec-2\"}, {\"key\":\"previousArticleId\",\"value\":\"\",\"metadataId\":\"prev-2\"}]",
+              "groupId": "2",
+              "id": "meta-group-2"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"at-3\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"sec-3\"}, {\"key\":\"previousArticleId\",\"value\":\"alpha\",\"metadataId\":\"prev-3\"}]",
+              "groupId": "3",
+              "id": "meta-group-3"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"at-4\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"sec-4\"}, {\"key\":\"previousArticleId\",\"value\":\"\",\"metadataId\":\"prev-4\"}]",
+              "groupId": "4",
+              "id": "meta-group-4"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"at-5\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"sec-5\"}, {\"key\":\"previousArticleId\",\"value\":\"\",\"metadataId\":\"prev-5\"}]",
+              "groupId": "5",
+              "id": "meta-group-5"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"at-6\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"sec-6\"}, {\"key\":\"previousArticleId\",\"value\":\"\",\"metadataId\":\"prev-6\"}]",
+              "groupId": "6",
+              "id": "meta-group-6"
+            },
+            {
+              "label": "metadata",
+              "score": 1,
+              "box": { "X1": 0, "X2": 1, "Y1": 0, "Y2": 1 },
+              "text": "[{\"key\":\"articleType\",\"value\":\"news\",\"metadataId\":\"at-uuid\"}, {\"key\":\"section\",\"value\":\"editorial\",\"metadataId\":\"sec-uuid\"}, {\"key\":\"previousArticleId\",\"value\":\"\",\"metadataId\":\"prev-uuid\"}]",
+              "groupId": "42ba09e0-b2f5-439d-bdae-201e7c37787b",
+              "id": "meta-group-uuid"
             },
           ]
         },

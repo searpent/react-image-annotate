@@ -66,7 +66,8 @@ storiesOf("PageSelector", module).add(
         <div style={{ padding: 16, flex: 1 }}>
           <p>
             Same case-level <code>updatedBy</code> for all pages; semaphore remounts when you switch page (active thumbnail).
-            When <code>mediaPresenterLeaseUntil</code> (ISO UTC from Dynamo) is in the future, label shows <strong>Do not modify</strong> (red lamp) even for AGGREGATOR — same as media-presenter webhook lease.
+            When <code>mediaPresenterLeaseUntil</code> (ISO UTC from Dynamo) is in the future, label shows <strong>Do not modify</strong> (red lamp) even for AGGREGATOR/WEBHOOK — same as media-presenter webhook lease.
+            After Boxnet export the album may be <code>updatedBy=WEBHOOK</code>; that still counts as Ready.
           </p>
           <p>
             <strong>Review completed</strong> can be checked only while the semaphore is Ready; unchecking is always allowed.
@@ -74,6 +75,9 @@ storiesOf("PageSelector", module).add(
           </p>
           <button type="button" onClick={() => setUpdatedBy("AGGREGATOR")}>
             updatedBy = AGGREGATOR
+          </button>{" "}
+          <button type="button" onClick={() => setUpdatedBy("WEBHOOK")}>
+            updatedBy = WEBHOOK
           </button>{" "}
           <button type="button" onClick={() => setUpdatedBy("OPERATOR")}>
             updatedBy = OPERATOR
