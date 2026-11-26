@@ -1,9 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Album is safe to edit after aggregation finished.
+ * SI-2549 stamps updatedBy=WEBHOOK on the album after Boxnet export write-back;
+ * that is still a completed pipeline (same as AGGREGATOR before the stamp).
+ */
+const READY_UPDATED_BY = new Set(['AGGREGATOR', 'WEBHOOK']);
+
 export function isUpdatedByAggregator(updatedBy) {
   if (updatedBy == null) return false;
-  return String(updatedBy).trim() === 'AGGREGATOR';
+  return READY_UPDATED_BY.has(String(updatedBy).trim());
 }
 
 /** Non-empty lease string or null (treat undefined / "" / whitespace as no lock). */
@@ -53,7 +60,7 @@ export function useCaseReady(updatedBy, mediaPresenterLeaseUntil) {
 
 /**
  * Case-level "UPDATED BY" indicator for the page strip (left panel).
- * Green lit only when `updatedBy` is exactly AGGREGATOR and the media-presenter Dynamo lease is not active.
+ * Green when `updatedBy` is AGGREGATOR or WEBHOOK (post-export) and the media-presenter lease is not active.
  * `selectionKey` should change per selected page so the control remounts when paging.
  */
 export default function UpdatedBySemaphore({ updatedBy, mediaPresenterLeaseUntil, selectionKey }) {
@@ -63,7 +70,7 @@ export default function UpdatedBySemaphore({ updatedBy, mediaPresenterLeaseUntil
   const statusLabel = green ? 'Ready' : 'Do not modify';
   const title =
     `Case last updated by: ${source}.${leaseHint} Status: ${statusLabel}. ` +
-    'Green lamp: safe to modify (AGGREGATOR and no active media-presenter lease). ' +
+    'Green lamp: safe to modify (AGGREGATOR/WEBHOOK and no active media-presenter lease). ' +
     'Red lamp: do not modify (other updater and/or lock).';
   const redClass = 'ps-semaphore-lamp ps-semaphore-red' + (green ? '' : ' ps-semaphore-lit');
   const greenClass = 'ps-semaphore-lamp ps-semaphore-green' + (green ? ' ps-semaphore-lit' : '');

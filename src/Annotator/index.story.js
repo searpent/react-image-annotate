@@ -205,6 +205,24 @@ storiesOf("Annotator", module)
             onExit={(s) => console.log('[onExit] triggered:', s)}
             save={async ({ image, triggerRecalc, albumMetadata }) => {
               console.log(`[SYNC] image ${image.id} saving...  recalc: ${triggerRecalc} albumMetadata: ${albumMetadata.length}`)
+              // Story helper: show previousArticleId tags (manual- prefix after GUI edit)
+              ;(image?.regions || [])
+                .filter((r) => r.cls === "metadata")
+                .forEach((r) => {
+                  try {
+                    const fields = JSON.parse(r.text || "[]")
+                    fields
+                      .filter((f) => f.key === "previousArticleId")
+                      .forEach((f) =>
+                        console.log(
+                          `[SYNC] previousArticleId groupId=${r.groupId}`,
+                          { value: f.value, metadataId: f.metadataId }
+                        )
+                      )
+                  } catch (e) {
+                    console.warn("[SYNC] metadata parse failed", r.groupId, e)
+                  }
+                })
               return new Promise((resolve, reject) => {
                 setTimeout(() => {
                   let lockedUntil = null;

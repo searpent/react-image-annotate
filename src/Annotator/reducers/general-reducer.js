@@ -1103,6 +1103,14 @@ export default (state: MainLayoutState, action: Action) => {
             return state
           }
 
+          // Tag manual previousArticleId so media-presenter linking does not
+          // overwrite it on Boxnet export (id is persisted as LabelScore.id).
+          if (
+            name === "previousArticleId" &&
+            articleMetadata[toBeUpdatedMetadataIdx].value !== value
+          ) {
+            articleMetadata[toBeUpdatedMetadataIdx].metadataId = `manual-${getRandomId()}`
+          }
           articleMetadata[toBeUpdatedMetadataIdx].value = value
           state = addSaveableAction(state, "UPDATE_METADATA")
           return setIn(

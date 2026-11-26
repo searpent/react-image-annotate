@@ -36,15 +36,22 @@ test("can be checked when the case is Ready", () => {
   expect(onChange).toHaveBeenCalledWith(true)
 })
 
+test("can be checked when updatedBy is WEBHOOK after export", () => {
+  const input = render({ updatedBy: "WEBHOOK", onChange: jest.fn() })
+  expect(input.disabled).toBe(false)
+})
+
 test("cannot be checked when the case is not Ready", () => {
-  expect(render({ updatedBy: "WEBHOOK" }).disabled).toBe(true)
+  expect(render({ updatedBy: "OPERATOR" }).disabled).toBe(true)
+  expect(render({ updatedBy: "API" }).disabled).toBe(true)
   const lease = new Date(Date.now() + 3600e3).toISOString()
   expect(render({ updatedBy: "AGGREGATOR", mediaPresenterLeaseUntil: lease }).disabled).toBe(true)
+  expect(render({ updatedBy: "WEBHOOK", mediaPresenterLeaseUntil: lease }).disabled).toBe(true)
 })
 
 test("can be unchecked even when the case is not Ready", () => {
   const onChange = jest.fn()
-  const input = render({ updatedBy: "WEBHOOK", humanProcessorConfirmation: confirmation, onChange })
+  const input = render({ updatedBy: "OPERATOR", humanProcessorConfirmation: confirmation, onChange })
   expect(input.checked).toBe(true)
   expect(input.disabled).toBe(false)
   act(() => input.click())
